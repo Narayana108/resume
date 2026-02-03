@@ -1,9 +1,20 @@
+@font-face {
+  font-family: "Zenitha Classic";
+  src: url("fonts/ZenithaClassic.otf") format("opentype");
+
+}
+@font-face {
+  font-family: "Vogue";
+  src: url("fonts/Vogue.ttf") format("truetype");
+
+}
+
 body { margin: 0;
        padding: 0;
        background-color: #fff font-size: 12px;
        font-family: 'Source Sans Pro', sans-serif;
        -webkit-font-smoothing: subpixel-antialiased;
-}
+
 * { box-sizing: border-box;
     -moz-box-sizing: border-box;
 }
@@ -17,23 +28,22 @@ h1 { font-weight: normal;
      color:#B46ECC;
      padding: 0 10px 10px;
      border-radius:2px;
-    /*font-family: 'Merriweather', serif;*/
-    font-family: 'VT323', monospace;
+    /*font-family: 'IBM Plex Sans', sans-serif;*/
+    font-family: 'Zenitha Classic', serif;
 }
-h2 { color: #B46ECC;
-     /*width: 150px;*/
-     font-size: 28px;
-     padding-left: 20px;
-     padding-top: 2px;
-     /*font-weight:700;*/
-     /*font-family: 'Merriweather', serif;*/
-    font-family: 'VT323', monospace;
 
-   width: 100%; 
-   text-align: center; 
-   border-bottom: 1px solid #B46ECC; 
-   line-height: 0.1em;
-   margin: 10px 0 20px;
+h2 { color: #B46ECC;
+    font-size: 28px;
+    padding-left: 20px;
+    padding-top: 2px;
+    font-weight:700;
+    font-family: 'Vogue', serif;
+
+  width: 100%; 
+  text-align: center; 
+  border-bottom: 1px solid #B46ECC; 
+  line-height: 0.1em;
+  margin: 10px 0 20px;
 
 }
 h2 span { 
@@ -66,11 +76,30 @@ a:hover {
 }
 .key::before { content: '◆';
                position: absolute;
-               left: -15px;
                color: #B46ECC;
                font-size: 7pt;
 }
-.key:first-child::before { content: '' }
+
+
+.key::before {
+  content: '◆';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #B46ECC;
+  font-size: 7pt;
+  line-height: 1;
+}
+
+.key {
+  display: inline-block;
+  position: relative;
+  margin: 0 14px 6px 14px; /* horizontal + vertical gap */
+  padding-left: 12px;     /* space for bullet */
+  line-height: 1.6;
+}
+
 .section { padding: 10px 0 15px;
 }
 .section:last-child { border: none }
@@ -80,6 +109,9 @@ a:hover {
                 margin: 10px 0 10px;
                 padding: 15px 10px;
 }
+
+
+
 .subsection { margin: 10px 0 5px }
 .desc { font-size: 16px; font-family: 'Source Sans Pro', sans-serif; color:#444;}
 .contact-info { font-size: 16px;
@@ -197,4 +229,79 @@ footer {
 .title {
  font-weight: bold;
  color: #A89EAD;
+}
+
+/* container stacks items vertically and provides left padding for bullets */
+.interests-spans {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;        /* vertical spacing between items */
+  padding-left: 1.25rem; /* space for bullet */
+  margin: 0;
+}
+
+/* each .key behaves like a list-item so bullets align naturally */
+.interests-spans .key {
+  display: block;            /* ensures full-line layout */
+  position: relative;
+  padding-left: 0.5rem;     /* space between bullet and text */
+  line-height: 1.4;         /* adjust vertical centering */
+}
+
+/* bullet rendered with pseudo-element and vertically centered */
+.interests-spans .key::before {
+  content: "•";
+  position: absolute;
+  left: -1.25rem;            /* place bullet in the left padding area */
+  top: 50%;
+  transform: translateY(-50%); /* vertically center bullet */
+  font-size: 0.9em;         /* adjust bullet size if needed */
+  color: inherit;           /* match text color */
+  line-height: 1;
+}
+
+/* optional: tighter control for alignment on smaller screens */
+@media (max-width: 480px) {
+  .interests-spans { padding-left: 1rem; }
+  .interests-spans .key::before { left: -1rem; }
+}
+
+.bio-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* ===========================
+   HEADER
+   =========================== */
+
+.header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hero-name {
+    margin: 0;
+    font-size: 48px;
+    line-height: 1;
+    letter-spacing: 1px;
+    font-weight: bold;
+      font-family: 'Zenitha Classic', serif !important; 
+}
+
+.contact-info {
+    text-align: right;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* test block — use !important to rule out overrides */
+h1, .hero-name {
+  font-family: 'Cinzel', serif !important;
+  font-weight: 700 !important;
+  font-size: 48px !important;
+  outline: 2px dashed rgba(0,0,0,0.08) !important;
 }
