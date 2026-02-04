@@ -1,6 +1,12 @@
 @font-face {
   font-family: "Zenitha Classic";
-  src: url("fonts/ZenithaClassic.otf") format("opentype");
+  src: url("../fonts/ZenithaClassic.woff2") format("woff2"),
+       url("../fonts/ZenithaClassic.woff") format("woff");
+
+       
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -83,7 +89,7 @@ h2 { color: #B46ECC;
     padding-left: 20px;
     padding-top: 2px;
     font-weight:700;
-    font-family: 'Vogue', serif;
+    font-family: 'Merriweather', serif;
 
     width: 100%; 
     text-align: center; 
