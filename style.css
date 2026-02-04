@@ -1,7 +1,6 @@
 /* ===========================
    HEADER
    =========================== */
-
    
 .header-row {
     display: flex;
@@ -46,8 +45,6 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
   -webkit-font-smoothing: subpixel-antialiased;
 }
-
-
 
 /* ===========================
    PRIMARY RULES
@@ -101,6 +98,7 @@ h3 { color: #B46ECC;
      line-height: 28px;
      font-family: 'EB Garamond', serif;
 }
+
 h2, h3 { margin-top: 5px }
 
 a { color: #B46ECC;
@@ -145,7 +143,7 @@ a:hover {
     width: 100%;
     font-size: 20px;
     line-height: 24px;
-    margin: 10px 0 10px;
+    margin: 2px 0 2px;
     padding: 15px 10px;
 }
 
@@ -240,6 +238,15 @@ ul.skills li:last-child {
  color: #A89EAD;
 }
 
+.client {
+  font-weight: normal;
+  color: #B46ECC;
+}
+
+.line {
+  border-bottom: 2px solid #eee;
+}
+
 /* ===========================
    Other Interests
    =========================== */
@@ -279,7 +286,6 @@ ul.skills li:last-child {
   color: inherit;           /* match text color */
   line-height: 1;
 }
-
 
 /* ===========================
    FOOTER
