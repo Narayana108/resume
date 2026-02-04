@@ -1,35 +1,81 @@
 @font-face {
   font-family: "Zenitha Classic";
   src: url("fonts/ZenithaClassic.otf") format("opentype");
-
 }
+
 @font-face {
   font-family: "Vogue";
   src: url("fonts/Vogue.ttf") format("truetype");
-
 }
 
-body { margin: 0;
-       padding: 0;
-       background-color: #fff font-size: 12px;
-       font-family: 'Source Sans Pro', sans-serif;
-       -webkit-font-smoothing: subpixel-antialiased;
 
-* { box-sizing: border-box;
-    -moz-box-sizing: border-box;
+/* ===========================
+   HEADER
+   =========================== */
+
+.header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-/*
- Primary Rules
-*/
-h1 { font-weight: normal;
-     margin: 5px 0 0;
-     font-size: 60px;
-     color:#B46ECC;
-     padding: 0 10px 10px;
-     border-radius:2px;
-    /*font-family: 'IBM Plex Sans', sans-serif;*/
-    font-family: 'Zenitha Classic', serif;
+.hero-name {
+    margin: 0;
+    font-size: 48px;
+    line-height: 1;
+    letter-spacing: 1px;
+    font-weight: bold;
+    font-family: 'Zenitha Classic', serif !important; 
+}
+
+.contact-info {
+    text-align: right;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.cryptedmail:after {
+  content: attr(data-name) "@" attr(data-domain) "." attr(data-tld); 
+}
+
+img {
+  border: 1px solid #ddd; /* Gray border */
+  border-radius: 4px;  /* Rounded border */
+  padding: 5px; /* Some padding */
+  width: 200px; /* Set a small width */
+}
+
+.bio {
+    font-weight: bold;
+    padding: 5px;
+    color:#B46ECC;
+}
+
+.bio-text {
+    font-size: 18px;
+}
+
+/* ===========================
+   BODY
+   =========================== */
+
+body { 
+  background-color: #fff; 
+  font-family: 'Source Sans Pro', sans-serif;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+/* ===========================
+   PRIMARY RULES
+   =========================== */
+h1 { 
+    font-weight: normal !important;
+    font-size: 52px;
+    color:#B46ECC;
+    font-family: 'Zenitha Classic', serif !important;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #B46ECC; 
 }
 
 h2 { color: #B46ECC;
@@ -39,11 +85,11 @@ h2 { color: #B46ECC;
     font-weight:700;
     font-family: 'Vogue', serif;
 
-  width: 100%; 
-  text-align: center; 
-  border-bottom: 1px solid #B46ECC; 
-  line-height: 0.1em;
-  margin: 10px 0 20px;
+    width: 100%; 
+    text-align: center; 
+    border-bottom: 1px solid #B46ECC; 
+    line-height: 0.1em;
+    margin: 10px 0 20px;
 
 }
 h2 span { 
@@ -59,6 +105,7 @@ h3 { color: #B46ECC;
      font-family: 'Merriweather', serif;
 }
 h2, h3 { margin-top: 5px }
+
 a { color: #B46ECC;
     display: inline-block;
     text-decoration: none;
@@ -66,20 +113,25 @@ a { color: #B46ECC;
     border-radius:2px;
     margin-right:-2px;
 }
+
 a:hover {
   background-color:#B46ECC;
   color:#fff;
 }
+
 .key:first-child { margin-left: 0 }
-.key { margin: 0 10px;
-       position: relative;
-}
-.key::before { content: '◆';
-               position: absolute;
-               color: #B46ECC;
-               font-size: 7pt;
+
+.key { 
+  margin: 0 10px;
+  position: relative;
 }
 
+.key::before { 
+  content: '◆';
+  position: absolute;
+  color: #B46ECC;
+  font-size: 7pt;
+}
 
 .key::before {
   content: '◆';
@@ -100,47 +152,47 @@ a:hover {
   line-height: 1.6;
 }
 
-.section { padding: 10px 0 15px;
-}
+.section { padding: 10px 0 15px; }
+
 .section:last-child { border: none }
-.section-text { width: 100%;
-                font-size: 16px;
-                line-height: 24px;
-                margin: 10px 0 10px;
-                padding: 15px 10px;
+
+.section-text { 
+    width: 100%;
+    font-size: 16px;
+    line-height: 24px;
+    margin: 10px 0 10px;
+    padding: 15px 10px;
 }
-
-
 
 .subsection { margin: 10px 0 5px }
+
 .desc { font-size: 16px; font-family: 'Source Sans Pro', sans-serif; color:#444;}
-.contact-info { font-size: 16px;
-                text-align: right;
-}
+
 .light { color: #aaa;letter-spacing:1px;
          font-size: 14px;
          line-height:28px;
          font-family: 'Source Sans Pro', sans-serif;
          text-transform:uppercase;
 }
-ul{
+
+ul {
   padding-left:15px;
 }
 
-ul.skills{
+ul.skills {
   float:left;
   width:30%;
   padding-left:0px;
   margin: 0 20px 0 0;
 }
 
-ul.skills li{
+ul.skills li {
   list-style: none;
   font-size:16px;
   margin-bottom:10px;
 }
 
-ul.skills li:last-child{
+ul.skills li:last-child {
   margin:0;
 }
 
@@ -154,9 +206,10 @@ ul.skills li:last-child{
 .col { float: left }
 .col-right { float: right }
 
-/*
- Page Rules
-*/
+/* ===========================
+   PAGE RULES
+   =========================== */
+
 .page { width: 1000px;
         min-height: 29.7cm;
         margin: 1cm auto;
@@ -169,43 +222,20 @@ ul.skills li:last-child{
            height: 297mm;
 }
 
-.cryptedmail:after {
-  content: attr(data-name) "@" attr(data-domain) "." attr(data-tld); 
-}
-
-img {
-  border: 1px solid #ddd; /* Gray border */
-  border-radius: 4px;  /* Rounded border */
-  padding: 5px; /* Some padding */
-  width: 200px; /* Set a small width */
-}
-
-.bio {
-     font-weight: bold;
-     padding: 5px;
-     color:#B46ECC;
-}
-.profile{
-     font-size:12px;
-}
-.pad-top{
-    padding-top: 10px;
-}
-
-.w3-container,.w3-panel{
+.w3-container,.w3-panel {
   padding:0.01em 16px;
   width: 20%;
 }
-.w3-blue,.w3-hover-blue:hover{
+.w3-blue,.w3-hover-blue:hover {
   color:#fff!important;
   background-color:#2196F3!important
 }
-.w3-green,.w3-hover-green:hover{
+.w3-green,.w3-hover-green:hover {
   color:#000000!important;
   background-color:#88F28F!important
 }
 
-.w3-purple,.w3-hover-purple:hover{
+.w3-purple,.w3-hover-purple:hover {
   color:#000000!important;
   background-color:#CD88F2!important
 }
@@ -264,44 +294,4 @@ footer {
 @media (max-width: 480px) {
   .interests-spans { padding-left: 1rem; }
   .interests-spans .key::before { left: -1rem; }
-}
-
-.bio-layout {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-}
-
-/* ===========================
-   HEADER
-   =========================== */
-
-.header-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.hero-name {
-    margin: 0;
-    font-size: 48px;
-    line-height: 1;
-    letter-spacing: 1px;
-    font-weight: bold;
-      font-family: 'Zenitha Classic', serif !important; 
-}
-
-.contact-info {
-    text-align: right;
-    font-family: 'Source Sans Pro', sans-serif;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-/* test block — use !important to rule out overrides */
-h1, .hero-name {
-  font-family: 'Cinzel', serif !important;
-  font-weight: 700 !important;
-  font-size: 48px !important;
-  outline: 2px dashed rgba(0,0,0,0.08) !important;
 }
