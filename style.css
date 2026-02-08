@@ -59,6 +59,8 @@ h1 {
     line-height: 1;
     letter-spacing: 2px;
     text-align: center !important;
+      text-transform: uppercase;
+
 }
 
 .role {
@@ -75,7 +77,7 @@ h1 {
 h2 { 
     color: #B46ECC;
     font-size: 30px;
-    font-family: 'Roboto Slab', serif;
+    font-family: serif;
     font-weight: normal;
     text-align: center; 
 
@@ -96,10 +98,30 @@ h3 { color: #B46ECC;
      font-weight: bold;
      margin-bottom: 0;
      line-height: 28px;
-     font-family: 'EB Garamond', serif;
+     font-family: serif;
 }
 
 h2, h3 { margin-top: 5px }
+
+.profile {
+  margin: 1.5rem 0;
+}
+
+.profile-heading h3 {
+  font-size: 23px;
+  color: #666;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.profile-heading blockquote {
+  margin: 0;
+  padding-left: 1rem;
+  border-left: 3px solid #444;
+  font-style: italic;
+  color: #222;
+  line-height: 1.4;
+}
 
 a { color: #B46ECC;
     display: inline-block;
