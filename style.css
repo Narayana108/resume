@@ -330,3 +330,73 @@ footer {
   .interests-spans { padding-left: 1rem; }
   .interests-spans .key::before { left: -1rem; }
 }
+
+/* ===========================
+   MOBILE RESPONSIVE
+   =========================== */
+
+@media (max-width: 768px) {
+
+  body {
+    font-size: 15px;
+  }
+
+  .page {
+    width: 100%;
+    margin: 0;
+    padding: 16px;
+  }
+
+  h1 {
+    font-size: 42px;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 22px;
+    padding-left: 0;
+  }
+
+  h3 {
+    font-size: 16px;
+  }
+
+  .col,
+  .col-right {
+    float: none;
+    width: 100%;
+    text-align: left;
+  }
+
+  .contact-info {
+    text-align: left;
+    margin-top: 10px;
+  }
+
+  .section-text {
+    font-size: 15px;
+    line-height: 1.6;
+    padding: 10px 0;
+  }
+
+  ul.skills {
+    width: 100%;
+    float: none;
+    margin: 0 0 20px 0;
+  }
+
+  img {
+    width: 120px;
+    display: block;
+    margin: 0 auto 10px;
+  }
+
+  .row {
+    display: block;
+  }
+
+  footer {
+    text-align: center;
+    padding: 10px 0;
+  }
+}
