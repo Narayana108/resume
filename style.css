@@ -111,7 +111,7 @@ h2, h3 { margin-top: 5px }
   font-size: 23px;
   color: #666;
   margin-bottom: 0.5rem;
-  font-weight: bold;
+  font-weight: normal;
 }
 
 .profile-heading blockquote {
