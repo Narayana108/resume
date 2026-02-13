@@ -59,7 +59,7 @@ h1 {
     line-height: 1;
     letter-spacing: 2px;
     text-align: center !important;
-      text-transform: uppercase;
+    text-transform: uppercase;
 
 }
 
@@ -109,19 +109,27 @@ h2, h3 { margin-top: 5px }
 
 .profile-heading h3 {
   font-size: 23px;
+  line-height: 1.4;
   color: #666;
   margin-bottom: 0.5rem;
+  font-family: google-sans;
   font-weight: normal;
+  padding-bottom: 5px;
 }
 
 .profile-heading blockquote {
   margin: 0;
   padding-left: 1rem;
-  border-left: 3px solid #444;
+  border-left: 3px solid #b7b7b7;
   font-style: italic;
-  color: #222;
+  color: #666;
   line-height: 1.4;
 }
+
+.gap { 
+  height: 2px; margin: 0; padding: 0; 
+}
+
 
 a { color: #B46ECC;
     display: inline-block;
