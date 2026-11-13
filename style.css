@@ -110,7 +110,7 @@ h2, h3 { margin-top: 5px }
 .profile-heading h3 {
   font-size: 23px;
   line-height: 1.4;
-  color: #666;
+  color: #B46ECC;
   margin-bottom: 0.5rem;
   font-family: google-sans;
   font-weight: normal;
@@ -367,12 +367,6 @@ footer {
     padding: 10px 0;
   }
 
-  ul.skills {
-    width: 100%;
-    float: none;
-    margin: 0 0 20px 0;
-  }
-
   img {
     width: 120px;
     display: block;
@@ -421,6 +415,6 @@ footer {
   li { break-inside: avoid; }
   ul.skills-list { break-inside: auto; }
   .subsection { break-after: avoid; }
-  .keep { break-inside: avoid; }
+  .keep { break-inside: avoid; break-after: avoid; }
   .line { break-after: avoid; }
 }
