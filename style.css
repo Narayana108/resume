@@ -16,17 +16,16 @@
 :root,
 html[data-palette="indigo"] {
     --bg: #FAFAFA;
-    --bg-wing: #F4F4F4;
     --surface: #FFFFFF;
     --surface-subtle: #F4F4F4;
     --ink: #222524;
     --ink-muted: #404040;
     --ink-faint: #6B6B6B;
-    --brand: #009B5A;
-    --brand-strong: #1E4D36;
-    --accent: #1D297A;
-    --accent-soft: rgba(29, 41, 122, 0.08);
-    --brand-soft: rgba(0, 155, 90, 0.10);
+    --brand: #1D297A;
+    --brand-strong: #16205C;
+    --accent: #009B5A;
+    --accent-soft: rgba(0, 155, 90, 0.09);
+    --brand-soft: rgba(29, 41, 122, 0.10);
     --hairline: #E5E5E5;
     --hairline-strong: #D4D4D4;
     --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05), 0 4px 12px -4px rgba(0, 0, 0, 0.03);
@@ -42,7 +41,6 @@ html[data-palette="indigo"] {
 
 html[data-palette="emerald"] {
     --bg: #FAFAFA;
-    --bg-wing: #F1F7F3;
     --surface: #FFFFFF;
     --surface-subtle: #F1F7F3;
     --ink: #17211C;
@@ -68,7 +66,6 @@ html[data-palette="emerald"] {
 
 html[data-palette="mono"] {
     --bg: #FAFAFA;
-    --bg-wing: #F2F2F2;
     --surface: #FFFFFF;
     --surface-subtle: #F2F2F2;
     --ink: #111111;
@@ -95,28 +92,26 @@ html[data-palette="mono"] {
 /* Dark mode — same hues, deepened grounds */
 html[data-mode="dark"][data-palette="indigo"] {
     --bg: #0C0A14;
-    --bg-wing: #12101C;
     --surface: #141220;
     --surface-subtle: #1B1830;
     --ink: #F2F0FA;
     --ink-muted: #C3BEDA;
     --ink-faint: #928CB0;
-    --brand: #34D399;
-    --brand-strong: #6EE7B7;
-    --accent: #A5B4FC;
-    --accent-soft: rgba(165, 180, 252, 0.14);
-    --brand-soft: rgba(52, 211, 153, 0.14);
+    --brand: #A5B4FC;
+    --brand-strong: #C4B5FD;
+    --accent: #34D399;
+    --accent-soft: rgba(52, 211, 153, 0.14);
+    --brand-soft: rgba(165, 180, 252, 0.14);
     --hairline: #262238;
     --hairline-strong: #363050;
     --shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.60);
-    --shadow-hover: 0 20px 42px -12px rgba(52, 211, 153, 0.20);
+    --shadow-hover: 0 20px 42px -12px rgba(165, 180, 252, 0.24);
     --term-bg: #08060F;
     --term-bar: #100D1A;
 }
 
 html[data-mode="dark"][data-palette="emerald"] {
     --bg: #06110D;
-    --bg-wing: #0A1A14;
     --surface: #0C1F18;
     --surface-subtle: #112D24;
     --ink: #ECFDF5;
@@ -137,7 +132,6 @@ html[data-mode="dark"][data-palette="emerald"] {
 
 html[data-mode="dark"][data-palette="mono"] {
     --bg: #0A0A0A;
-    --bg-wing: #111111;
     --surface: #141414;
     --surface-subtle: #1C1C1C;
     --ink: #FAFAFA;
@@ -430,7 +424,7 @@ html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
 }
 
 /* --------------------------------------------------------------
-   4. SHELL + TRIPTYCH
+   4. SHELL
    -------------------------------------------------------------- */
 
 .shell {
@@ -443,85 +437,12 @@ html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
     .shell { padding: 32px 24px 72px; }
 }
 
-.triptych {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-    align-items: start;
-}
-
-@media (min-width: 1024px) {
-    .triptych {
-        grid-template-columns: 260px minmax(0, 1fr) 260px;
-        gap: 24px;
-    }
-}
-
-@media (min-width: 1280px) {
-    .triptych {
-        grid-template-columns: 300px minmax(0, 1fr) 300px;
-    }
-}
-
 .center {
+    width: 100%;
     min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 28px;
-    order: 1;
-}
-
-@media (min-width: 1024px) {
-    .center { order: 0; }
-}
-
-/* Wings — reserved for sacred geometry */
-.wing {
-    display: none;
-    order: 2;
-    position: sticky;
-    top: 88px;
-}
-
-@media (min-width: 1024px) {
-    .wing {
-        display: block;
-        border: 1px dashed var(--hairline-strong);
-        border-radius: 16px;
-        background: var(--bg-wing);
-        padding: 20px 16px;
-        min-height: 180px;
-    }
-}
-
-.wing-left { order: 2; }
-.wing-right { order: 3; }
-
-@media (min-width: 1024px) {
-    .wing-left { order: 0; }
-    .wing-right { order: 0; }
-}
-
-.wing-placeholder {
-    text-align: center;
-    color: var(--ink-faint);
-}
-
-.wing-kicker {
-    display: block;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--brand);
-    margin-bottom: 6px;
-}
-
-.wing-placeholder p {
-    margin: 0;
-    font-family: 'EB Garamond', Georgia, serif;
-    font-style: italic;
-    font-size: 14px;
 }
 
 /* --------------------------------------------------------------
@@ -737,6 +658,15 @@ html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
 }
 
 .prose:last-child { margin-bottom: 0; }
+
+.prose-head {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--brand);
+    margin: 0 0 10px;
+}
 
 /* --------------------------------------------------------------
    8. SKILLS
@@ -1008,7 +938,7 @@ html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
     font-size: 24px;
     font-weight: 700;
     letter-spacing: 0.02em;
-    color: #000000;
+    color: var(--brand);
     margin-bottom: 2px;
 }
 
@@ -1032,7 +962,7 @@ html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #000000;
+    color: var(--accent);
     border-bottom: 1px solid #999999;
     padding-bottom: 3px;
     margin: 0 0 9px;
@@ -1062,7 +992,7 @@ html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
     font-family: Georgia, 'Times New Roman', serif;
     font-size: 14.5px;
     font-weight: 700;
-    color: #000000;
+    color: var(--brand-strong);
     margin: 0 0 1px;
 }
 
@@ -1076,7 +1006,7 @@ html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
 .ats-client {
     font-size: 12.5px;
     font-weight: 700;
-    color: #000000;
+    color: var(--brand-strong);
     margin: 8px 0 4px;
 }
 
@@ -1282,7 +1212,6 @@ html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
     }
 
     .topbar,
-    .wing,
     .terminal,
     .colophon,
     .hero,
@@ -1294,10 +1223,6 @@ html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
         max-width: none;
         padding: 0;
         margin: 0;
-    }
-
-    .triptych {
-        display: block;
     }
 
     .center { display: block; }
