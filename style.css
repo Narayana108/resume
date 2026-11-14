@@ -676,7 +676,6 @@ a.btn-solid:hover {
 }
 
 .prose {
-    max-width: 600px;
     font-family: 'EB Garamond', Georgia, serif;
     font-size: 18px;
     line-height: 1.62;
@@ -685,6 +684,30 @@ a.btn-solid:hover {
 }
 
 .prose:last-child { margin-bottom: 0; }
+
+.profile-list {
+    margin-bottom: 14px;
+}
+
+.profile-list li {
+    font-size: 17px;
+    line-height: 1.55;
+}
+
+.prose-label {
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.prose-closing {
+    padding-top: 12px;
+    border-top: 1px solid var(--hairline);
+    margin-bottom: 0;
+}
+
+.profile-card {
+    width: 100%;
+}
 
 .prose-head {
     font-family: 'Cormorant Garamond', Georgia, serif;
