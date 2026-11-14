@@ -1,7 +1,5 @@
 <!doctype html>
-<html lang="en">
-
-<!-- HEAD -->
+<html lang="en" data-palette="indigo" data-mode="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,218 +16,545 @@
     <title>DevOps Engineer | Nārāyaṇa</title>
 
     <link rel="icon" type="image/png" href="./favicon.ico">
-    <link href='https://fonts.googleapis.com/css?family=Cinzel' rel='stylesheet'>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
-  
+
+    <!-- Google Fonts: Cormorant Garamond, EB Garamond, Inter, JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
 </head>
-
-<!-- PAGE -->
 <body>
-    <div class="page">
 
-    <!-- HEADER -->
-    <div class="header-row">
-        <h1>Nārāyaṇa Dās Harricharaṇ</h1>
-    </div>
-    <p class="role">Senior DevOps / Platform Engineer</p>
+<!-- ===========================
+     TOP BAR
+     =========================== -->
+<header class="topbar">
+    <div class="topbar-inner">
 
-    <!-- BIO -->
-        <div class="section section-text row">
-            <div style="display:inline-block;vertical-align:top;">
-                <img src="pp.png" alt="avatar">
+        <a class="brand" href="#top">
+            <span class="brand-mark" aria-hidden="true">N</span>
+            <span class="brand-text">
+                <span class="brand-name">Nārāyaṇa Dās Harricharaṇ</span>
+                <span class="brand-role">Senior DevOps / Platform Engineer</span>
+            </span>
+        </a>
+
+        <nav class="view-switch" aria-label="Resume view">
+            <button type="button" class="view-tab is-active" data-view="interactive" aria-pressed="true">✦ Interactive Studio</button>
+            <button type="button" class="view-tab" data-view="ats" aria-pressed="false">▤ Clean ATS Sheet</button>
+        </nav>
+
+        <div class="topbar-actions">
+            <div class="palette-switch" role="group" aria-label="Colour theme">
+                <button type="button" class="chip is-active" data-palette="indigo" title="Indigo, emerald and white">Indigo</button>
+                <button type="button" class="chip" data-palette="emerald" title="Emerald, forest and white">Emerald</button>
+                <button type="button" class="chip" data-palette="mono" title="Black and white">Mono</button>
             </div>
 
-            <div style="display:inline-block;" >
-                <p class="bio-text"><span class="bio">Date of birth: </span>25/08/1993</p>
-                <p class="bio-text"><span class="bio">Nationality: </span>South African</p>
-                <p class="bio-text"><span class="bio">Current location: </span>India (GMT+5:30)</p> 
-                <p class="bio-text"><span class="bio">Languages: </span>English, Afrikaans and Hindi</p> 
-            </div>
+            <button type="button" id="mode-toggle" class="btn-ghost" title="Switch between light and dark">
+                <span id="mode-icon" aria-hidden="true">☀</span><span id="mode-label">Light</span>
+            </button>
 
-            <div class="contact-info col-right">
-                <a href="#" class="cryptedmail"
-                    data-name="narayan-das"
-                    data-domain="tuta"
-                    data-tld="io"
-                    onclick="window.location.href = 'mailto:' + this.dataset.name + '@' + this.dataset.domain + '.' + this.dataset.tld; return false;">
-                </a>
-                <div>
-                    <a href="./Nārāyaṇa - DevOps Engineer - Resume.pdf" download>Download PDF</a>
-                </div>
-            </div>
+            <button type="button" id="print-btn" class="btn-solid" title="Print or save the ATS sheet as PDF">⬇ PDF</button>
         </div>
 
-        <div class="section row">
-            <h2><span>Profile</span></h2>
-            <br>
-                <div class="section-text">
-                    <section class="profile-heading">
-                        <h3><b>Cloud &amp; Platform Engineer | Infrastructure Automation | AI Systems</b></h3>
-                    </section>
-                    <p class="desc">Cloud and Platform Engineer with 8+ years of experience designing, building and operating Linux infrastructure, cloud platforms and containerised production systems, including high-availability and high-traffic environments.</p>
-                    <p class="desc">Broad, hands-on experience across infrastructure technologies and automation stacks. Tool-agnostic, with the ability to learn unfamiliar technologies, select appropriate tools and build systems from first principles. This foundation was built through independent study and hands-on engineering before modern LLM coding assistants.</p>
-                    <p class="desc">Currently applying this engineering experience to local LLMs and agent systems, benchmarking inference engines and evaluating AI-generated solutions through practical engineering judgement and structured reasoning.</p>
+    </div>
+</header>
+
+<!-- ===========================
+     MAIN
+     =========================== -->
+<main id="top" class="shell">
+
+    <div class="triptych">
+
+        <!-- LEFT WING (reserved for sacred geometry) -->
+        <aside class="wing wing-left" aria-hidden="true">
+            <div class="wing-placeholder">
+                <span class="wing-kicker">Reserved</span>
+                <p>Sacred geometry wing</p>
+            </div>
+        </aside>
+
+        <!-- CENTER COLUMN -->
+        <div class="center">
+
+            <!-- HERO -->
+            <section class="card hero">
+                <img class="avatar" src="pp.png" alt="Nārāyaṇa Dās Harricharaṇ">
+
+                <div class="hero-body">
+                    <div class="badges">
+                        <span class="badge badge-accent">Cloud &amp; Platform Engineer</span>
+                        <span class="badge badge-forest">Infrastructure Automation</span>
+                        <span class="badge badge-indigo">AI Systems</span>
+                    </div>
+
+                    <h1 class="hero-name">Nārāyaṇa Dās Harricharaṇ</h1>
+                    <p class="hero-role">Senior DevOps / Platform Engineer</p>
+                    <p class="hero-tagline">Cloud &amp; Platform Engineer | Infrastructure Automation | AI Systems</p>
+
+                    <dl class="facts">
+                        <div class="fact">
+                            <dt>Date of birth</dt>
+                            <dd>25/08/1993</dd>
+                        </div>
+                        <div class="fact">
+                            <dt>Nationality</dt>
+                            <dd>South African</dd>
+                        </div>
+                        <div class="fact">
+                            <dt>Current location</dt>
+                            <dd>India (GMT+5:30)</dd>
+                        </div>
+                        <div class="fact">
+                            <dt>Languages</dt>
+                            <dd>English, Afrikaans and Hindi</dd>
+                        </div>
+                    </dl>
+
+                    <div class="hero-actions">
+                        <a class="btn-ghost" href="mailto:narayan-das@tuta.io">
+                            <span aria-hidden="true">✉</span> narayan-das@tuta.io
+                        </a>
+                        <a class="btn-ghost" href="https://github.com/Narayana108/" target="_blank" rel="noopener">
+                            <span aria-hidden="true">⌘</span> github.com/Narayana108
+                        </a>
+                        <a class="btn-solid" href="./Nārāyaṇa - DevOps Engineer - Resume.pdf" download>
+                            <span aria-hidden="true">⬇</span> Download PDF
+                        </a>
+                    </div>
                 </div>
+            </section>
+
+            <!-- ==================================================
+                 VIEW 1: INTERACTIVE STUDIO
+                 ================================================== -->
+            <div id="view-interactive">
+
+                <!-- PROFILE -->
+                <section class="block">
+                    <header class="block-head">
+                        <span class="eyebrow">I. Professional Profile</span>
+                        <h2 class="block-title">Profile</h2>
+                    </header>
+
+                    <div class="card pad">
+                        <p class="prose">Cloud and Platform Engineer with 8+ years of experience designing, building and operating Linux infrastructure, cloud platforms and containerised production systems, including high-availability and high-traffic environments.</p>
+                        <p class="prose">Broad, hands-on experience across infrastructure technologies and automation stacks. Tool-agnostic, with the ability to learn unfamiliar technologies, select appropriate tools and build systems from first principles. This foundation was built through independent study and hands-on engineering before modern LLM coding assistants.</p>
+                        <p class="prose">Currently applying this engineering experience to local LLMs and agent systems, benchmarking inference engines and evaluating AI-generated solutions through practical engineering judgement and structured reasoning.</p>
+                    </div>
+                </section>
+
+                <!-- TECHNICAL SKILLS -->
+                <section class="block">
+                    <header class="block-head">
+                        <span class="eyebrow">II. Structural Foundations</span>
+                        <h2 class="block-title">Technical Skills</h2>
+                    </header>
+
+                    <div class="card pad">
+                        <ul class="skills">
+                            <li><span class="skill-label">Cloud &amp; Linux:</span> AWS (EC2, S3, Route 53, CloudWatch), Google Cloud (GKE), DigitalOcean, Debian, Ubuntu, CentOS, Alpine Linux.</li>
+                            <li><span class="skill-label">Containers &amp; Virtualisation:</span> Kubernetes, Docker, Docker Swarm, Helm, Incus, KVM, Vagrant, VirtualBox, GlusterFS.</li>
+                            <li><span class="skill-label">Automation &amp; CI/CD:</span> Ansible, Puppet, Jenkins, Bitbucket Pipelines, Git, GitLab.</li>
+                            <li><span class="skill-label">Programming &amp; Development:</span> Python, Bash, Go, Ruby, TypeScript, Node.js.</li>
+                            <li><span class="skill-label">Networking, Databases &amp; Observability:</span> TCP/IP, DNS, TLS/SSL, load balancing, SSH, PostgreSQL, MySQL, CockroachDB, MongoDB, Redis, Prometheus, Grafana, ELK.</li>
+                            <li><span class="skill-label">Local AI &amp; Agent Systems:</span> llama.cpp and forks, Strata, Unsloth, local LLM benchmarking, inference runtimes, model quantisation, fine-tuning workflows, sovereign/self-hosted AI solutions, Herdr, OMP, Odysseus, isolated agent environments.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- EXPERIENCE -->
+                <section class="block">
+                    <header class="block-head">
+                        <span class="eyebrow">III. Lineage &amp; Stewardship</span>
+                        <h2 class="block-title">Experience</h2>
+                    </header>
+
+                    <div class="timeline">
+
+                        <article class="card entry">
+                            <div class="entry-head">
+                                <div class="entry-titles">
+                                    <h3 class="entry-title">Independent Cloud &amp; Platform Engineer</h3>
+                                    <p class="entry-sub">Infrastructure Engineering, DevOps Automation &amp; Local AI Systems</p>
+                                </div>
+                                <span class="entry-date">Jul 2025 - Present</span>
+                            </div>
+                            <ul class="bullets">
+                                <li>Building a modular Ansible-based Debian server baseline and designing an Incus-based managed WordPress hosting platform.</li>
+                                <li>Developing infrastructure automation and repeatable infrastructure testing using Vagrant.</li>
+                                <li>Benchmarking local LLMs, inference engines and coding-agent harnesses.</li>
+                                <li>Experimenting with multiple concurrently running agents in isolated execution environments using Herdr.</li>
+                                <li>Exploring local AI infrastructure, inference optimisation, model quantisation and fine-tuning workflows.</li>
+                            </ul>
+                            <p class="entry-note"><span class="note-label">Debian Server Baseline:</span> <a href="https://github.com/Mantrium/debian-server-baseline" target="_blank" rel="noopener">GitHub</a></p>
+                            <p class="entry-note"><span class="note-label">Personal Project — Ansible GitLab Cluster:</span> Designed and automated a semi-HA GitLab architecture with replicated databases and distributed GlusterFS storage. <a href="https://github.com/Narayana108/ha-gitlab-server-ansible" target="_blank" rel="noopener">GitHub</a></p>
+                            <p class="entry-note">GitHub: <a href="https://github.com/Narayana108/" target="_blank" rel="noopener">github.com/Narayana108</a></p>
+                        </article>
+
+                        <article class="card entry">
+                            <div class="entry-head">
+                                <div class="entry-titles">
+                                    <h3 class="entry-title">Independent Residential Study &amp; Teaching</h3>
+                                    <p class="entry-sub">Sanskrit, Classical Logic, Philosophy &amp; Community Teaching — India</p>
+                                </div>
+                                <span class="entry-date">Oct 2021 - Present</span>
+                            </div>
+                            <ul class="bullets">
+                                <li>Residential study of traditional Vedic scholarship, Sanskrit grammar, classical logic, epistemology and philosophy.</li>
+                                <li>Community teaching and mentoring in logic, epistemology and philosophy.</li>
+                                <li>Translated Sanskrit books into English using AI-assisted workflows; independently proofread and revised translations against the original texts for accuracy, terminology and clarity.</li>
+                            </ul>
+                        </article>
+
+                        <article class="card entry">
+                            <div class="entry-head">
+                                <div class="entry-titles">
+                                    <h3 class="entry-title">Rehive</h3>
+                                    <p class="entry-sub">Senior DevOps Engineer</p>
+                                </div>
+                                <span class="entry-date">Aug 2020 - Sep 2021</span>
+                            </div>
+                            <ul class="bullets">
+                                <li>Operated infrastructure supporting approximately 1.2 million requests/day</li>
+                                <li>Scaled and maintained GKE clusters and PostgreSQL</li>
+                                <li>Co-managed infrastructure with the CTO</li>
+                                <li>Enhanced custom Python CI/CD tooling</li>
+                                <li>Built Python automation managing 70+ Git repositories</li>
+                                <li>Deployed and configured Prometheus and Grafana monitoring</li>
+                                <li>Planned and organised the DevOps roadmap</li>
+                                <li>Identified infrastructure weaknesses and implemented fixes</li>
+                                <li>Executed cost-optimisation initiatives</li>
+                            </ul>
+                        </article>
+
+                        <article class="card entry">
+                            <div class="entry-head">
+                                <div class="entry-titles">
+                                    <h3 class="entry-title">DevOps Consultant / Contractor</h3>
+                                    <p class="entry-sub">Senior DevOps Engineer</p>
+                                </div>
+                                <span class="entry-date">Apr 2019 - Dec 2019</span>
+                            </div>
+
+                            <div class="client">
+                                <div class="client-head">
+                                    <span class="client-name">Client: SensorNetworks</span>
+                                    <span class="entry-date">Oct 2019 - Dec 2019</span>
+                                </div>
+                                <ul class="bullets">
+                                    <li>Authored Helm charts</li>
+                                    <li>Implemented Prometheus &amp; Grafana monitoring solution</li>
+                                </ul>
+                            </div>
+
+                            <div class="client">
+                                <div class="client-head">
+                                    <span class="client-name">Client: Private</span>
+                                    <span class="entry-date">Aug 2019 - Sep 2019</span>
+                                </div>
+                                <ul class="bullets">
+                                    <li>Migrated a LAMP-stack application from bare-metal servers to AWS</li>
+                                </ul>
+                            </div>
+
+                            <div class="client">
+                                <div class="client-head">
+                                    <span class="client-name">Client: OneConfig</span>
+                                    <span class="entry-date">Apr 2019 - Aug 2019</span>
+                                </div>
+                                <ul class="bullets">
+                                    <li>Managed a fleet of 30+ Linux servers</li>
+                                    <li>Provisioned, configured, and migrated servers</li>
+                                    <li>Handled patching, backups, monitoring, and incident response</li>
+                                    <li>Renewed and managed Let's Encrypt certificates</li>
+                                    <li>Operated and maintained a CockroachDB cluster</li>
+                                    <li>Implemented automation using Ansible, Bash, and Go</li>
+                                    <li>Dockerized the staging environment</li>
+                                    <li>Cost optimizations</li>
+                                    <li>Provisioned and managed KVM virtual machines</li>
+                                </ul>
+                            </div>
+                        </article>
+
+                        <article class="card entry">
+                            <div class="entry-head">
+                                <div class="entry-titles">
+                                    <h3 class="entry-title">Kurtosys</h3>
+                                    <p class="entry-sub">Senior Platform Engineer</p>
+                                </div>
+                                <span class="entry-date">Aug 2017 - Mar 2019</span>
+                            </div>
+                            <ul class="bullets">
+                                <li>Hybrid role: DevOps and full-stack engineering</li>
+                                <li>One of three platform engineers for the project</li>
+                                <li>Project: Architected and built a highly available, end-to-end WordPress hosting platform</li>
+                                <li>Key Contributions:</li>
+                            </ul>
+                            <ul class="bullets sub">
+                                <li>Built backend platform services and API's in TypeScript (unit tested)</li>
+                                <li>Architected a multi-environment system (dev, staging, production)</li>
+                                <li>Automated WordPress provisioning and lifecycle management</li>
+                                <li>Implemented CI/CD pipelines and Git workflows per environment</li>
+                                <li>Built high-availability infrastructure using Docker Swarm and GlusterFS</li>
+                                <li>Integrated platform services: DNS, TLS, backups, restores, databases</li>
+                                <li>Optimized and maintained Docker images</li>
+                                <li>Deployed and operated a high-availability internal GitLab service</li>
+                                <li>Automated GitLab provisioning and configuration using Puppet</li>
+                                <li>Tested infrastructure automation with Vagrant</li>
+                                <li>Provisioned and managed cluster components using Ansible</li>
+                            </ul>
+                        </article>
+
+                        <article class="card entry">
+                            <div class="entry-head">
+                                <div class="entry-titles">
+                                    <h3 class="entry-title">Manalto</h3>
+                                    <p class="entry-sub">DevOps Engineer</p>
+                                </div>
+                                <span class="entry-date">Mar 2017 - Jul 2017</span>
+                            </div>
+                            <ul class="bullets">
+                                <li>Deployed and maintained Linux servers</li>
+                                <li>Administrated MongoDB</li>
+                                <li>Managed AWS services and CI/CD pipelines</li>
+                                <li>Containerized staging using Alpine-based Docker images</li>
+                                <li>Built Bitbucket and Jenkins pipelines for the Docker staging environment</li>
+                                <li>Automated AWS Route53 CNAME creation</li>
+                                <li>Wrote init.d scripts and a Docker management script in Bash</li>
+                                <li>Integrated AWS CloudWatch metrics into Grafana dashboards</li>
+                                <li>Deployed private NPM registry</li>
+                            </ul>
+                        </article>
+
+                        <article class="card entry">
+                            <div class="entry-head">
+                                <div class="entry-titles">
+                                    <h3 class="entry-title">OLX</h3>
+                                    <p class="entry-sub">DevOps Engineer</p>
+                                </div>
+                                <span class="entry-date">Apr 2016 - Jan 2017</span>
+                            </div>
+                            <ul class="bullets">
+                                <li>Co-managed six OLX country sites across Africa</li>
+                                <li>olx.co.za alone was receiving millions of pageviews per day</li>
+                                <li>Maintained high-scale Linux servers, MySQL, Redis databases</li>
+                                <li>Deployed Sensu for monitoring and alerting</li>
+                                <li>Deployed ELK stack and created custom dashboards</li>
+                                <li>Automated SSH key provisioning and rotation using Ansible</li>
+                                <li>Bash and Ruby scripting</li>
+                            </ul>
+                        </article>
+
+                        <article class="card entry">
+                            <div class="entry-head">
+                                <div class="entry-titles">
+                                    <h3 class="entry-title">8Frag</h3>
+                                    <p class="entry-sub">Linux Systems Administrator</p>
+                                </div>
+                                <span class="entry-date">Jul 2014 - Apr 2016</span>
+                            </div>
+                            <ul class="bullets">
+                                <li>Administered and maintained Ubuntu and Windows servers</li>
+                                <li>Managed AWS services: EC2, S3, Route 53</li>
+                                <li>MySQL database administration</li>
+                                <li>Deployed and configured game servers(CS:GO and TF2)</li>
+                                <li>Migrated game servers between Linux and Windows servers</li>
+                                <li>Tested game servers and software</li>
+                                <li>Deployed and configured UnrealIRC and Teamspeak</li>
+                                <li>Implemented game server web-panel TCAdmin</li>
+                                <li>Deployed and configured monitoring solutions (Pulseway and LibreNMS)</li>
+                                <li>DDOS mitigation with Bash, UFW, IPtables and Apache logs</li>
+                                <li>Wrote tutorials on how to use and manage game servers</li>
+                                <li>Bash scripting and SSL installation</li>
+                                <li>Client support and game tournament support</li>
+                                <li>Managed and trained a Junior Linux Systems Administrator</li>
+                            </ul>
+                        </article>
+
+                        <article class="card entry">
+                            <div class="entry-head">
+                                <div class="entry-titles">
+                                    <h3 class="entry-title">Ockhams Razor</h3>
+                                    <p class="entry-sub">Junior Linux Systems Administrator</p>
+                                </div>
+                                <span class="entry-date">Feb 2014 - Apr 2014</span>
+                            </div>
+                            <ul class="bullets">
+                                <li>Gained hands‑on experience with Debian Servers and RAID</li>
+                                <li>Training highlights: </li>
+                                <li>Solid understanding of Linux fundamentals (LPI Level 1)</li>
+                                <li>apt-get package management</li>
+                                <li>Apache web server deployment and configuration</li>
+                                <li>Postfix email server administration and mailflow troubleshooting</li>
+                                <li>Deploying and configuring web sites/panels and ISP config</li>
+                                <li>BASH, AWK, SED and REGEX Scripting</li>
+                                <li>DNS and configuring network interface cards</li>
+                            </ul>
+                        </article>
+
+                        <article class="card entry">
+                            <div class="entry-head">
+                                <div class="entry-titles">
+                                    <h3 class="entry-title">Maxitec - Internet Service Provider</h3>
+                                    <p class="entry-sub">Internet and IT Support</p>
+                                </div>
+                                <span class="entry-date">Jan 2012 - Jan 2014</span>
+                            </div>
+                            <ul class="bullets">
+                                <li>Responded to all calls, e-mails and walk-in clients</li>
+                                <li>Service call outs for resolving hardware, software and end users problems</li>
+                                <li>Provided customer support for all issues relating to</li>
+                                <li>Windows/Apple computers, mobile devices, routers, hosting, e-mails, VOIP</li>
+                                <li>Created and updated support documentation</li>
+                            </ul>
+                        </article>
+
+                    </div>
+                </section>
+
+                <!-- EDUCATION -->
+                <section class="block">
+                    <header class="block-head">
+                        <span class="eyebrow">IV. Credentials</span>
+                        <h2 class="block-title">Education &amp; Certifications</h2>
+                    </header>
+
+                    <div class="card pad">
+                        <div class="cred">
+                            <div class="cred-head">
+                                <h3 class="cred-title">Bachelor of Arts (B.A.) — Sanskrit Grammar &amp; Literature</h3>
+                                <span class="entry-date">Jul 2026 - Present</span>
+                            </div>
+                            <p class="cred-meta">In progress</p>
+                        </div>
+
+                        <div class="cred">
+                            <div class="cred-head">
+                                <h3 class="cred-title">Red Hat Certified Systems Administrator</h3>
+                                <span class="entry-date">Sep 2015</span>
+                            </div>
+                            <p class="cred-meta">Red Hat</p>
+                        </div>
+                    </div>
+                </section>
+
             </div>
 
-            <div class="section row">
-              <h2><span>Technical Skills</span></h2>
-                <div class="section-text">
-                    <ul class="desc skills-list">
-                        <li><span class="title">Cloud &amp; Linux:</span> AWS (EC2, S3, Route 53, CloudWatch), Google Cloud (GKE), DigitalOcean, Debian, Ubuntu, CentOS, Alpine Linux.</li>
-                        <li><span class="title">Containers &amp; Virtualisation:</span> Kubernetes, Docker, Docker Swarm, Helm, Incus, KVM, Vagrant, VirtualBox, GlusterFS.</li>
-                        <li><span class="title">Automation &amp; CI/CD:</span> Ansible, Puppet, Jenkins, Bitbucket Pipelines, Git, GitLab.</li>
-                        <li><span class="title">Programming &amp; Development:</span> Python, Bash, Go, Ruby, TypeScript, Node.js.</li>
-                        <li><span class="title">Networking, Databases &amp; Observability:</span> TCP/IP, DNS, TLS/SSL, load balancing, SSH, PostgreSQL, MySQL, CockroachDB, MongoDB, Redis, Prometheus, Grafana, ELK.</li>
-                        <li><span class="title">Local AI &amp; Agent Systems:</span> llama.cpp and forks, Strata, Unsloth, local LLM benchmarking, inference runtimes, model quantisation, fine-tuning workflows, sovereign/self-hosted AI solutions, Herdr, OMP, Odysseus, isolated agent environments.</li>
+            <!-- ==================================================
+                 VIEW 2: CLEAN ATS SHEET
+                 ================================================== -->
+            <section id="view-ats" class="card ats" hidden>
+
+                <header class="ats-head">
+                    <h1 class="ats-name">Nārāyaṇa Dās Harricharaṇ</h1>
+                    <p class="ats-role">Senior DevOps / Platform Engineer</p>
+                    <p class="ats-contact">narayan-das@tuta.io &middot; India (GMT+5:30) &middot; github.com/Narayana108</p>
+                </header>
+
+                <section class="ats-sec">
+                    <h2 class="ats-h2">Profile</h2>
+                    <p>Cloud and Platform Engineer with 8+ years of experience designing, building and operating Linux infrastructure, cloud platforms and containerised production systems, including high-availability and high-traffic environments.</p>
+                    <p>Broad, hands-on experience across infrastructure technologies and automation stacks. Tool-agnostic, with the ability to learn unfamiliar technologies, select appropriate tools and build systems from first principles. This foundation was built through independent study and hands-on engineering before modern LLM coding assistants.</p>
+                    <p>Currently applying this engineering experience to local LLMs and agent systems, benchmarking inference engines and evaluating AI-generated solutions through practical engineering judgement and structured reasoning.</p>
+                </section>
+
+                <section class="ats-sec">
+                    <h2 class="ats-h2">Technical Skills</h2>
+                    <ul class="ats-list">
+                        <li><strong>Cloud &amp; Linux:</strong> AWS (EC2, S3, Route 53, CloudWatch), Google Cloud (GKE), DigitalOcean, Debian, Ubuntu, CentOS, Alpine Linux.</li>
+                        <li><strong>Containers &amp; Virtualisation:</strong> Kubernetes, Docker, Docker Swarm, Helm, Incus, KVM, Vagrant, VirtualBox, GlusterFS.</li>
+                        <li><strong>Automation &amp; CI/CD:</strong> Ansible, Puppet, Jenkins, Bitbucket Pipelines, Git, GitLab.</li>
+                        <li><strong>Programming &amp; Development:</strong> Python, Bash, Go, Ruby, TypeScript, Node.js.</li>
+                        <li><strong>Networking, Databases &amp; Observability:</strong> TCP/IP, DNS, TLS/SSL, load balancing, SSH, PostgreSQL, MySQL, CockroachDB, MongoDB, Redis, Prometheus, Grafana, ELK.</li>
+                        <li><strong>Local AI &amp; Agent Systems:</strong> llama.cpp and forks, Strata, Unsloth, local LLM benchmarking, inference runtimes, model quantisation, fine-tuning workflows, sovereign/self-hosted AI solutions, Herdr, OMP, Odysseus, isolated agent environments.</li>
                     </ul>
-                </div>
-            </div>
+                </section>
 
-        <h2><span>Experience</span></h2>
-        <br>
-            <div class="section-text col-right">
-                <div class="keep">
-                    <div class="row">
-                        <div class="col">
-                            <h3>Independent Cloud &amp; Platform Engineer</h3>
-                        </div>
-                    </div>
-                    <div class="row subsection">
-                        <div class="emph col title">Infrastructure Engineering, DevOps Automation &amp; Local AI Systems</div>
-                        <div class="col-right light">Jul 2025 - Present</div>
-                    </div>
-                </div>
-                <ul class="desc">
-                    <li>Building a modular Ansible-based Debian server baseline and designing an Incus-based managed WordPress hosting platform.</li>
-                    <li>Developing infrastructure automation and repeatable infrastructure testing using Vagrant.</li>
-                    <li>Benchmarking local LLMs, inference engines and coding-agent harnesses.</li>
-                    <li>Experimenting with multiple concurrently running agents in isolated execution environments using Herdr.</li>
-                    <li>Exploring local AI infrastructure, inference optimisation, model quantisation and fine-tuning workflows.</li>
-                </ul>
-                <p class="desc"><span class="title">Debian Server Baseline:</span> <a href="https://github.com/Mantrium/debian-server-baseline">GitHub</a></p>
-                <p class="desc"><span class="title">Personal Project — Ansible GitLab Cluster:</span> Designed and automated a semi-HA GitLab architecture with replicated databases and distributed GlusterFS storage. <a href="https://github.com/Narayana108/ha-gitlab-server-ansible">GitHub</a></p>
-                <p class="desc">GitHub: <a href="https://github.com/Narayana108/">github.com/Narayana108</a></p>
-                <p class="line"></p>
-            </div>
+                <section class="ats-sec">
+                    <h2 class="ats-h2">Experience</h2>
 
-            <div class="section-text col-right">
-                <div class="keep">
-                    <div class="row">
-                        <div class="col">
-                            <h3>Independent Residential Study &amp; Teaching</h3>
-                        </div>
+                    <div class="ats-job">
+                        <h3 class="ats-job-title">Independent Cloud &amp; Platform Engineer</h3>
+                        <p class="ats-meta">Infrastructure Engineering, DevOps Automation &amp; Local AI Systems &middot; Jul 2025 - Present</p>
+                        <ul class="ats-list">
+                            <li>Building a modular Ansible-based Debian server baseline and designing an Incus-based managed WordPress hosting platform.</li>
+                            <li>Developing infrastructure automation and repeatable infrastructure testing using Vagrant.</li>
+                            <li>Benchmarking local LLMs, inference engines and coding-agent harnesses.</li>
+                            <li>Experimenting with multiple concurrently running agents in isolated execution environments using Herdr.</li>
+                            <li>Exploring local AI infrastructure, inference optimisation, model quantisation and fine-tuning workflows.</li>
+                        </ul>
+                        <p class="ats-note">Debian Server Baseline: <a href="https://github.com/Mantrium/debian-server-baseline">https://github.com/Mantrium/debian-server-baseline</a></p>
+                        <p class="ats-note">Personal Project — Ansible GitLab Cluster: Designed and automated a semi-HA GitLab architecture with replicated databases and distributed GlusterFS storage. <a href="https://github.com/Narayana108/ha-gitlab-server-ansible">https://github.com/Narayana108/ha-gitlab-server-ansible</a></p>
+                        <p class="ats-note">GitHub: <a href="https://github.com/Narayana108/">https://github.com/Narayana108/</a></p>
                     </div>
-                    <div class="row subsection">
-                        <div class="emph col title">Sanskrit, Classical Logic, Philosophy &amp; Community Teaching — India</div>
-                        <div class="col-right light">Oct 2021 - Present</div>
-                    </div>
-                </div>
-                <ul class="desc">
-                    <li>Residential study of traditional Vedic scholarship, Sanskrit grammar, classical logic, epistemology and philosophy.</li>
-                    <li>Community teaching and mentoring in logic, epistemology and philosophy.</li>
-                    <li>Translated Sanskrit books into English using AI-assisted workflows; independently proofread and revised translations against the original texts for accuracy, terminology and clarity.</li>
-                </ul>
-                <p class="line"></p>
-            </div>
 
-            <div class="section-text col-right">
-                <div class="keep">
-                    <div class="row">
-                        <div class="col">
-                            <h3>Rehive</h3>
-                        </div>
+                    <div class="ats-job">
+                        <h3 class="ats-job-title">Independent Residential Study &amp; Teaching</h3>
+                        <p class="ats-meta">Sanskrit, Classical Logic, Philosophy &amp; Community Teaching — India &middot; Oct 2021 - Present</p>
+                        <ul class="ats-list">
+                            <li>Residential study of traditional Vedic scholarship, Sanskrit grammar, classical logic, epistemology and philosophy.</li>
+                            <li>Community teaching and mentoring in logic, epistemology and philosophy.</li>
+                            <li>Translated Sanskrit books into English using AI-assisted workflows; independently proofread and revised translations against the original texts for accuracy, terminology and clarity.</li>
+                        </ul>
                     </div>
-                    <div class="row subsection">
-                        <div class="emph col title">Senior DevOps Engineer</div>
-                        <div class="col-right light">Aug 2020 - Sep 2021</div>
-                    </div>
-                </div>
-                <ul class="desc">
-                    <li>Operated infrastructure supporting approximately 1.2 million requests/day</li>
-                    <li>Scaled and maintained GKE clusters and PostgreSQL</li>
-                    <li>Co-managed infrastructure with the CTO</li>
-                    <li>Enhanced custom Python CI/CD tooling</li>
-                    <li>Built Python automation managing 70+ Git repositories</li>
-                    <li>Deployed and configured Prometheus and Grafana monitoring</li>
-                    <li>Planned and organised the DevOps roadmap</li>
-                    <li>Identified infrastructure weaknesses and implemented fixes</li>
-                    <li>Executed cost-optimisation initiatives</li>
-                </ul>
-                <p class="line"></p>
-            </div>
 
-            <div class="section-text col-right">
-                <div class="keep">
-                    <div class="row">
-                        <div class="col">
-                            <h3>DevOps Consultant / Contractor</h3>
-                        </div>
+                    <div class="ats-job">
+                        <h3 class="ats-job-title">Rehive</h3>
+                        <p class="ats-meta">Senior DevOps Engineer &middot; Aug 2020 - Sep 2021</p>
+                        <ul class="ats-list">
+                            <li>Operated infrastructure supporting approximately 1.2 million requests/day</li>
+                            <li>Scaled and maintained GKE clusters and PostgreSQL</li>
+                            <li>Co-managed infrastructure with the CTO</li>
+                            <li>Enhanced custom Python CI/CD tooling</li>
+                            <li>Built Python automation managing 70+ Git repositories</li>
+                            <li>Deployed and configured Prometheus and Grafana monitoring</li>
+                            <li>Planned and organised the DevOps roadmap</li>
+                            <li>Identified infrastructure weaknesses and implemented fixes</li>
+                            <li>Executed cost-optimisation initiatives</li>
+                        </ul>
                     </div>
-                    <div class="row subsection">
-                        <div class="emph col title">Senior DevOps Engineer</div>
-                        <div class="col-right light">Apr 2019 - Dec 2019</div>
-                    </div>
-                </div>
-                <p class="line"></p>
-                <div class="keep">
-                    <div class="row subsection">
-                        <div class="emph col client">Client: SensorNetworks</div>
-                        <div class="col-right light">Oct 2019 - Dec 2019</div>
-                    </div>
-                </div>
-                <ul class="desc">
-                    <li>Authored Helm charts</li>
-                    <li>Implemented Prometheus &amp; Grafana monitoring solution</li>
-                </ul>
-                <div class="keep">
-                    <div class="row subsection">
-                        <div class="emph col client">Client: Private</div>
-                        <div class="col-right light">Aug 2019 - Sep 2019</div>
-                    </div>
-                </div>
-                <ul class="desc">
-                    <li>Migrated a LAMP-stack application from bare-metal servers to AWS</li>
-                </ul>
-                <div class="keep">
-                    <div class="row subsection">
-                        <div class="emph col client">Client: OneConfig</div>
-                        <div class="col-right light">Apr 2019 - Aug 2019</div>
-                    </div>
-                </div>
-                <ul class="desc">
-                    <li>Managed a fleet of 30+ Linux servers</li>
-                    <li>Provisioned, configured, and migrated servers</li>
-                    <li>Handled patching, backups, monitoring, and incident response</li>
-                    <li>Renewed and managed Let's Encrypt certificates</li>
-                    <li>Operated and maintained a CockroachDB cluster</li>
-                    <li>Implemented automation using Ansible, Bash, and Go</li>
-                    <li>Dockerized the staging environment</li>
-                    <li>Cost optimizations</li>
-                    <li>Provisioned and managed KVM virtual machines</li>
-                </ul>
-                <p class="line"></p>
-            </div>
 
-            <div class="section-text col-right">
-                <div class="keep">
-                    <div class="row">
-                        <div class="col">
-                            <h3>Kurtosys</h3>
-                        </div>
+                    <div class="ats-job">
+                        <h3 class="ats-job-title">DevOps Consultant / Contractor</h3>
+                        <p class="ats-meta">Senior DevOps Engineer &middot; Apr 2019 - Dec 2019</p>
+
+                        <p class="ats-client">Client: SensorNetworks &middot; Oct 2019 - Dec 2019</p>
+                        <ul class="ats-list">
+                            <li>Authored Helm charts</li>
+                            <li>Implemented Prometheus &amp; Grafana monitoring solution</li>
+                        </ul>
+
+                        <p class="ats-client">Client: Private &middot; Aug 2019 - Sep 2019</p>
+                        <ul class="ats-list">
+                            <li>Migrated a LAMP-stack application from bare-metal servers to AWS</li>
+                        </ul>
+
+                        <p class="ats-client">Client: OneConfig &middot; Apr 2019 - Aug 2019</p>
+                        <ul class="ats-list">
+                            <li>Managed a fleet of 30+ Linux servers</li>
+                            <li>Provisioned, configured, and migrated servers</li>
+                            <li>Handled patching, backups, monitoring, and incident response</li>
+                            <li>Renewed and managed Let's Encrypt certificates</li>
+                            <li>Operated and maintained a CockroachDB cluster</li>
+                            <li>Implemented automation using Ansible, Bash, and Go</li>
+                            <li>Dockerized the staging environment</li>
+                            <li>Cost optimizations</li>
+                            <li>Provisioned and managed KVM virtual machines</li>
+                        </ul>
                     </div>
-                    <div class="row subsection">
-                        <div class="emph col title">Senior Platform Engineer</div>
-                        <div class="col-right light">Aug 2017 - Mar 2019</div>
-                    </div>
-                </div>
-                <ul class="desc">
-                    <li>Hybrid role: DevOps and full-stack engineering</li>
-                    <li>One of three platform engineers for the project</li>
-                    <li>Project: Architected and built a highly available, end-to-end WordPress hosting platform</li>
-                    <li>Key Contributions:</li>
-                        <ul class="desc">
+
+                    <div class="ats-job">
+                        <h3 class="ats-job-title">Kurtosys</h3>
+                        <p class="ats-meta">Senior Platform Engineer &middot; Aug 2017 - Mar 2019</p>
+                        <ul class="ats-list">
+                            <li>Hybrid role: DevOps and full-stack engineering</li>
+                            <li>One of three platform engineers for the project</li>
+                            <li>Project: Architected and built a highly available, end-to-end WordPress hosting platform</li>
+                            <li>Key Contributions:</li>
                             <li>Built backend platform services and API's in TypeScript (unit tested)</li>
                             <li>Architected a multi-environment system (dev, staging, production)</li>
                             <li>Automated WordPress provisioning and lifecycle management</li>
@@ -242,162 +567,380 @@
                             <li>Tested infrastructure automation with Vagrant</li>
                             <li>Provisioned and managed cluster components using Ansible</li>
                         </ul>
-                </ul>
-                <p class="line"></p>
+                    </div>
+
+                    <div class="ats-job">
+                        <h3 class="ats-job-title">Manalto</h3>
+                        <p class="ats-meta">DevOps Engineer &middot; Mar 2017 - Jul 2017</p>
+                        <ul class="ats-list">
+                            <li>Deployed and maintained Linux servers</li>
+                            <li>Administrated MongoDB</li>
+                            <li>Managed AWS services and CI/CD pipelines</li>
+                            <li>Containerized staging using Alpine-based Docker images</li>
+                            <li>Built Bitbucket and Jenkins pipelines for the Docker staging environment</li>
+                            <li>Automated AWS Route53 CNAME creation</li>
+                            <li>Wrote init.d scripts and a Docker management script in Bash</li>
+                            <li>Integrated AWS CloudWatch metrics into Grafana dashboards</li>
+                            <li>Deployed private NPM registry</li>
+                        </ul>
+                    </div>
+
+                    <div class="ats-job">
+                        <h3 class="ats-job-title">OLX</h3>
+                        <p class="ats-meta">DevOps Engineer &middot; Apr 2016 - Jan 2017</p>
+                        <ul class="ats-list">
+                            <li>Co-managed six OLX country sites across Africa</li>
+                            <li>olx.co.za alone was receiving millions of pageviews per day</li>
+                            <li>Maintained high-scale Linux servers, MySQL, Redis databases</li>
+                            <li>Deployed Sensu for monitoring and alerting</li>
+                            <li>Deployed ELK stack and created custom dashboards</li>
+                            <li>Automated SSH key provisioning and rotation using Ansible</li>
+                            <li>Bash and Ruby scripting</li>
+                        </ul>
+                    </div>
+
+                    <div class="ats-job">
+                        <h3 class="ats-job-title">8Frag</h3>
+                        <p class="ats-meta">Linux Systems Administrator &middot; Jul 2014 - Apr 2016</p>
+                        <ul class="ats-list">
+                            <li>Administered and maintained Ubuntu and Windows servers</li>
+                            <li>Managed AWS services: EC2, S3, Route 53</li>
+                            <li>MySQL database administration</li>
+                            <li>Deployed and configured game servers(CS:GO and TF2)</li>
+                            <li>Migrated game servers between Linux and Windows servers</li>
+                            <li>Tested game servers and software</li>
+                            <li>Deployed and configured UnrealIRC and Teamspeak</li>
+                            <li>Implemented game server web-panel TCAdmin</li>
+                            <li>Deployed and configured monitoring solutions (Pulseway and LibreNMS)</li>
+                            <li>DDOS mitigation with Bash, UFW, IPtables and Apache logs</li>
+                            <li>Wrote tutorials on how to use and manage game servers</li>
+                            <li>Bash scripting and SSL installation</li>
+                            <li>Client support and game tournament support</li>
+                            <li>Managed and trained a Junior Linux Systems Administrator</li>
+                        </ul>
+                    </div>
+
+                    <div class="ats-job">
+                        <h3 class="ats-job-title">Ockhams Razor</h3>
+                        <p class="ats-meta">Junior Linux Systems Administrator &middot; Feb 2014 - Apr 2014</p>
+                        <ul class="ats-list">
+                            <li>Gained hands‑on experience with Debian Servers and RAID</li>
+                            <li>Training highlights: </li>
+                            <li>Solid understanding of Linux fundamentals (LPI Level 1)</li>
+                            <li>apt-get package management</li>
+                            <li>Apache web server deployment and configuration</li>
+                            <li>Postfix email server administration and mailflow troubleshooting</li>
+                            <li>Deploying and configuring web sites/panels and ISP config</li>
+                            <li>BASH, AWK, SED and REGEX Scripting</li>
+                            <li>DNS and configuring network interface cards</li>
+                        </ul>
+                    </div>
+
+                    <div class="ats-job">
+                        <h3 class="ats-job-title">Maxitec - Internet Service Provider</h3>
+                        <p class="ats-meta">Internet and IT Support &middot; Jan 2012 - Jan 2014</p>
+                        <ul class="ats-list">
+                            <li>Responded to all calls, e-mails and walk-in clients</li>
+                            <li>Service call outs for resolving hardware, software and end users problems</li>
+                            <li>Provided customer support for all issues relating to</li>
+                            <li>Windows/Apple computers, mobile devices, routers, hosting, e-mails, VOIP</li>
+                            <li>Created and updated support documentation</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="ats-sec">
+                    <h2 class="ats-h2">Education &amp; Certifications</h2>
+
+                    <div class="ats-job">
+                        <h3 class="ats-job-title">Bachelor of Arts (B.A.) — Sanskrit Grammar &amp; Literature</h3>
+                        <p class="ats-meta">In progress &middot; Jul 2026 - Present</p>
+                    </div>
+
+                    <div class="ats-job">
+                        <h3 class="ats-job-title">Red Hat Certified Systems Administrator</h3>
+                        <p class="ats-meta">Red Hat &middot; Sep 2015</p>
+                    </div>
+                </section>
+
+            </section>
+
+        </div>
+
+        <!-- RIGHT WING (reserved for sacred geometry) -->
+        <aside class="wing wing-right" aria-hidden="true">
+            <div class="wing-placeholder">
+                <span class="wing-kicker">Reserved</span>
+                <p>Sacred geometry wing</p>
             </div>
+        </aside>
 
-            <div class="section-text col-right">
-                <div class="keep">
-                    <div class="row">
-                        <div class="col">
-                            <h3>Manalto</h3>
-                        </div>
-                    </div>
-                    <div class="row subsection">
-                        <div class="emph col title">DevOps Engineer</div>
-                        <div class="col-right light">Mar 2017 - Jul 2017</div>
-                    </div>
-                </div>
-                <ul class="desc">
-                    <li>Deployed and maintained Linux servers</li>
-                    <li>Administrated MongoDB</li>
-                    <li>Managed AWS services and CI/CD pipelines</li>
-                    <li>Containerized staging using Alpine-based Docker images</li>
-                    <li>Built Bitbucket and Jenkins pipelines for the Docker staging environment</li>
-                    <li>Automated AWS Route53 CNAME creation</li>
-                    <li>Wrote init.d scripts and a Docker management script in Bash</li>
-                    <li>Integrated AWS CloudWatch metrics into Grafana dashboards</li>
-                    <li>Deployed private NPM registry</li>
-                </ul>
-                <p class="line"></p>
+    </div>
+
+    <!-- ===========================
+         TERMINAL
+         =========================== -->
+    <section class="terminal" aria-label="Interactive terminal">
+        <div class="terminal-bar">
+            <div class="terminal-dots" aria-hidden="true">
+                <span></span><span></span><span></span>
             </div>
-
-            <div class="section-text col-right">
-                <div class="keep">
-                    <div class="row">
-                        <div class="col">
-                            <h3>OLX</h3>
-                        </div>
-                    </div>
-                    <div class="row subsection">
-                        <div class="emph col title">DevOps Engineer</div>
-                        <div class="col-right light">Apr 2016 - Jan 2017</div>
-                    </div>
-                </div>
-                <ul class="desc">
-                    <li>Co-managed six OLX country sites across Africa</li>
-                    <li>olx.co.za alone was receiving millions of pageviews per day</li>
-                    <li>Maintained high-scale Linux servers, MySQL, Redis databases</li>
-                    <li>Deployed Sensu for monitoring and alerting</li>
-                    <li>Deployed ELK stack and created custom dashboards</li>
-                    <li>Automated SSH key provisioning and rotation using Ansible</li>
-                    <li>Bash and Ruby scripting</li>
-                </ul>
-                <p class="line"></p>
+            <span class="terminal-title">narayana@resume:~ (zsh)</span>
+            <div class="terminal-quick">
+                <button type="button" class="term-chip" data-cmd="help">help</button>
+                <button type="button" class="term-chip" data-cmd="skills">skills</button>
+                <button type="button" class="term-chip" data-cmd="experience">experience</button>
+                <button type="button" class="term-chip" data-cmd="contact">contact</button>
             </div>
+        </div>
 
-            <div class="section-text col-right">
-                <div class="keep">
-                    <div class="row">
-                        <div class="col">
-                            <h3>8Frag</h3>
-                        </div>
-                    </div>
-                    <div class="row subsection">
-                        <div class="emph col title">Linux Systems Administrator</div>
-                        <div class="col-right light">Jul 2014 - Apr 2016</div>
-                    </div>
-                </div>
-                <ul class="desc">
-                    <li>Administered and maintained Ubuntu and Windows servers</li>
-                    <li>Managed AWS services: EC2, S3, Route 53</li>
-                    <li>MySQL database administration</li>
-                    <li>Deployed and configured game servers(CS:GO and TF2)</li>
-                    <li>Migrated game servers between Linux and Windows servers</li>
-                    <li>Tested game servers and software</li>
-                    <li>Deployed and configured UnrealIRC and Teamspeak</li>
-                    <li>Implemented game server web-panel TCAdmin</li>
-                    <li>Deployed and configured monitoring solutions (Pulseway and LibreNMS)</li>
-                    <li>DDOS mitigation with Bash, UFW, IPtables and Apache logs</li>
-                    <li>Wrote tutorials on how to use and manage game servers</li>
-                    <li>Bash scripting and SSL installation</li>
-                    <li>Client support and game tournament support</li>
-                    <li>Managed and trained a Junior Linux Systems Administrator</li>
-                </ul>
-                <p class="line"></p>
-            </div>
+        <div class="terminal-body">
+            <div id="term-out" class="term-out" role="log" aria-live="polite"></div>
 
-            <div class="section-text col-right">
-                <div class="keep">
-                    <div class="row">
-                        <div class="col">
-                            <h3>Ockhams Razor</h3>
-                        </div>
-                    </div>
-                    <div class="row subsection">
-                        <div class="emph col title">Junior Linux Systems Administrator</div>
-                        <div class="col-right light">Feb 2014 - Apr 2014</div>
-                    </div>
-                </div>
-                <ul class="desc">
-                    <li>Gained hands‑on experience with Debian Servers and RAID</li>
-                    <li>Training highlights: </li>
-                    <li>Solid understanding of Linux fundamentals (LPI Level 1)</li>
-                    <li>apt-get package management</li>
-                    <li>Apache web server deployment and configuration</li>
-                    <li>Postfix email server administration and mailflow troubleshooting</li>
-                    <li>Deploying and configuring web sites/panels and ISP config</li>
-                    <li>BASH, AWK, SED and REGEX Scripting</li>
-                    <li>DNS and configuring network interface cards</li>
-                </ul>
-                <p class="line"></p>
-            </div>
+            <form id="term-form" class="term-form" autocomplete="off">
+                <label class="term-prompt" for="term-in">❯</label>
+                <input id="term-in" class="term-in" type="text" spellcheck="false" placeholder="Type a command (help, skills, experience, education, contact, theme, clear)...">
+                <button type="submit" class="term-run">Execute</button>
+            </form>
+        </div>
+    </section>
 
-            <div class="section-text col-right">
-                <div class="keep">
-                    <div class="row">
-                        <div class="col">
-                            <h3>Maxitec - Internet Service Provider</h3>
-                        </div>
-                    </div>
-                    <div class="row subsection">
-                        <div class="emph col title">Internet and IT Support</div>
-                        <div class="col-right light">Jan 2012 - Jan 2014</div>
-                    </div>
-                </div>
-                <ul class="desc">
-                    <li>Responded to all calls, e-mails and walk-in clients</li>
-                    <li>Service call outs for resolving hardware, software and end users problems</li>
-                    <li>Provided customer support for all issues relating to</li>
-                    <li>Windows/Apple computers, mobile devices, routers, hosting, e-mails, VOIP</li>
-                    <li>Created and updated support documentation</li>
-                </ul>
-                <br>
-            </div>
+    <!-- ===========================
+         FOOTER
+         =========================== -->
+    <footer class="colophon">
+        <p class="colophon-line">
+            <a href="https://github.com/Narayana108/resume" target="_blank" rel="noopener">Website by Nārāyaṇa Dās Harricharaṇ</a>
+        </p>
+    </footer>
 
+</main>
 
+<script>
+(function () {
+    'use strict';
 
-            <div class="section row">
-              <h2><span>Education &amp; Certifications</span></h2>
-                <div class="section-text col-right">
-                    <h3>Bachelor of Arts (B.A.) — Sanskrit Grammar &amp; Literature</h3>
-                    <div class="row">
-                        <div class="col light">In progress</div>
-                        <div class="col-right light">Jul 2026 - Present</div>
-                    </div>
-                    <h3>Red Hat Certified Systems Administrator</h3>
-                    <div class="row">
-                        <div class="col light">Red Hat</div>
-                        <div class="col-right light">Sep 2015</div>
-                    </div>
-                </div>
-            </div>
+    /* ---------------------------------------------
+       Theme + view state
+       --------------------------------------------- */
+    var root = document.documentElement;
+    var viewTabs = document.querySelectorAll('.view-tab');
+    var paletteChips = document.querySelectorAll('.chip');
+    var viewInteractive = document.getElementById('view-interactive');
+    var viewAts = document.getElementById('view-ats');
+    var modeToggle = document.getElementById('mode-toggle');
+    var modeIcon = document.getElementById('mode-icon');
+    var modeLabel = document.getElementById('mode-label');
 
-            <div class="section row">
-              <h2><span>-</span></h2>
-              <footer>
-                  <div><a href="https://github.com/Narayana108/resume">Website by Nārāyaṇa Dās Harricharaṇ</a></div>
-              </footer>
-            </div>
-    </body>
+    function setView(view) {
+        var isAts = view === 'ats';
+        viewInteractive.hidden = isAts;
+        viewAts.hidden = !isAts;
+
+        viewTabs.forEach(function (tab) {
+            var active = tab.getAttribute('data-view') === view;
+            tab.classList.toggle('is-active', active);
+            tab.setAttribute('aria-pressed', String(active));
+        });
+    }
+
+    function setPalette(palette) {
+        root.setAttribute('data-palette', palette);
+        paletteChips.forEach(function (chip) {
+            chip.classList.toggle('is-active', chip.getAttribute('data-palette') === palette);
+        });
+    }
+
+    function setMode(mode) {
+        root.setAttribute('data-mode', mode);
+        var dark = mode === 'dark';
+        modeIcon.textContent = dark ? '☾' : '☀';
+        modeLabel.textContent = dark ? 'Dark' : 'Light';
+    }
+
+    viewTabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+            setView(tab.getAttribute('data-view'));
+        });
+    });
+
+    paletteChips.forEach(function (chip) {
+        chip.addEventListener('click', function () {
+            setPalette(chip.getAttribute('data-palette'));
+        });
+    });
+
+    modeToggle.addEventListener('click', function () {
+        setMode(root.getAttribute('data-mode') === 'dark' ? 'light' : 'dark');
+    });
+
+    document.getElementById('print-btn').addEventListener('click', function () {
+        window.print();
+    });
+
+    /* ---------------------------------------------
+       Terminal
+       --------------------------------------------- */
+    var out = document.getElementById('term-out');
+    var form = document.getElementById('term-form');
+    var input = document.getElementById('term-in');
+
+    var SKILLS = [
+        'Cloud & Linux: AWS (EC2, S3, Route 53, CloudWatch), Google Cloud (GKE), DigitalOcean, Debian, Ubuntu, CentOS, Alpine Linux.',
+        'Containers & Virtualisation: Kubernetes, Docker, Docker Swarm, Helm, Incus, KVM, Vagrant, VirtualBox, GlusterFS.',
+        'Automation & CI/CD: Ansible, Puppet, Jenkins, Bitbucket Pipelines, Git, GitLab.',
+        'Programming & Development: Python, Bash, Go, Ruby, TypeScript, Node.js.',
+        'Networking, Databases & Observability: TCP/IP, DNS, TLS/SSL, load balancing, SSH, PostgreSQL, MySQL, CockroachDB, MongoDB, Redis, Prometheus, Grafana, ELK.',
+        'Local AI & Agent Systems: llama.cpp and forks, Strata, Unsloth, local LLM benchmarking, inference runtimes, model quantisation, fine-tuning workflows, sovereign/self-hosted AI solutions, Herdr, OMP, Odysseus, isolated agent environments.'
+    ];
+
+    var EXPERIENCE = [
+        'Independent Cloud & Platform Engineer — Jul 2025 - Present',
+        'Independent Residential Study & Teaching — Oct 2021 - Present',
+        'Rehive — Aug 2020 - Sep 2021',
+        'DevOps Consultant / Contractor — Apr 2019 - Dec 2019',
+        'Kurtosys — Aug 2017 - Mar 2019',
+        'Manalto — Mar 2017 - Jul 2017',
+        'OLX — Apr 2016 - Jan 2017',
+        '8Frag — Jul 2014 - Apr 2016',
+        'Ockhams Razor — Feb 2014 - Apr 2014',
+        'Maxitec - Internet Service Provider — Jan 2012 - Jan 2014'
+    ];
+
+    function print(text, cls) {
+        var line = document.createElement('div');
+        line.className = 'term-line' + (cls ? ' ' + cls : '');
+        line.textContent = text;
+        out.appendChild(line);
+        out.scrollTop = out.scrollHeight;
+    }
+
+    function printBlock(lines, cls) {
+        lines.forEach(function (line) { print(line, cls); });
+    }
+
+    function runCommand(raw) {
+        var cmd = raw.trim();
+        if (!cmd) { return; }
+
+        print('❯ ' + cmd, 'term-echo');
+
+        var parts = cmd.toLowerCase().split(/\s+/);
+        var head = parts[0];
+
+        switch (head) {
+            case 'help':
+                printBlock([
+                    'Available commands:',
+                    '  help          show this message',
+                    '  whoami        identity and summary',
+                    '  profile       profile text',
+                    '  skills        technical skills inventory',
+                    '  experience    employment timeline',
+                    '  education     education and certifications',
+                    '  contact       contact details and links',
+                    '  theme <p>     set palette: indigo | emerald | mono',
+                    '  mode          toggle light / dark',
+                    '  view          toggle interactive studio / ATS sheet',
+                    '  clear         clear the terminal'
+                ], 'term-ok');
+                break;
+
+            case 'whoami':
+                printBlock([
+                    'Nārāyaṇa Dās Harricharaṇ',
+                    'Senior DevOps / Platform Engineer',
+                    'Cloud & Platform Engineer | Infrastructure Automation | AI Systems',
+                    'India (GMT+5:30) · English, Afrikaans and Hindi'
+                ], 'term-ok');
+                break;
+
+            case 'profile':
+                printBlock([
+                    'Cloud and Platform Engineer with 8+ years of experience designing, building and operating',
+                    'Linux infrastructure, cloud platforms and containerised production systems, including',
+                    'high-availability and high-traffic environments.',
+                    '',
+                    'Broad, hands-on experience across infrastructure technologies and automation stacks.',
+                    'Tool-agnostic, with the ability to learn unfamiliar technologies, select appropriate tools',
+                    'and build systems from first principles. This foundation was built through independent',
+                    'study and hands-on engineering before modern LLM coding assistants.',
+                    '',
+                    'Currently applying this engineering experience to local LLMs and agent systems,',
+                    'benchmarking inference engines and evaluating AI-generated solutions through practical',
+                    'engineering judgement and structured reasoning.'
+                ], 'term-ok');
+                break;
+
+            case 'skills':
+                printBlock(SKILLS, 'term-ok');
+                break;
+
+            case 'experience':
+            case 'experiences':
+                printBlock(EXPERIENCE, 'term-ok');
+                break;
+
+            case 'education':
+                printBlock([
+                    'Bachelor of Arts (B.A.) — Sanskrit Grammar & Literature — In progress (Jul 2026 - Present)',
+                    'Red Hat Certified Systems Administrator — Red Hat (Sep 2015)'
+                ], 'term-ok');
+                break;
+
+            case 'contact':
+                printBlock([
+                    'Email:    narayan-das@tuta.io',
+                    'GitHub:   https://github.com/Narayana108/',
+                    'Website:  https://github.com/Narayana108/resume'
+                ], 'term-ok');
+                break;
+
+            case 'theme':
+                var wanted = parts[1];
+                if (wanted === 'indigo' || wanted === 'emerald' || wanted === 'mono') {
+                    setPalette(wanted);
+                    print('palette set to ' + wanted, 'term-ok');
+                } else {
+                    print('usage: theme <indigo|emerald|mono>', 'term-warn');
+                }
+                break;
+
+            case 'mode':
+                setMode(root.getAttribute('data-mode') === 'dark' ? 'light' : 'dark');
+                print('mode: ' + root.getAttribute('data-mode'), 'term-ok');
+                break;
+
+            case 'view':
+                setView(viewAts.hidden ? 'ats' : 'interactive');
+                print('view: ' + (viewAts.hidden ? 'ats' : 'interactive'), 'term-ok');
+                break;
+
+            case 'clear':
+                out.innerHTML = '';
+                break;
+
+            default:
+                print('command not found: ' + head + ' — try "help"', 'term-warn');
+        }
+    }
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        runCommand(input.value);
+        input.value = '';
+    });
+
+    document.querySelectorAll('.term-chip').forEach(function (chip) {
+        chip.addEventListener('click', function () {
+            runCommand(chip.getAttribute('data-cmd'));
+        });
+    });
+
+    print('Nārāyaṇa Dās Harricharaṇ — resume shell', 'term-ok');
+    print('Type "help" for available commands.', 'term-dim');
+})();
+</script>
+
+</body>
 </html>
