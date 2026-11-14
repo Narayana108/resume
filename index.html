@@ -41,8 +41,8 @@
         </a>
 
         <nav class="view-switch" aria-label="Resume view">
-            <button type="button" class="view-tab is-active" data-view="interactive" aria-pressed="true">✦ Interactive Studio</button>
-            <button type="button" class="view-tab" data-view="ats" aria-pressed="false">▤ Clean ATS Sheet</button>
+            <button type="button" class="view-tab is-active" data-view="interactive" aria-pressed="true">✦ Interactive Resume</button>
+            <button type="button" class="view-tab" data-view="ats" aria-pressed="false">▤ Clean Resume</button>
         </nav>
 
         <div class="topbar-actions">
@@ -55,7 +55,7 @@
                 <span id="mode-icon" aria-hidden="true">☀</span><span id="mode-label">Light</span>
             </button>
 
-            <button type="button" id="print-btn" class="btn-solid" title="Print or save the ATS sheet as PDF">⬇ PDF</button>
+            <a class="btn-solid" id="print-btn" href="./Nārāyaṇa - DevOps Engineer - Resume.pdf" download title="Download the resume as a PDF">⬇ PDF</a>
         </div>
 
     </div>
@@ -73,7 +73,11 @@
                 <img class="avatar" src="pp.png" alt="Nārāyaṇa Dās Harricharaṇ">
 
                 <div class="hero-body">
-                    <p class="hero-tagline">Infrastructure &amp; Cloud · Full-Stack Development · AI Systems</p>
+                    <div class="tagline">
+                        <span class="tagline-bubble">Infrastructure &amp; Cloud</span>
+                        <span class="tagline-bubble">Full-Stack Development</span>
+                        <span class="tagline-bubble">AI Systems</span>
+                    </div>
 
                     <h1 class="hero-name">Nārāyaṇa Dās Harricharaṇ</h1>
                     <p class="hero-role">Senior DevOps / Platform Engineer</p>
@@ -433,7 +437,26 @@
                 <header class="ats-head">
                     <h1 class="ats-name">Nārāyaṇa Dās Harricharaṇ</h1>
                     <p class="ats-role">Senior DevOps / Platform Engineer</p>
+                    <p class="ats-tagline">Infrastructure &amp; Cloud &middot; Full-Stack Development &middot; AI Systems</p>
                     <p class="ats-contact">narayan-das@tuta.io &middot; India (GMT+5:30) &middot; github.com/Narayana108</p>
+                    <dl class="ats-facts">
+                        <div class="ats-fact">
+                            <dt>Date of birth</dt>
+                            <dd>25/08/1993</dd>
+                        </div>
+                        <div class="ats-fact">
+                            <dt>Nationality</dt>
+                            <dd>South African</dd>
+                        </div>
+                        <div class="ats-fact">
+                            <dt>Current location</dt>
+                            <dd>India (GMT+5:30)</dd>
+                        </div>
+                        <div class="ats-fact">
+                            <dt>Languages</dt>
+                            <dd>English, Afrikaans, Hindi and Sanskrit</dd>
+                        </div>
+                    </dl>
                 </header>
 
                 <section class="ats-sec">
@@ -733,21 +756,23 @@
 
     var atsTab = document.querySelector('.view-tab[data-view="ats"]');
 
-    function syncAtsAvailability() {
-        var dark = root.getAttribute('data-mode') === 'dark';
-        atsTab.disabled = dark;
-        atsTab.title = dark ? 'The Clean ATS Sheet is available in light themes only' : '';
-        if (dark && !viewAts.hidden) {
-            setView('interactive');
-        }
+    function syncModeAvailability() {
+        var atsOpen = !viewAts.hidden;
+        modeToggle.disabled = atsOpen;
+        modeToggle.title = atsOpen
+            ? 'The Clean Resume is light-only — switch back to the Interactive Resume to use dark mode'
+            : '';
     }
 
     function setView(view) {
         var isAts = view === 'ats';
+
+        // The ATS sheet is a light document: entering it forces the light
+        // theme, and dark mode is locked out until it is left.
         if (isAts && root.getAttribute('data-mode') === 'dark') {
-            isAts = false;
-            view = 'interactive';
+            setMode('light');
         }
+
         viewInteractive.hidden = isAts;
         viewAts.hidden = !isAts;
 
@@ -756,6 +781,8 @@
             tab.classList.toggle('is-active', active);
             tab.setAttribute('aria-pressed', String(active));
         });
+
+        syncModeAvailability();
     }
 
     function setPalette(palette) {
@@ -766,14 +793,15 @@
     }
 
     function setMode(mode) {
+        if (mode === 'dark' && !viewAts.hidden) { return; }
         root.setAttribute('data-mode', mode);
         var dark = mode === 'dark';
         modeIcon.textContent = dark ? '☾' : '☀';
         modeLabel.textContent = dark ? 'Dark' : 'Light';
-        syncAtsAvailability();
+        syncModeAvailability();
     }
 
-    syncAtsAvailability();
+    syncModeAvailability();
 
     viewTabs.forEach(function (tab) {
         tab.addEventListener('click', function () {
@@ -789,10 +817,6 @@
 
     modeToggle.addEventListener('click', function () {
         setMode(root.getAttribute('data-mode') === 'dark' ? 'light' : 'dark');
-    });
-
-    document.getElementById('print-btn').addEventListener('click', function () {
-        window.print();
     });
 
     /* ---------------------------------------------
