@@ -6,77 +6,100 @@
   let input = $state('');
   let termEl = $state(null);
 
-  function push(lines, cls = 'term-ok') {
-    for (const line of lines) output.push({ text: line, cls });
+  /** A line is a list of coloured segments: [text, class] pairs. */
+  function pushSegs(segs) {
+    output.push({ segs: segs.map(([t, c]) => ({ t, c: c || 't-val' })) });
+    scroll();
+  }
+
+  function scroll() {
     if (termEl) termEl.scrollTop = termEl.scrollHeight;
   }
 
   const commands = {
     help() {
-      push(
-        [
-          'Available commands:',
-          '  help          show this message',
-          '  whoami        identity and summary',
-          '  profile       profile text',
-          '  skills        technical skills inventory',
-          '  experience    employment timeline',
-          '  education     education and certifications',
-          '  contact       contact details and links',
-          '  theme <p>     set palette: indigo | emerald',
-          '  mode          toggle light / dark',
-          '  view          toggle interactive studio / ATS sheet',
-          '  clear         clear the terminal'
-        ],
-        'term-ok'
-      );
+      const rows = [
+        ['help', 'show this message'],
+        ['whoami', 'identity and summary'],
+        ['profile', 'profile text'],
+        ['skills', 'technical skills inventory'],
+        ['experience', 'employment timeline'],
+        ['education', 'education and certifications'],
+        ['contact', 'contact details and links'],
+        ['theme <p>', 'set palette: indigo | emerald'],
+        ['mode', 'toggle light / dark'],
+        ['view', 'toggle interactive studio / ATS sheet'],
+        ['clear', 'clear the terminal']
+      ];
+      pushSegs([['Available commands:', 't-key']]);
+      for (const [cmd, desc] of rows) {
+        pushSegs([
+          ['  ', 't-val'],
+          [cmd.padEnd(14), 't-cmd'],
+          [desc, 't-dim']
+        ]);
+      }
     },
 
     whoami() {
-      push([site.name, site.role, site.tagline.join(' · '), 'India (GMT+5:30)'], 'term-ok');
+      pushSegs([[site.name, 't-key']]);
+      pushSegs([[site.role, 't-val']]);
+      pushSegs([[site.tagline.join(' · '), 't-link']]);
+      pushSegs([[site.location, 't-dim']]);
     },
 
     profile() {
-      const lines = [];
-      for (const p of profile.points) lines.push(`${p.label}: ${p.text}`);
-      lines.push('', `${profile.closing.lead} ${profile.closing.emphasis}, ${profile.closing.tail}`);
-      push(lines, 'term-ok');
+      for (const p of profile.points) {
+        pushSegs([[`${p.label}: `, 't-key'], [p.text, 't-val']]);
+      }
+      pushSegs([
+        ['', 't-val'],
+        [profile.closing.lead + ' ', 't-dim'],
+        [profile.closing.emphasis, 't-ok'],
+        [' ' + profile.closing.tail, 't-dim']
+      ]);
     },
 
     skills() {
-      push(skills.map((s) => `${s.label}: ${s.text}`), 'term-ok');
+      for (const s of skills) pushSegs([[`${s.label}: `, 't-key'], [s.text, 't-val']]);
     },
 
     experience() {
-      push(experience.map((j) => `${j.title} — ${j.date}`), 'term-ok');
+      for (const j of experience) {
+        pushSegs([[j.title, 't-key'], [' — ', 't-dim'], [j.date, 't-link']]);
+      }
     },
 
     education() {
-      push(education.map((e) => `${e.title} — ${e.meta} (${e.date})`), 'term-ok');
+      for (const e of education) {
+        pushSegs([[e.title, 't-key'], [' — ', 't-dim'], [`${e.meta} (${e.date})`, 't-link']]);
+      }
     },
 
     contact() {
       const email = `${site.email.user}@${site.email.domain}.${site.email.tld}`;
-      push([`Email:    ${email}`, `GitHub:   ${site.github}`, `Website:  ${site.website}`], 'term-ok');
+      pushSegs([['Email:    ', 't-dim'], [email, 't-link']]);
+      pushSegs([['GitHub:   ', 't-dim'], [site.github, 't-link']]);
+      pushSegs([['Website:  ', 't-dim'], [site.website, 't-link']]);
     },
 
     theme(arg) {
       if (arg === 'indigo' || arg === 'emerald') {
         setPalette(arg);
-        push(`palette set to ${arg}`, 'term-ok');
+        pushSegs([['palette set to ', 't-dim'], [arg, 't-ok']]);
       } else {
-        push('usage: theme <indigo|emerald>', 'term-warn');
+        pushSegs([['usage: ', 't-dim'], ['theme <indigo|emerald>', 't-cmd']]);
       }
     },
 
     mode() {
       setMode($mode === 'dark' ? 'light' : 'dark');
-      push(`mode: ${$mode}`, 'term-ok');
+      pushSegs([['mode: ', 't-dim'], [$mode, 't-ok']]);
     },
 
     view() {
       setView($view === 'ats' ? 'interactive' : 'ats');
-      push(`view: ${$view}`, 'term-ok');
+      pushSegs([['view: ', 't-dim'], [$view, 't-ok']]);
     },
 
     clear() {
@@ -88,13 +111,13 @@
     const cmd = raw.trim();
     if (!cmd) return;
 
-    output.push({ text: `❯ ${cmd}`, cls: 'term-echo' });
+    pushSegs([['❯ ', 't-prompt'], [cmd, 't-cmd']]);
 
     const [head, ...rest] = cmd.toLowerCase().split(/\s+/);
     const fn = commands[head];
 
     if (!fn) {
-      push([`command not found: ${head} — try "help"`], 'term-warn');
+      pushSegs([[`command not found: ${head}`, 't-warn'], [' — try "help"', 't-dim']]);
       return;
     }
 
@@ -117,7 +140,8 @@
 
   const quick = ['help', 'skills', 'experience', 'contact'];
 
-  push([`${site.name} — resume shell`, 'Type "help" for available commands.'], 'term-dim');
+  pushSegs([[site.name, 't-key'], [' — resume shell', 't-dim']]);
+  pushSegs([['Type ', 't-dim'], ['"help"', 't-cmd'], [' for available commands.', 't-dim']]);
 </script>
 
 <section class="terminal" aria-label="Interactive terminal">
@@ -136,7 +160,9 @@
   <div class="terminal-body">
     <div bind:this={termEl} class="term-out" role="log" aria-live="polite">
       {#each output as line}
-        <div class="term-line {line.cls}">{line.text}</div>
+        <div class="term-line">
+          {#each line.segs as seg}<span class={seg.c}>{seg.t}</span>{/each}
+        </div>
       {/each}
     </div>
 
@@ -225,6 +251,16 @@
   .term-ok { color: var(--term-ink); }
   .term-dim { color: var(--term-dim); }
   .term-warn { color: var(--term-warn); }
+
+  /* Segment colours — all driven by the active palette's terminal tokens. */
+  .t-prompt { color: var(--term-ok); font-weight: 700; }
+  .t-cmd { color: var(--term-accent); font-weight: 600; }
+  .t-key { color: var(--term-key); font-weight: 700; }
+  .t-val { color: var(--term-ink); }
+  .t-ok { color: var(--term-ok); font-weight: 600; }
+  .t-link { color: var(--term-link); text-decoration: underline; text-underline-offset: 2px; }
+  .t-dim { color: var(--term-dim); }
+  .t-warn { color: var(--term-warn); }
 
   .term-form {
     display: flex;

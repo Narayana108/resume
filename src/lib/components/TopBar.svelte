@@ -35,7 +35,7 @@
         aria-pressed={$view === 'ats'}
         onclick={() => setView('ats')}
       >
-        ▤ Clean Resume
+        ▤ Clean ATS Resume
       </button>
     </nav>
 

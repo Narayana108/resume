@@ -1,47 +1,56 @@
 <script>
-  /** Full-viewport flower-of-life background with a Metatron's Cube on hover. */
+  /**
+   * Full-viewport flower-of-life background with a Metatron's Cube that locks
+   * to the lattice.
+   *
+   * Performance shape:
+   *  - The static lattice is rendered once into an offscreen canvas and blitted
+   *    per frame, so a frame costs one drawImage plus a handful of nearby
+   *    circles instead of a full re-stroke of every circle.
+   *  - Theme colours are cached and only re-read when <html> changes palette or
+   *    mode, not per frame (getComputedStyle forces a style recalc).
+   *  - The cube is a single prebuilt Path2D stroked once, not 78 beginPath calls.
+   *  - The cube eases toward the nearest lattice point instead of teleporting
+   *    between them, so it stays locked to the grid but moves continuously.
+   *  - The rAF loop stops when nothing is moving.
+   */
   import { onMount } from 'svelte';
 
   let canvas;
+
+  const RADIUS = 46;
+  const DX = RADIUS * Math.sqrt(3);
+  const DY = RADIUS * 1.5;
+  const INFLUENCE = 190;
+  const EASE = 0.22;
+  const FADE = 0.14;
+
   let raf = 0;
-  let mouse = { x: -9999, y: -9999, active: false };
-  let needsDraw = true;
+  let running = false;
+  let dpr = 1;
+  let w = 0;
+  let h = 0;
+
+  let brand = '#009B5A';
+  let accent = '#1E4D36';
+  let staticLayer = null;
+  let cubePath = null;
+
+  // Eased cube position, and the lattice point it is easing toward.
+  const pos = { x: 0, y: 0 };
+  let target = null;
+  let alpha = 0;
+  let alphaTarget = 0;
 
   function read(name, fallback) {
     return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
   }
 
-  function rgba(hex, alpha) {
+  function rgba(hex, a) {
     const h = hex.replace('#', '');
     const full = h.length === 3 ? h.split('').map((c) => c + c).join('') : h;
     const n = parseInt(full, 16);
-    return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${alpha})`;
-  }
-
-  function metatron(ctx, cx, cy, r, colour) {
-    const pts = [[0, 0]];
-    for (let i = 0; i < 6; i++) {
-      const a = (Math.PI / 3) * i - Math.PI / 2;
-      pts.push([Math.cos(a) * r, Math.sin(a) * r]);
-    }
-    for (let j = 0; j < 6; j++) {
-      const b = (Math.PI / 3) * j;
-      pts.push([Math.cos(b) * r * Math.sqrt(3), Math.sin(b) * r * Math.sqrt(3)]);
-    }
-
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.strokeStyle = rgba(colour, 0.3);
-    ctx.lineWidth = 1;
-    for (let p = 0; p < pts.length; p++) {
-      for (let q = p + 1; q < pts.length; q++) {
-        ctx.beginPath();
-        ctx.moveTo(pts[p][0], pts[p][1]);
-        ctx.lineTo(pts[q][0], pts[q][1]);
-        ctx.stroke();
-      }
-    }
-    ctx.restore();
+    return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
   }
 
   /**
@@ -51,16 +60,16 @@
    * column can pick a centre that is not actually the closest. Check the three
    * candidate rows around the point and keep the true nearest.
    */
-  function snap(x, y, dx, dy) {
-    const base = Math.round(y / dy);
+  function snap(x, y) {
+    const base = Math.round(y / DY);
     let best = null;
     let bestDist = Infinity;
 
     for (let row = base - 1; row <= base + 1; row++) {
-      const offset = row % 2 ? dx / 2 : 0;
-      const col = Math.round((x - offset) / dx);
-      const px = col * dx + offset;
-      const py = row * dy;
+      const offset = row % 2 ? DX / 2 : 0;
+      const col = Math.round((x - offset) / DX);
+      const px = col * DX + offset;
+      const py = row * DY;
       const dist = (px - x) ** 2 + (py - y) ** 2;
       if (dist < bestDist) {
         bestDist = dist;
@@ -71,92 +80,202 @@
     return best;
   }
 
-  function draw() {
-    if (!canvas) return;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-
-    if (canvas.width !== w * dpr || canvas.height !== h * dpr) {
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
+  /** Metatron's Cube: centre, 6 inner, 6 outer, every pair connected. */
+  function buildCube() {
+    const pts = [[0, 0]];
+    for (let i = 0; i < 6; i++) {
+      const a = (Math.PI / 3) * i - Math.PI / 2;
+      pts.push([Math.cos(a) * RADIUS, Math.sin(a) * RADIUS]);
+    }
+    for (let i = 0; i < 6; i++) {
+      const a = (Math.PI / 3) * i;
+      pts.push([Math.cos(a) * RADIUS * Math.sqrt(3), Math.sin(a) * RADIUS * Math.sqrt(3)]);
     }
 
-    const ctx = canvas.getContext('2d');
+    const path = new Path2D();
+    for (let p = 0; p < pts.length; p++) {
+      for (let q = p + 1; q < pts.length; q++) {
+        path.moveTo(pts[p][0], pts[p][1]);
+        path.lineTo(pts[q][0], pts[q][1]);
+      }
+    }
+    return path;
+  }
+
+  /** Render the static lattice once into an offscreen canvas. */
+  function buildStatic() {
+    const layer = document.createElement('canvas');
+    layer.width = Math.max(1, Math.round(w * dpr));
+    layer.height = Math.max(1, Math.round(h * dpr));
+
+    const ctx = layer.getContext('2d');
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.clearRect(0, 0, w, h);
+    ctx.strokeStyle = rgba(brand, 0.1);
+    ctx.lineWidth = 1;
 
-    const brand = read('--brand', '#009B5A');
-    const accent = read('--accent', '#1E4D36');
-    const radius = 46;
-    const dx = radius * Math.sqrt(3);
-    const dy = radius * 1.5;
-    const cols = Math.ceil(w / dx) + 2;
-    const rows = Math.ceil(h / dy) + 2;
+    const cols = Math.ceil(w / DX) + 2;
+    const rows = Math.ceil(h / DY) + 2;
 
-    // Lock the cube to the nearest flower-of-life circle centre so it can
-    // never sit off-grid or drift asymmetrically between points.
-    const snapped = mouse.active ? snap(mouse.x, mouse.y, dx, dy) : null;
-    const cx = snapped ? snapped.x : -9999;
-    const cy = snapped ? snapped.y : -9999;
-
+    ctx.beginPath();
     for (let row = -1; row < rows; row++) {
       for (let col = -1; col < cols; col++) {
-        const x = col * dx + (row % 2 ? dx / 2 : 0);
-        const y = row * dy;
-        const dist = Math.hypot(x - cx, y - cy);
-        const near = Math.max(0, 1 - dist / 190);
+        const x = col * DX + (row % 2 ? DX / 2 : 0);
+        const y = row * DY;
+        ctx.moveTo(x + RADIUS, y);
+        ctx.arc(x, y, RADIUS, 0, Math.PI * 2);
+      }
+    }
+    ctx.stroke();
+
+    staticLayer = layer;
+  }
+
+  function draw() {
+    if (!canvas || !staticLayer) return;
+
+    const ctx = canvas.getContext('2d');
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(staticLayer, 0, 0);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    if (alpha <= 0.001) return;
+
+    // Only the cells that can be lit by the cube need re-stroking.
+    const reach = Math.ceil(INFLUENCE / DX) + 1;
+    const rowReach = Math.ceil(INFLUENCE / DY) + 1;
+    const baseRow = Math.round(pos.y / DY);
+    const baseCol = Math.round(pos.x / DX);
+
+    for (let row = baseRow - rowReach; row <= baseRow + rowReach; row++) {
+      const offset = row % 2 ? DX / 2 : 0;
+      for (let col = baseCol - reach; col <= baseCol + reach; col++) {
+        const x = col * DX + offset;
+        const y = row * DY;
+        const dist = Math.hypot(x - pos.x, y - pos.y);
+        const near = Math.max(0, 1 - dist / INFLUENCE) * alpha;
+        if (near <= 0.02) continue;
 
         ctx.beginPath();
-        ctx.arc(x, y, radius, 0, Math.PI * 2);
-        ctx.strokeStyle = rgba(near > 0.05 ? accent : brand, 0.1 + near * 0.35);
+        ctx.arc(x, y, RADIUS, 0, Math.PI * 2);
+        ctx.strokeStyle = rgba(accent, near * 0.35);
         ctx.lineWidth = 1 + near * 1.1;
         ctx.stroke();
 
-        if (near > 0.02) {
-          ctx.beginPath();
-          ctx.arc(x, y, radius * 0.5, 0, Math.PI * 2);
-          ctx.strokeStyle = rgba(accent, near * 0.22);
-          ctx.lineWidth = 1;
-          ctx.stroke();
-        }
+        ctx.beginPath();
+        ctx.arc(x, y, RADIUS * 0.5, 0, Math.PI * 2);
+        ctx.strokeStyle = rgba(accent, near * 0.22);
+        ctx.lineWidth = 1;
+        ctx.stroke();
       }
     }
 
-    if (mouse.active) metatron(ctx, cx, cy, radius, accent);
+    if (cubePath) {
+      ctx.save();
+      ctx.translate(pos.x, pos.y);
+      ctx.strokeStyle = rgba(accent, 0.3 * alpha);
+      ctx.lineWidth = 1;
+      ctx.stroke(cubePath);
+      ctx.restore();
+    }
+  }
+
+  function frame() {
+    raf = 0;
+
+    if (target) {
+      pos.x += (target.x - pos.x) * EASE;
+      pos.y += (target.y - pos.y) * EASE;
+      if (Math.abs(target.x - pos.x) < 0.05 && Math.abs(target.y - pos.y) < 0.05) {
+        pos.x = target.x;
+        pos.y = target.y;
+      }
+    }
+    alpha += (alphaTarget - alpha) * FADE;
+    if (Math.abs(alphaTarget - alpha) < 0.002) alpha = alphaTarget;
+
+    draw();
+
+    const settled =
+      (!target || (pos.x === target.x && pos.y === target.y)) &&
+      alpha === alphaTarget;
+
+    if (!settled) {
+      raf = requestAnimationFrame(frame);
+    } else {
+      running = false;
+    }
+  }
+
+  function kick() {
+    if (!running) {
+      running = true;
+      raf = requestAnimationFrame(frame);
+    }
   }
 
   function onMove(e) {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-    mouse.active = true;
-    needsDraw = true;
+    const point = snap(e.clientX, e.clientY);
+    if (!target) {
+      // First entry: start on the lattice point so there is no fly-in.
+      pos.x = point.x;
+      pos.y = point.y;
+    }
+    target = point;
+    alphaTarget = 1;
+    kick();
   }
 
   function onLeave() {
-    mouse.active = false;
-    needsDraw = true;
+    target = null;
+    alphaTarget = 0;
+    kick();
+  }
+
+  function resize() {
+    if (!canvas) return;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    canvas.style.width = `${w}px`;
+    canvas.style.height = `${h}px`;
+    buildStatic();
+    draw();
+  }
+
+  function retheme() {
+    brand = read('--brand', '#009B5A');
+    accent = read('--accent', '#1E4D36');
+    buildStatic();
+    draw();
   }
 
   onMount(() => {
-    const loop = () => {
-      if (needsDraw) {
-        draw();
-        needsDraw = false;
-      }
-      raf = requestAnimationFrame(loop);
-    };
+    cubePath = buildCube();
+    retheme();
+    resize();
 
-    window.addEventListener('mousemove', onMove, { passive: true });
-    window.addEventListener('mouseleave', onLeave);
-    window.addEventListener('scroll', onLeave, { passive: true });
-    window.addEventListener('resize', () => { needsDraw = true; });
+    window.addEventListener('pointermove', onMove, { passive: true });
+    window.addEventListener('pointerleave', onLeave);
+    window.addEventListener('blur', onLeave);
+    window.addEventListener('resize', resize);
 
-    raf = requestAnimationFrame(loop);
+    // Re-read the palette tokens only when the theme actually changes.
+    const observer = new MutationObserver(retheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-palette', 'data-mode']
+    });
+
     return () => {
       cancelAnimationFrame(raf);
-      window.removeEventListener('mousemove', onMove);
-      window.removeEventListener('mouseleave', onLeave);
+      observer.disconnect();
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerleave', onLeave);
+      window.removeEventListener('blur', onLeave);
+      window.removeEventListener('resize', resize);
     };
   });
 </script>

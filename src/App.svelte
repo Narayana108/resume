@@ -1,7 +1,6 @@
 <script>
   import { onMount } from 'svelte';
   import { palette, mode, view, applyTheme } from './lib/stores/theme.js';
-  import { equilibrium } from './lib/data/resume.js';
 
   import TopBar from './lib/components/TopBar.svelte';
   import Hero from './lib/components/Hero.svelte';
@@ -14,7 +13,6 @@
   import Terminal from './lib/components/Terminal.svelte';
   import Footer from './lib/components/Footer.svelte';
   import FlowerOfLife from './lib/components/geometry/FlowerOfLife.svelte';
-  import Radar from './lib/components/geometry/Radar.svelte';
 
   // Mirror the theme onto <html> whenever it changes.
   $: applyTheme($palette, $mode);
@@ -34,10 +32,6 @@
     <Hero />
 
     <div id="view-interactive" hidden={$view !== 'interactive'}>
-      <Section title={equilibrium.heading}>
-        <Radar />
-      </Section>
-
       <Section title="Profile">
         <Profile />
       </Section>

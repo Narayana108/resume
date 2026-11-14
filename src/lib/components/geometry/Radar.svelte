@@ -7,7 +7,7 @@
    * the profile is broad rather than deep in one place.
    */
   import { onMount } from 'svelte';
-  import { equilibrium } from '../../data/resume.js';
+  import { profile } from '../../data/resume.js';
 
   let canvas;
 
@@ -42,7 +42,7 @@
     const accent = read('--accent', '#1E4D36');
     const inkMuted = read('--ink-muted', '#5A5A5A');
 
-    const axes = equilibrium.axes;
+    const axes = profile.axes;
     const n = axes.length;
     const cx = w / 2;
     const cy = h / 2;
@@ -143,33 +143,11 @@
   });
 </script>
 
-<div class="equilibrium">
-  <div class="geo-canvas-wrap">
-    <canvas bind:this={canvas} aria-label="Radar chart of full-spectrum engineering capability"></canvas>
-  </div>
-
-  <div class="equilibrium-body">
-    {#each equilibrium.paragraphs as paragraph}
-      <p class="prose">{paragraph}</p>
-    {/each}
-  </div>
+<div class="geo-canvas-wrap">
+  <canvas bind:this={canvas} aria-label="Radar chart of full-spectrum engineering capability"></canvas>
 </div>
 
 <style>
-  .equilibrium {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-    align-items: center;
-  }
-
-  @media (min-width: 768px) {
-    .equilibrium {
-      grid-template-columns: 340px minmax(0, 1fr);
-      gap: 28px;
-    }
-  }
-
   .geo-canvas-wrap {
     position: relative;
     width: 100%;

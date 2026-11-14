@@ -68,14 +68,14 @@ src/
       Footer.svelte
       geometry/
         FlowerOfLife.svelte
-        Hexagram.svelte
+        Radar.svelte
         PolyhedralMorpher.svelte
 ```
 
 ## Editing content
 
 All resume text lives in `src/lib/data/resume.js` — `site`, `profile`, `skills`,
-`experience`, `education`, `equilibrium`. Edit that file; components render from
+`experience`, `education`. Edit that file; components render from
 it. Nothing is fetched at runtime.
 
 ## Theming
@@ -91,15 +91,15 @@ Theme tokens are CSS custom properties in `src/app.css`, scoped by
 Each has a light and a dark variant. The active palette and mode are mirrored
 onto `<html>` by `src/lib/stores/theme.js` and persisted to `localStorage`.
 
-The Clean Resume sheet is pinned to emerald in both screen and print so the
+The Clean ATS Resume sheet is pinned to emerald in both screen and print so the
 preview matches the downloaded PDF.
 
 ## Views
 
 - **Interactive Resume** — cards, hero, geometry, terminal
-- **Clean Resume** — single-column ATS-friendly document, light themes only
+- **Clean ATS Resume** — single-column ATS-friendly document, light themes only
 
-The Clean Resume is light-only: entering it forces the light theme and disables
+The Clean ATS Resume is light-only: entering it forces the light theme and disables
 the mode toggle.
 
 ## Print / PDF

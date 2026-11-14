@@ -29,6 +29,8 @@ html[data-palette="indigo"] {
   --term-ok: #c4b5fd;
   --term-warn: #fca5a5;
   --term-accent: #ddd6fe;
+  --term-key: #a78bfa;
+  --term-link: #c4b5fd;
   --btn-bg: #6d28d9;
   --btn-bg-hover: #5b21b6;
   --btn-ink: #ffffff;
@@ -64,6 +66,8 @@ html[data-palette="emerald"] {
   --term-ok: #6ee7b7;
   --term-warn: #fca5a5;
   --term-accent: #a7f3d0;
+  --term-key: #34d399;
+  --term-link: #6ee7b7;
   --btn-bg: #009b5a;
   --btn-bg-hover: #1e4d36;
   --btn-ink: #ffffff;
@@ -94,6 +98,8 @@ html[data-mode="dark"][data-palette="indigo"] {
   --glow: rgba(196, 181, 253, 0.3);
   --term-bg: #0f0b18;
   --term-bar: #171122;
+  --term-key: #c4b5fd;
+  --term-link: #ddd6fe;
   --btn-bg: #7c3aed;
   --btn-bg-hover: #8b5cf6;
   --btn-ink: #ffffff;
@@ -124,6 +130,8 @@ html[data-mode="dark"][data-palette="emerald"] {
   --glow: rgba(52, 211, 153, 0.24);
   --term-bg: #04100b;
   --term-bar: #0a1a13;
+  --term-key: #6ee7b7;
+  --term-link: #a7f3d0;
   --btn-bg: #059669;
   --btn-bg-hover: #047857;
   --btn-ink: #ffffff;
@@ -525,7 +533,7 @@ a.btn-solid:hover {
   z-index: 1;
 }
 
-/* Prose shared by the profile and equilibrium blocks. */
+/* Prose shared by the profile block. */
 .prose {
   font-family: 'EB Garamond', Georgia, serif;
   font-size: 18px;
