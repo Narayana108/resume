@@ -964,7 +964,7 @@ a.btn-solid:hover {
     font-size: 28px;
     font-weight: 700;
     letter-spacing: 0.02em;
-    color: #1E4D36;
+    color: #009B5A;
     margin-bottom: 2px;
 }
 
@@ -984,7 +984,7 @@ a.btn-solid:hover {
     font-size: 16px;
     font-weight: 700;
     margin: 0 0 4px;
-    color: #1E4D36;
+    color: #009B5A;
 }
 
 .ats-facts {
@@ -1060,7 +1060,7 @@ a.btn-solid:hover {
     font-family: Georgia, 'Times New Roman', serif;
     font-size: 18px;
     font-weight: 700;
-    color: #1E4D36;
+    color: #009B5A;
     margin: 0 0 1px;
 }
 
@@ -1074,7 +1074,7 @@ a.btn-solid:hover {
 .ats-client {
     font-size: 16px;
     font-weight: 700;
-    color: #1E4D36;
+    color: #009B5A;
     margin: 8px 0 4px;
 }
 
@@ -1359,14 +1359,11 @@ a.btn-solid:hover {
 
     /* The downloadable PDF always uses the emerald theme */
     .ats-h2,
-    .ats-client {
-        color: #009B5A !important;
-    }
-
+    .ats-client,
     .ats-name,
     .ats-job-title,
     .ats-tagline {
-        color: #1E4D36 !important;
+        color: #009B5A !important;
     }
 
     .ats-tagline {
