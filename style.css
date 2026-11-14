@@ -179,6 +179,12 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* The hidden attribute must beat any author display rule
+   (e.g. #view-interactive { display:flex }) */
+[hidden] {
+    display: none !important;
+}
+
 h1, h2, h3 {
     font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
     font-weight: 600;
