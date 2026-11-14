@@ -9,7 +9,7 @@
    Palette rewritten to the Vraja Maṇḍala editorial colours:
    #FAFAFA canvas, #FFFFFF surface, #222524 ink, #009B5A emerald,
    #1E4D36 forest, #1D297A indigo, #E5E5E5 hairline.
-   Themes: indigo (default), emerald, mono (black & white).
+   Themes: purple/indigo (default), emerald. Dark mode is a variant of each.
    Modes: light (default), dark.
    ---------------------------------------------------------- */
 
@@ -66,52 +66,26 @@ html[data-palette="emerald"] {
     --term-accent: #A7F3D0;
 }
 
-html[data-palette="mono"] {
-    --bg: #FAFAFA;
-    --surface: #FFFFFF;
-    --surface-subtle: #F2F2F2;
-    --ink: #111111;
-    --ink-muted: #333333;
-    --ink-faint: #5A5A5A;
-    --brand: #111111;
-    --brand-strong: #000000;
-    --accent: #000000;
-    --accent-soft: rgba(0, 0, 0, 0.06);
-    --brand-soft: rgba(0, 0, 0, 0.06);
-    --hairline: #E0E0E0;
-    --hairline-strong: #C9C9C9;
-    --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.06), 0 4px 12px -4px rgba(0, 0, 0, 0.03);
-    --shadow-hover: 0 12px 32px -12px rgba(0, 0, 0, 0.10);
-    --glow: rgba(17, 17, 17, 0.12);
-    --term-bg: #0A0A0A;
-    --term-bar: #141414;
-    --term-ink: #E6E6E6;
-    --term-dim: #8A8A8A;
-    --term-ok: #D4D4D4;
-    --term-warn: #F0A0A0;
-    --term-accent: #FFFFFF;
-}
-
 /* Dark mode — same hues, deepened grounds */
 html[data-mode="dark"][data-palette="indigo"] {
-    --bg: #0C0A14;
-    --surface: #141220;
-    --surface-subtle: #1B1830;
-    --ink: #F2F0FA;
-    --ink-muted: #C3BEDA;
-    --ink-faint: #928CB0;
+    --bg: #14101F;
+    --surface: #1D1729;
+    --surface-subtle: #251D34;
+    --ink: #F4F1FB;
+    --ink-muted: #C9C0DE;
+    --ink-faint: #9A8FB5;
     --brand: #C4B5FD;
     --brand-strong: #DDD6FE;
     --accent: #A5B4FC;
-    --accent-soft: rgba(165, 180, 252, 0.14);
-    --brand-soft: rgba(196, 181, 253, 0.14);
-    --hairline: #262238;
-    --hairline-strong: #363050;
-    --shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.60);
-    --shadow-hover: 0 20px 42px -12px rgba(165, 180, 252, 0.24);
-    --glow: rgba(196, 181, 253, 0.28);
-    --term-bg: #08060F;
-    --term-bar: #100D1A;
+    --accent-soft: rgba(165, 180, 252, 0.16);
+    --brand-soft: rgba(196, 181, 253, 0.16);
+    --hairline: #322A45;
+    --hairline-strong: #453A5E;
+    --shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.55);
+    --shadow-hover: 0 20px 42px -12px rgba(196, 181, 253, 0.28);
+    --glow: rgba(196, 181, 253, 0.30);
+    --term-bg: #0F0B18;
+    --term-bar: #171122;
 }
 
 html[data-mode="dark"][data-palette="emerald"] {
@@ -135,27 +109,6 @@ html[data-mode="dark"][data-palette="emerald"] {
     --term-bar: #0A1A13;
 }
 
-html[data-mode="dark"][data-palette="mono"] {
-    --bg: #0A0A0A;
-    --surface: #141414;
-    --surface-subtle: #1C1C1C;
-    --ink: #FAFAFA;
-    --ink-muted: #C2C2C2;
-    --ink-faint: #8C8C8C;
-    --brand: #FAFAFA;
-    --brand-strong: #FFFFFF;
-    --accent: #FFFFFF;
-    --accent-soft: rgba(255, 255, 255, 0.10);
-    --brand-soft: rgba(255, 255, 255, 0.08);
-    --hairline: #262626;
-    --hairline-strong: #3A3A3A;
-    --shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.70);
-    --shadow-hover: 0 20px 42px -12px rgba(255, 255, 255, 0.10);
-    --glow: rgba(255, 255, 255, 0.14);
-    --term-bg: #000000;
-    --term-bar: #0D0D0D;
-}
-
 /* ----------------------------------------------------------------------
    2. BASE
    ---------------------------------------------------------- */
@@ -172,7 +125,7 @@ body {
     background-color: var(--bg);
     color: var(--ink);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 15px;
+    font-size: 16.5px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -350,7 +303,14 @@ a:hover {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.10);
 }
 
-html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
+.view-tab:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.view-tab:disabled:hover {
+    color: var(--ink-muted);
+}
 
 /* Top bar actions */
 .topbar-actions {
@@ -520,46 +480,6 @@ html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
     flex: 1 1 auto;
 }
 
-.badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 12px;
-}
-
-.badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    padding: 4px 10px;
-    border-radius: 9999px;
-    border: 1px solid var(--hairline);
-    background: var(--surface);
-    color: var(--ink-muted);
-}
-
-.badge-accent {
-    color: var(--brand);
-    border-color: var(--brand);
-    background: var(--brand-soft);
-}
-
-.badge-forest {
-    color: var(--brand-strong);
-    border-color: var(--hairline-strong);
-    background: var(--surface-subtle);
-}
-
-.badge-indigo {
-    color: var(--accent);
-    border-color: var(--hairline-strong);
-    background: var(--accent-soft);
-}
-
 .hero-name {
     font-size: clamp(28px, 5vw, 42px);
     line-height: 1.08;
@@ -614,7 +534,7 @@ html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
 
 .fact dd {
     margin: 0;
-    font-size: 13.5px;
+    font-size: 15px;
     color: var(--ink);
     min-width: 0;
 }
@@ -659,7 +579,7 @@ html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
 .eyebrow {
     font-family: 'EB Garamond', Georgia, serif;
     font-style: italic;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -675,7 +595,7 @@ html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
 
 .prose {
     font-family: 'EB Garamond', Georgia, serif;
-    font-size: 16.5px;
+    font-size: 18px;
     line-height: 1.62;
     color: var(--ink);
     margin-bottom: 0.85em;
@@ -708,7 +628,7 @@ html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
 .skills li {
     position: relative;
     padding-left: 18px;
-    font-size: 14.5px;
+    font-size: 16px;
     line-height: 1.55;
     color: var(--ink-muted);
 }
@@ -782,7 +702,7 @@ html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
 
 .entry-sub {
     font-family: 'EB Garamond', Georgia, serif;
-    font-size: 15.5px;
+    font-size: 17px;
     color: var(--brand-strong);
     margin: 0;
 }
@@ -791,7 +711,7 @@ html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
     display: inline-block;
     flex: 0 0 auto;
     font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 11px;
+    font-size: 12.5px;
     font-weight: 500;
     color: var(--ink-muted);
     background: var(--surface-subtle);
@@ -814,7 +734,7 @@ html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
 .bullets li {
     position: relative;
     padding-left: 17px;
-    font-size: 14.5px;
+    font-size: 16px;
     line-height: 1.55;
     color: var(--ink-muted);
 }
@@ -843,7 +763,7 @@ html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
 }
 
 .entry-note {
-    font-size: 13.5px;
+    font-size: 15px;
     color: var(--ink-muted);
     margin: 10px 0 0;
     line-height: 1.5;
@@ -885,7 +805,7 @@ html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
 
 .client-name {
     font-family: 'EB Garamond', Georgia, serif;
-    font-size: 15.5px;
+    font-size: 17px;
     font-weight: 600;
     color: var(--accent);
 }
@@ -967,13 +887,13 @@ html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
 }
 
 .ats-role {
-    font-size: 13.5px;
+    font-size: 15px;
     margin: 0 0 2px;
     color: #000000;
 }
 
 .ats-contact {
-    font-size: 12.5px;
+    font-size: 14px;
     margin: 0;
     color: #222222;
 }
@@ -1022,28 +942,28 @@ html[data-palette="mono"] .view-tab.is-active { color: #FFFFFF; }
 
 .ats-job-title {
     font-family: Georgia, 'Times New Roman', serif;
-    font-size: 14.5px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--brand-strong);
     margin: 0 0 1px;
 }
 
 .ats-meta {
-    font-size: 12.5px;
+    font-size: 14px;
     font-style: italic;
     color: #222222;
     margin: 0 0 6px;
 }
 
 .ats-client {
-    font-size: 12.5px;
+    font-size: 14px;
     font-weight: 700;
     color: var(--brand-strong);
     margin: 8px 0 4px;
 }
 
 .ats-note {
-    font-size: 12.5px;
+    font-size: 14px;
     margin: 3px 0 0;
     color: #000000;
 }

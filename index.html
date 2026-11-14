@@ -47,9 +47,8 @@
 
         <div class="topbar-actions">
             <div class="palette-switch" role="group" aria-label="Colour theme">
-                <button type="button" class="chip is-active" data-palette="indigo" title="Indigo, emerald and white">Indigo</button>
-                <button type="button" class="chip" data-palette="emerald" title="Emerald, forest and white">Emerald</button>
-                <button type="button" class="chip" data-palette="mono" title="Black and white">Mono</button>
+                <button type="button" class="chip is-active" data-palette="indigo" title="Purple and indigo">Purple</button>
+                <button type="button" class="chip" data-palette="emerald" title="Emerald and forest green">Emerald</button>
             </div>
 
             <button type="button" id="mode-toggle" class="btn-ghost" title="Switch between light and dark">
@@ -74,15 +73,10 @@
                 <img class="avatar" src="pp.png" alt="Nārāyaṇa Dās Harricharaṇ">
 
                 <div class="hero-body">
-                    <div class="badges">
-                        <span class="badge badge-accent">Cloud &amp; Platform Engineer</span>
-                        <span class="badge badge-forest">Infrastructure Automation</span>
-                        <span class="badge badge-indigo">AI Systems</span>
-                    </div>
+                    <p class="hero-tagline">Infrastructure &amp; Cloud · Full-Stack Development · AI Systems</p>
 
                     <h1 class="hero-name">Nārāyaṇa Dās Harricharaṇ</h1>
                     <p class="hero-role">Senior DevOps / Platform Engineer</p>
-                    <p class="hero-tagline">Infrastructure &amp; Cloud · Full-Stack Development · AI Systems</p>
 
                     <dl class="facts">
                         <div class="fact">
@@ -737,8 +731,23 @@
 
     initEmail();
 
+    var atsTab = document.querySelector('.view-tab[data-view="ats"]');
+
+    function syncAtsAvailability() {
+        var dark = root.getAttribute('data-mode') === 'dark';
+        atsTab.disabled = dark;
+        atsTab.title = dark ? 'The Clean ATS Sheet is available in light themes only' : '';
+        if (dark && !viewAts.hidden) {
+            setView('interactive');
+        }
+    }
+
     function setView(view) {
         var isAts = view === 'ats';
+        if (isAts && root.getAttribute('data-mode') === 'dark') {
+            isAts = false;
+            view = 'interactive';
+        }
         viewInteractive.hidden = isAts;
         viewAts.hidden = !isAts;
 
@@ -761,7 +770,10 @@
         var dark = mode === 'dark';
         modeIcon.textContent = dark ? '☾' : '☀';
         modeLabel.textContent = dark ? 'Dark' : 'Light';
+        syncAtsAvailability();
     }
+
+    syncAtsAvailability();
 
     viewTabs.forEach(function (tab) {
         tab.addEventListener('click', function () {
@@ -844,7 +856,7 @@
                     '  experience    employment timeline',
                     '  education     education and certifications',
                     '  contact       contact details and links',
-                    '  theme <p>     set palette: indigo | emerald | mono',
+                    '  theme <p>     set palette: indigo | emerald',
                     '  mode          toggle light / dark',
                     '  view          toggle interactive studio / ATS sheet',
                     '  clear         clear the terminal'
@@ -903,11 +915,11 @@
 
             case 'theme':
                 var wanted = parts[1];
-                if (wanted === 'indigo' || wanted === 'emerald' || wanted === 'mono') {
+                if (wanted === 'indigo' || wanted === 'emerald') {
                     setPalette(wanted);
                     print('palette set to ' + wanted, 'term-ok');
                 } else {
-                    print('usage: theme <indigo|emerald|mono>', 'term-warn');
+                    print('usage: theme <indigo|emerald>', 'term-warn');
                 }
                 break;
 
