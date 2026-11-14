@@ -46,6 +46,7 @@ html[data-palette="indigo"] {
     --bub-1: #F5F0FE;
     --bub-2: #EDE3FD;
     --bub-3: #E3D5FC;
+    --bub-glow: rgba(109, 40, 217, 0.30);
 }
 
 html[data-palette="emerald"] {
@@ -75,11 +76,12 @@ html[data-palette="emerald"] {
     --btn-bg: #009B5A;
     --btn-bg-hover: #1E4D36;
     --btn-ink: #FFFFFF;
-    --bub-ink: #1E4D36;
+    --bub-ink: #0E9F6E;
     --bub-border: #009B5A;
     --bub-1: #EFFAF4;
     --bub-2: #E2F5EB;
     --bub-3: #D2EEE0;
+    --bub-glow: rgba(0, 179, 104, 0.35);
 }
 
 /* Dark mode — same hues, deepened grounds */
@@ -110,6 +112,7 @@ html[data-mode="dark"][data-palette="indigo"] {
     --bub-1: rgba(167, 139, 250, 0.14);
     --bub-2: rgba(167, 139, 250, 0.22);
     --bub-3: rgba(167, 139, 250, 0.32);
+    --bub-glow: rgba(167, 139, 250, 0.45);
 }
 
 html[data-mode="dark"][data-palette="emerald"] {
@@ -139,6 +142,7 @@ html[data-mode="dark"][data-palette="emerald"] {
     --bub-1: rgba(52, 211, 153, 0.14);
     --bub-2: rgba(52, 211, 153, 0.22);
     --bub-3: rgba(52, 211, 153, 0.32);
+    --bub-glow: rgba(52, 211, 153, 0.45);
 }
 
 /* ----------------------------------------------------------------------
@@ -157,7 +161,7 @@ body {
     background-color: var(--bg);
     color: var(--ink);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 16.5px;
+    font-size: 17.5px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -566,8 +570,16 @@ a.btn-solid:hover {
     background: var(--bub-1);
     border: 1px solid var(--bub-border);
     border-radius: 9999px;
-    padding: 5px 16px;
+    padding: 3px 11px;
     white-space: nowrap;
+}
+
+.tagline-bubble:hover {
+    box-shadow: 0 0 0 3px var(--bub-glow), 0 0 10px 1px var(--bub-glow);
+}
+
+.tagline-bubble {
+    transition: box-shadow 0.25s ease;
 }
 
 .tagline-bubble:nth-child(2) { background: var(--bub-2); }
@@ -595,7 +607,7 @@ a.btn-solid:hover {
 
 .fact dt {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--ink-faint);
@@ -604,7 +616,7 @@ a.btn-solid:hover {
 
 .fact dd {
     margin: 0;
-    font-size: 15px;
+    font-size: 16px;
     color: var(--ink);
     min-width: 0;
 }
@@ -698,7 +710,7 @@ a.btn-solid:hover {
 .skills li {
     position: relative;
     padding-left: 18px;
-    font-size: 16px;
+    font-size: 17px;
     line-height: 1.55;
     color: var(--ink-muted);
 }
@@ -781,7 +793,7 @@ a.btn-solid:hover {
     display: inline-block;
     flex: 0 0 auto;
     font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 12.5px;
+    font-size: 13.5px;
     font-weight: 500;
     color: var(--ink-muted);
     background: var(--surface-subtle);
@@ -804,7 +816,7 @@ a.btn-solid:hover {
 .bullets li {
     position: relative;
     padding-left: 17px;
-    font-size: 16px;
+    font-size: 17px;
     line-height: 1.55;
     color: var(--ink-muted);
 }
@@ -833,7 +845,7 @@ a.btn-solid:hover {
 }
 
 .entry-note {
-    font-size: 15px;
+    font-size: 16px;
     color: var(--ink-muted);
     margin: 10px 0 0;
     line-height: 1.5;
@@ -952,7 +964,7 @@ a.btn-solid:hover {
     font-size: 28px;
     font-weight: 700;
     letter-spacing: 0.02em;
-    color: var(--brand);
+    color: #1E4D36;
     margin-bottom: 2px;
 }
 
@@ -972,14 +984,14 @@ a.btn-solid:hover {
     font-size: 16px;
     font-weight: 700;
     margin: 0 0 4px;
-    color: var(--brand-strong);
+    color: #1E4D36;
 }
 
 .ats-facts {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2px 24px;
-    margin: 10px 0 0;
+    margin: 20px 0 0;
     padding: 0;
     text-align: left;
 }
@@ -1010,7 +1022,7 @@ a.btn-solid:hover {
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: #009B5A;
     border-bottom: 1px solid #999999;
     padding-bottom: 3px;
     margin: 0 0 9px;
@@ -1048,7 +1060,7 @@ a.btn-solid:hover {
     font-family: Georgia, 'Times New Roman', serif;
     font-size: 18px;
     font-weight: 700;
-    color: var(--brand-strong);
+    color: #1E4D36;
     margin: 0 0 1px;
 }
 
@@ -1062,7 +1074,7 @@ a.btn-solid:hover {
 .ats-client {
     font-size: 16px;
     font-weight: 700;
-    color: var(--brand-strong);
+    color: #1E4D36;
     margin: 8px 0 4px;
 }
 
@@ -1077,6 +1089,10 @@ a.btn-solid:hover {
     border-bottom: 1px dotted #666666;
 }
 .ats a:hover { color: #000000; border-bottom-color: #000000; }
+
+.ats-note a {
+    white-space: nowrap;
+}
 
 /* --------------------------------------------------------------
    12. TERMINAL
@@ -1303,10 +1319,59 @@ a.btn-solid:hover {
     .ats-h2,
     .ats-name,
     .ats-job-title,
-    .ats-client,
+    .ats-job { break-inside: auto; }
+    .ats p,
+    .ats-note,
+    .ats-meta,
+    .ats-tagline,
+    .ats-contact {
+        break-inside: avoid;
+    }
     .ats-job {
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
+    }
+
+    /* Compact the ATS header so the Experience section is not pushed
+       to a new page, leaving a large gap on page 1. */
+    .ats-head {
+        padding-bottom: 8px;
+        margin-bottom: 10px;
+    }
+
+    .ats-tagline {
+        margin-bottom: 2px;
+    }
+
+    .ats-facts {
+        margin-top: 8px;
+        gap: 0 20px;
+    }
+
+    .ats-sec {
+        margin-bottom: 10px;
+    }
+
+    .ats-job {
+        margin-bottom: 6px;
+        padding-bottom: 6px;
+    }
+
+    /* The downloadable PDF always uses the emerald theme */
+    .ats-h2,
+    .ats-client {
+        color: #009B5A !important;
+    }
+
+    .ats-name,
+    .ats-job-title,
+    .ats-tagline {
+        color: #1E4D36 !important;
+    }
+
+    .ats-tagline {
+        border-bottom: 1px solid #009B5A;
+        padding-bottom: 2px;
     }
 
     .ats-h2 { break-after: avoid; }
