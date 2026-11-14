@@ -44,6 +44,33 @@
     ctx.restore();
   }
 
+  /**
+   * Nearest flower-of-life circle centre to a point.
+   *
+   * Odd rows are offset by half a cell, so rounding the row first and then the
+   * column can pick a centre that is not actually the closest. Check the three
+   * candidate rows around the point and keep the true nearest.
+   */
+  function snap(x, y, dx, dy) {
+    const base = Math.round(y / dy);
+    let best = null;
+    let bestDist = Infinity;
+
+    for (let row = base - 1; row <= base + 1; row++) {
+      const offset = row % 2 ? dx / 2 : 0;
+      const col = Math.round((x - offset) / dx);
+      const px = col * dx + offset;
+      const py = row * dy;
+      const dist = (px - x) ** 2 + (py - y) ** 2;
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = { x: px, y: py };
+      }
+    }
+
+    return best;
+  }
+
   function draw() {
     if (!canvas) return;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -66,8 +93,12 @@
     const dy = radius * 1.5;
     const cols = Math.ceil(w / dx) + 2;
     const rows = Math.ceil(h / dy) + 2;
-    const cx = mouse.active ? mouse.x : -9999;
-    const cy = mouse.active ? mouse.y : -9999;
+
+    // Lock the cube to the nearest flower-of-life circle centre so it can
+    // never sit off-grid or drift asymmetrically between points.
+    const snapped = mouse.active ? snap(mouse.x, mouse.y, dx, dy) : null;
+    const cx = snapped ? snapped.x : -9999;
+    const cy = snapped ? snapped.y : -9999;
 
     for (let row = -1; row < rows; row++) {
       for (let col = -1; col < cols; col++) {

@@ -14,7 +14,7 @@
   import Terminal from './lib/components/Terminal.svelte';
   import Footer from './lib/components/Footer.svelte';
   import FlowerOfLife from './lib/components/geometry/FlowerOfLife.svelte';
-  import Hexagram from './lib/components/geometry/Hexagram.svelte';
+  import Radar from './lib/components/geometry/Radar.svelte';
 
   // Mirror the theme onto <html> whenever it changes.
   $: applyTheme($palette, $mode);
@@ -35,7 +35,7 @@
 
     <div id="view-interactive" hidden={$view !== 'interactive'}>
       <Section title={equilibrium.heading}>
-        <Hexagram />
+        <Radar />
       </Section>
 
       <Section title="Profile">

@@ -263,10 +263,26 @@ export const education = [
   }
 ];
 
+/**
+ * Full-spectrum capability profile.
+ *
+ * `axes` drives the radar chart: six axes, one per capability the role spans.
+ * `value` is a self-assessment on a 0–1 scale, not a measurement — the shape
+ * is meant to read as broad rather than spiky.
+ */
 export const equilibrium = {
   heading: '✧ Sacred Star Equilibrium',
+  axes: [
+    { label: 'Product', value: 0.85 },
+    { label: 'Backend', value: 0.9 },
+    { label: 'Frontend', value: 0.85 },
+    { label: 'Cloud & Infra', value: 0.95 },
+    { label: 'Scaling & Ops', value: 0.9 },
+    { label: 'CI/CD', value: 0.95 }
+  ],
   paragraphs: [
-    'The hexagram is two interlocking triangles: one pointing up, one pointing down. Neither is complete alone; the overlap is where the capability sits.',
-    'Upward triangle — Full-Stack Delivery: product, backend, frontend. Downward triangle — DevOps Platform: cloud, infrastructure, scaling, monitoring, CI/CD. The intersection is the role: shipping a product end to end and running the platform it runs on.'
+    'Six axes, one per capability the role spans. The shape is deliberately broad rather than spiky: no single axis carries the profile.',
+    'Product, backend and frontend on one side; cloud, scaling and CI/CD on the other. The overlap is the role — shipping a product end to end and running the platform it runs on.',
+    'Values are a self-assessment, not a benchmark.'
   ]
 };
