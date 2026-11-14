@@ -1410,3 +1410,133 @@ a.btn-solid:hover {
         border: 0 !important;
     }
 }
+/* --------------------------------------------------------------
+   16. SACRED GEOMETRY LAYER
+   -------------------------------------------------------------- */
+
+/* Fixed full-viewport flower-of-life canvas behind all content */
+.geo-bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.85;
+    transition: opacity 0.4s ease;
+}
+
+/* Everything else sits above the canvas */
+.topbar,
+.shell {
+    position: relative;
+    z-index: 1;
+}
+
+.geo-canvas-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    border: 1px solid var(--hairline);
+    background: var(--surface-subtle);
+    overflow: hidden;
+}
+
+.geo-canvas-wrap canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Hero geometry accent — top-right corner */
+.hero {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-geo {
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 190px;
+    height: 190px;
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@media (max-width: 900px) {
+    .hero-geo { width: 130px; height: 130px; top: -20px; right: -20px; }
+}
+
+.hero > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* --------------------------------------------------------------
+   17. TERMINAL — richer palette
+   -------------------------------------------------------------- */
+
+.term-line.term-ok { color: var(--term-ok); }
+.term-line.term-dim { color: var(--term-dim); }
+.term-line.term-warn { color: #FCA5A5; }
+.term-line.term-echo { color: var(--term-accent); }
+
+.term-out::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+/* --------------------------------------------------------------
+   19. EQUILIBRIUM BLOCK
+   -------------------------------------------------------------- */
+
+.equilibrium {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    align-items: center;
+}
+
+@media (min-width: 768px) {
+    .equilibrium {
+        grid-template-columns: 300px minmax(0, 1fr);
+        gap: 28px;
+    }
+}
+
+.equilibrium-canvas {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+
+/* --------------------------------------------------------------
+   21. TERMINAL COLOUR POLISH
+   -------------------------------------------------------------- */
+
+.term-line.term-echo { color: var(--term-accent); }
+.term-line.term-ok { color: var(--term-ok); }
+.term-line.term-dim { color: var(--term-dim); }
+.term-line.term-warn { color: var(--term-warn); }
+
+.term-out { scrollbar-width: thin; }
+.term-out::-webkit-scrollbar { width: 8px; }
+.term-out::-webkit-scrollbar-track { background: transparent; }
+.term-out::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.16);
+    border-radius: 9999px;
+}
+
+/* --------------------------------------------------------------
+   22. PRINT — hide geometry
+   -------------------------------------------------------------- */
+
+@media print {
+    .geo-bg,
+    .hero-geo,
+    .equilibrium {
+        display: none !important;
+    }
+}
