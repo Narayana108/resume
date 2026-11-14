@@ -676,6 +676,7 @@ a.btn-solid:hover {
 }
 
 .prose {
+    max-width: 600px;
     font-family: 'EB Garamond', Georgia, serif;
     font-size: 18px;
     line-height: 1.62;
@@ -702,9 +703,13 @@ a.btn-solid:hover {
     list-style: none;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px 28px;
+}
+
+@media (min-width: 700px) {
+    .skills { grid-template-columns: 1fr 1fr; }
 }
 
 .skills li {
