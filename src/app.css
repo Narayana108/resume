@@ -1,0 +1,432 @@
+/* ==========================================================================
+   Nārāyaṇa Dās Harricharaṇ — Resume
+   Theme tokens + global base styles. Component styles live in their .svelte
+   files; only tokens, resets and shared primitives belong here.
+   ========================================================================== */
+
+:root,
+html[data-palette="indigo"] {
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --surface-subtle: #f4f4f4;
+  --ink: #222524;
+  --ink-muted: #404040;
+  --ink-faint: #6b6b6b;
+  --brand: #6d28d9;
+  --brand-strong: #5b21b6;
+  --accent: #1d297a;
+  --accent-soft: rgba(29, 41, 122, 0.09);
+  --brand-soft: rgba(109, 40, 217, 0.1);
+  --hairline: #e5e5e5;
+  --hairline-strong: #d4d4d4;
+  --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05), 0 4px 12px -4px rgba(0, 0, 0, 0.03);
+  --shadow-hover: 0 12px 32px -12px rgba(0, 0, 0, 0.08);
+  --glow: rgba(109, 40, 217, 0.16);
+  --term-bg: #0e1116;
+  --term-bar: #161b22;
+  --term-ink: #d6dee8;
+  --term-dim: #7d8894;
+  --term-ok: #c4b5fd;
+  --term-warn: #fca5a5;
+  --term-accent: #ddd6fe;
+  --btn-bg: #6d28d9;
+  --btn-bg-hover: #5b21b6;
+  --btn-ink: #ffffff;
+  --bub-ink: #5b21b6;
+  --bub-border: #6d28d9;
+  --bub-1: #f5f0fe;
+  --bub-2: #ede3fd;
+  --bub-3: #e3d5fc;
+  --bub-glow: rgba(109, 40, 217, 0.3);
+}
+
+html[data-palette="emerald"] {
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --surface-subtle: #f1f7f3;
+  --ink: #17211c;
+  --ink-muted: #3a4a42;
+  --ink-faint: #5c6b63;
+  --brand: #009b5a;
+  --brand-strong: #1e4d36;
+  --accent: #1e4d36;
+  --accent-soft: rgba(30, 77, 54, 0.08);
+  --brand-soft: rgba(0, 155, 90, 0.12);
+  --hairline: #e0e8e3;
+  --hairline-strong: #cbd8d0;
+  --shadow: 0 10px 30px -10px rgba(23, 33, 28, 0.05), 0 4px 12px -4px rgba(23, 33, 28, 0.03);
+  --shadow-hover: 0 12px 32px -12px rgba(23, 33, 28, 0.08);
+  --glow: rgba(0, 155, 90, 0.16);
+  --term-bg: #0b1410;
+  --term-bar: #121e18;
+  --term-ink: #d6e8de;
+  --term-dim: #7d9488;
+  --term-ok: #6ee7b7;
+  --term-warn: #fca5a5;
+  --term-accent: #a7f3d0;
+  --btn-bg: #009b5a;
+  --btn-bg-hover: #1e4d36;
+  --btn-ink: #ffffff;
+  --bub-ink: #0e9f6e;
+  --bub-border: #009b5a;
+  --bub-1: #effaf4;
+  --bub-2: #e2f5eb;
+  --bub-3: #d2eee0;
+  --bub-glow: rgba(0, 179, 104, 0.35);
+}
+
+html[data-mode="dark"][data-palette="indigo"] {
+  --bg: #14101f;
+  --surface: #1d1729;
+  --surface-subtle: #251d34;
+  --ink: #f4f1fb;
+  --ink-muted: #c9c0de;
+  --ink-faint: #928cb0;
+  --brand: #ddd6fe;
+  --brand-strong: #ede9fe;
+  --accent: #a5b4fc;
+  --accent-soft: rgba(165, 180, 252, 0.16);
+  --brand-soft: rgba(196, 181, 253, 0.16);
+  --hairline: #322a45;
+  --hairline-strong: #453a5e;
+  --shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.55);
+  --shadow-hover: 0 20px 42px -12px rgba(196, 181, 253, 0.28);
+  --glow: rgba(196, 181, 253, 0.3);
+  --term-bg: #0f0b18;
+  --term-bar: #171122;
+  --btn-bg: #7c3aed;
+  --btn-bg-hover: #8b5cf6;
+  --btn-ink: #ffffff;
+  --bub-ink: #ede9fe;
+  --bub-border: #a78bfa;
+  --bub-1: rgba(167, 139, 250, 0.14);
+  --bub-2: rgba(167, 139, 250, 0.22);
+  --bub-3: rgba(167, 139, 250, 0.32);
+  --bub-glow: rgba(167, 139, 250, 0.45);
+}
+
+html[data-mode="dark"][data-palette="emerald"] {
+  --bg: #06110d;
+  --surface: #0c1f18;
+  --surface-subtle: #112d24;
+  --ink: #ecfdf5;
+  --ink-muted: #a7c9bb;
+  --ink-faint: #6e9a88;
+  --brand: #34d399;
+  --brand-strong: #6ee7b7;
+  --accent: #6ee7b7;
+  --accent-soft: rgba(110, 231, 183, 0.14);
+  --brand-soft: rgba(52, 211, 153, 0.14);
+  --hairline: #163026;
+  --hairline-strong: #1e4034;
+  --shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.6);
+  --shadow-hover: 0 20px 42px -12px rgba(52, 211, 153, 0.2);
+  --glow: rgba(52, 211, 153, 0.24);
+  --term-bg: #04100b;
+  --term-bar: #0a1a13;
+  --btn-bg: #059669;
+  --btn-bg-hover: #047857;
+  --btn-ink: #ffffff;
+  --bub-ink: #d1fae5;
+  --bub-border: #34d399;
+  --bub-1: rgba(52, 211, 153, 0.14);
+  --bub-2: rgba(52, 211, 153, 0.22);
+  --bub-3: rgba(52, 211, 153, 0.32);
+  --bub-glow: rgba(52, 211, 153, 0.45);
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 16.5px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  font-weight: 600;
+  margin: 0;
+  color: var(--ink);
+}
+
+p {
+  margin: 0 0 0.85em;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+a {
+  color: var(--brand);
+  text-decoration: none;
+  border-bottom: 1.5px dotted var(--brand);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+a:hover {
+  color: var(--brand-strong);
+  border-bottom-color: var(--brand-strong);
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* The hidden attribute must beat any author display rule. */
+[hidden] {
+  display: none !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--hairline-strong);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand);
+}
+
+/* --------------------------------------------------------------------------
+   Shared primitives
+   -------------------------------------------------------------------------- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.card:hover {
+  border-color: var(--brand);
+  box-shadow: var(--shadow-hover), 0 0 0 4px var(--glow);
+}
+
+.card.pad {
+  padding: 20px;
+}
+
+@media (min-width: 640px) {
+  .card.pad {
+    padding: 26px;
+  }
+}
+
+/* Full-viewport flower-of-life canvas behind all content. */
+.geo-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.85;
+  transition: opacity 0.4s ease;
+}
+
+.topbar,
+.shell {
+  position: relative;
+  z-index: 1;
+}
+
+/* Prose shared by the profile and equilibrium blocks. */
+.prose {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.62;
+  color: var(--ink);
+  margin-bottom: 0.85em;
+}
+
+.prose:last-child {
+  margin-bottom: 0;
+}
+
+.prose-label {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* Bullets shared by profile and experience entries. */
+.bullets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+/* --------------------------------------------------------------------------
+   Print — ATS sheet only
+   -------------------------------------------------------------------------- */
+
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .topbar,
+  .terminal,
+  .colophon,
+  .hero,
+  .geo-bg,
+  #view-interactive {
+    display: none !important;
+  }
+
+  .shell {
+    max-width: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .center {
+    display: block;
+  }
+
+  /* The wrapper carries the hidden attribute on screen; force it open
+     for print so the ATS sheet is the only thing that prints. */
+  #view-ats {
+    display: block !important;
+  }
+
+  .ats {
+    font-size: 10.2pt;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+  }
+
+  .ats-name {
+    font-size: 17pt;
+  }
+
+  .ats-h2 {
+    font-size: 9.8pt;
+  }
+
+  .ats-job-title {
+    font-size: 10.8pt;
+  }
+
+  .ats-job {
+    break-inside: avoid;
+  }
+
+  .ats,
+  .ats-h2,
+  .ats-name,
+  .ats-job-title,
+  .ats-client,
+  .ats-job {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .ats-h2,
+  .ats-job-title {
+    break-after: avoid;
+  }
+
+  .ats-meta,
+  .ats-client {
+    break-after: avoid;
+  }
+
+  .ats-list li {
+    break-inside: avoid;
+  }
+
+  .ats a {
+    color: #000000 !important;
+    border: 0 !important;
+  }
+
+  /* Compact the ATS header so Experience is not pushed to a new page. */
+  .ats-head {
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+  }
+
+  .ats-tagline {
+    margin-bottom: 2px;
+    border-bottom: 1px solid #009b5a;
+    padding-bottom: 2px;
+  }
+
+  .ats-facts {
+    margin-top: 8px;
+    gap: 0 20px;
+  }
+
+  .ats-sec {
+    margin-bottom: 10px;
+  }
+
+  .ats-job {
+    margin-bottom: 6px;
+    padding-bottom: 6px;
+    break-inside: avoid;
+  }
+
+  /* The downloadable PDF always uses the emerald theme. */
+  .ats-h2,
+  .ats-client,
+  .ats-name,
+  .ats-job-title,
+  .ats-tagline {
+    color: #009b5a !important;
+  }
+}
