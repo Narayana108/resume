@@ -82,7 +82,7 @@
 
                     <h1 class="hero-name">Nārāyaṇa Dās Harricharaṇ</h1>
                     <p class="hero-role">Senior DevOps / Platform Engineer</p>
-                    <p class="hero-tagline">Infrastructure &amp; Cloud Engineering · Full-Stack Development · AI Systems</p>
+                    <p class="hero-tagline">Infrastructure &amp; Cloud · Full-Stack Development · AI Systems</p>
 
                     <dl class="facts">
                         <div class="fact">
@@ -99,13 +99,13 @@
                         </div>
                         <div class="fact">
                             <dt>Languages</dt>
-                            <dd>English, Afrikaans and Hindi</dd>
+                            <dd>English, Afrikaans, Hindi and Sanskrit</dd>
                         </div>
                     </dl>
 
                     <div class="hero-actions">
-                        <a class="btn-ghost" href="mailto:narayan-das@tuta.io">
-                            <span aria-hidden="true">✉</span> narayan-das@tuta.io
+                        <a class="btn-ghost" id="email-link" data-user="narayan-das" data-domain="tuta" data-tld="io">
+                            <span aria-hidden="true">✉</span> <span id="email-text">Email</span>
                         </a>
                         <a class="btn-ghost" href="https://github.com/Narayana108/" target="_blank" rel="noopener">
                             <span aria-hidden="true">⌘</span> github.com/Narayana108
@@ -710,6 +710,33 @@
     var modeIcon = document.getElementById('mode-icon');
     var modeLabel = document.getElementById('mode-label');
 
+    /* ---------------------------------------------
+       Email — assembled from data attributes so the
+       address never appears verbatim in the HTML
+       source. Readable by browsers and ATS parsers
+       that execute the DOM; opaque to naive
+       regex scrapers.
+       --------------------------------------------- */
+    var emailLink = document.getElementById('email-link');
+    var emailText = document.getElementById('email-text');
+
+    function emailAddress() {
+        if (!emailLink) { return ''; }
+        var u = emailLink.getAttribute('data-user');
+        var d = emailLink.getAttribute('data-domain');
+        var t = emailLink.getAttribute('data-tld');
+        return u + '@' + d + '.' + t;
+    }
+
+    function initEmail() {
+        if (!emailLink) { return; }
+        var addr = emailAddress();
+        emailLink.setAttribute('href', 'mailto:' + addr);
+        if (emailText) { emailText.textContent = addr; }
+    }
+
+    initEmail();
+
     function setView(view) {
         var isAts = view === 'ats';
         viewInteractive.hidden = isAts;
@@ -868,7 +895,7 @@
 
             case 'contact':
                 printBlock([
-                    'Email:    narayan-das@tuta.io',
+                    'Email:    ' + emailAddress(),
                     'GitHub:   https://github.com/Narayana108/',
                     'Website:  https://github.com/Narayana108/resume'
                 ], 'term-ok');
