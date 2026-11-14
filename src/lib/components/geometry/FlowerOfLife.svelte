@@ -1,17 +1,18 @@
 <script>
   /**
-   * Full-viewport flower-of-life background with a Metatron's Cube that locks
-   * to the lattice.
+   * Full-viewport flower-of-life background.
+   *
+   * The static layer is the 19-circle seed lattice tiled across the viewport.
+   * The dynamic layer is the Seed + Lotus Halo motif — twin containment rings,
+   * a 12-circle lotus halo, and the individual ring under the cursor lit gold —
+   * which eases to the nearest lattice centre as the pointer moves.
    *
    * Performance shape:
-   *  - The static lattice is rendered once into an offscreen canvas and blitted
-   *    per frame, so a frame costs one drawImage plus a handful of nearby
-   *    circles instead of a full re-stroke of every circle.
-   *  - Theme colours are cached and only re-read when <html> changes palette or
-   *    mode, not per frame (getComputedStyle forces a style recalc).
-   *  - The cube is a single prebuilt Path2D stroked once, not 78 beginPath calls.
-   *  - The cube eases toward the nearest lattice point instead of teleporting
-   *    between them, so it stays locked to the grid but moves continuously.
+   *  - The lattice is rendered once into an offscreen canvas and blitted per
+   *    frame, so a frame costs one drawImage plus the motif, not a full
+   *    re-stroke of every circle.
+   *  - Theme colours are cached and re-read only when <html> changes palette or
+   *    mode, never per frame (getComputedStyle forces a style recalc).
    *  - The rAF loop stops when nothing is moving.
    */
   import { onMount } from 'svelte';
@@ -21,7 +22,7 @@
   const RADIUS = 46;
   const DX = RADIUS * Math.sqrt(3);
   const DY = RADIUS * 1.5;
-  const INFLUENCE = 190;
+
   const EASE = 0.22;
   const FADE = 0.14;
 
@@ -33,10 +34,10 @@
 
   let brand = '#009B5A';
   let accent = '#1E4D36';
+  let highlight = '#34D399';
   let staticLayer = null;
-  let cubePath = null;
 
-  // Eased cube position, and the lattice point it is easing toward.
+  // Eased motif centre, and the lattice point it is easing toward.
   const pos = { x: 0, y: 0 };
   let target = null;
   let alpha = 0;
@@ -80,28 +81,6 @@
     return best;
   }
 
-  /** Metatron's Cube: centre, 6 inner, 6 outer, every pair connected. */
-  function buildCube() {
-    const pts = [[0, 0]];
-    for (let i = 0; i < 6; i++) {
-      const a = (Math.PI / 3) * i - Math.PI / 2;
-      pts.push([Math.cos(a) * RADIUS, Math.sin(a) * RADIUS]);
-    }
-    for (let i = 0; i < 6; i++) {
-      const a = (Math.PI / 3) * i;
-      pts.push([Math.cos(a) * RADIUS * Math.sqrt(3), Math.sin(a) * RADIUS * Math.sqrt(3)]);
-    }
-
-    const path = new Path2D();
-    for (let p = 0; p < pts.length; p++) {
-      for (let q = p + 1; q < pts.length; q++) {
-        path.moveTo(pts[p][0], pts[p][1]);
-        path.lineTo(pts[q][0], pts[q][1]);
-      }
-    }
-    return path;
-  }
-
   /** Render the static lattice once into an offscreen canvas. */
   function buildStatic() {
     const layer = document.createElement('canvas');
@@ -141,43 +120,46 @@
 
     if (alpha <= 0.001) return;
 
-    // Only the cells that can be lit by the cube need re-stroking.
-    const reach = Math.ceil(INFLUENCE / DX) + 1;
-    const rowReach = Math.ceil(INFLUENCE / DY) + 1;
-    const baseRow = Math.round(pos.y / DY);
-    const baseCol = Math.round(pos.x / DX);
+    const { x, y } = pos;
 
-    for (let row = baseRow - rowReach; row <= baseRow + rowReach; row++) {
-      const offset = row % 2 ? DX / 2 : 0;
-      for (let col = baseCol - reach; col <= baseCol + reach; col++) {
-        const x = col * DX + offset;
-        const y = row * DY;
-        const dist = Math.hypot(x - pos.x, y - pos.y);
-        const near = Math.max(0, 1 - dist / INFLUENCE) * alpha;
-        if (near <= 0.02) continue;
+    // Twin containment rings.
+    ctx.beginPath();
+    ctx.arc(x, y, RADIUS * 3.0, 0, Math.PI * 2);
+    ctx.strokeStyle = rgba(accent, 0.3 * alpha);
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
 
-        ctx.beginPath();
-        ctx.arc(x, y, RADIUS, 0, Math.PI * 2);
-        ctx.strokeStyle = rgba(accent, near * 0.35);
-        ctx.lineWidth = 1 + near * 1.1;
-        ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(x, y, RADIUS * 3.16, 0, Math.PI * 2);
+    ctx.strokeStyle = rgba(highlight, 0.34 * alpha);
+    ctx.setLineDash([4, 4]);
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+    ctx.setLineDash([]);
 
-        ctx.beginPath();
-        ctx.arc(x, y, RADIUS * 0.5, 0, Math.PI * 2);
-        ctx.strokeStyle = rgba(accent, near * 0.22);
-        ctx.lineWidth = 1;
-        ctx.stroke();
-      }
+    // Lotus halo: 12 petals around the seed, alternating accent and highlight.
+    for (let i = 0; i < 12; i++) {
+      const a = (i * Math.PI) / 6;
+      const px = x + RADIUS * 2.35 * Math.cos(a);
+      const py = y + RADIUS * 2.35 * Math.sin(a);
+      ctx.beginPath();
+      ctx.arc(px, py, RADIUS * 0.65, 0, Math.PI * 2);
+      ctx.strokeStyle = rgba(i % 2 === 0 ? accent : highlight, 0.26 * alpha);
+      ctx.lineWidth = 1.6;
+      ctx.stroke();
     }
 
-    if (cubePath) {
-      ctx.save();
-      ctx.translate(pos.x, pos.y);
-      ctx.strokeStyle = rgba(accent, 0.3 * alpha);
-      ctx.lineWidth = 1;
-      ctx.stroke(cubePath);
-      ctx.restore();
-    }
+    // The individual ring under the cursor, lit.
+    ctx.beginPath();
+    ctx.arc(x, y, RADIUS, 0, Math.PI * 2);
+    ctx.strokeStyle = rgba(highlight, 0.9 * alpha);
+    ctx.lineWidth = 2.2;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, Math.PI * 2);
+    ctx.fillStyle = rgba(highlight, 0.95 * alpha);
+    ctx.fill();
   }
 
   function frame() {
@@ -197,8 +179,7 @@
     draw();
 
     const settled =
-      (!target || (pos.x === target.x && pos.y === target.y)) &&
-      alpha === alphaTarget;
+      (!target || (pos.x === target.x && pos.y === target.y)) && alpha === alphaTarget;
 
     if (!settled) {
       raf = requestAnimationFrame(frame);
@@ -248,12 +229,12 @@
   function retheme() {
     brand = read('--brand', '#009B5A');
     accent = read('--accent', '#1E4D36');
+    highlight = read('--geo-highlight', '#34D399');
     buildStatic();
     draw();
   }
 
   onMount(() => {
-    cubePath = buildCube();
     retheme();
     resize();
 

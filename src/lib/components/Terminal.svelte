@@ -1,4 +1,5 @@
 <script>
+  import { tick } from 'svelte';
   import { site, profile, skills, experience, education } from '../data/resume.js';
   import { palette, mode, view, setPalette, setMode, setView } from '../stores/theme.js';
 
@@ -107,6 +108,34 @@
     }
   };
 
+  /**
+   * Commands that change the view resize the document, and the browser clamps
+   * scrollY to the new maximum. Coming back the other way leaves the viewport
+   * stranded wherever the clamp put it, which reads as the page jumping.
+   *
+   * Anchor the terminal to its current viewport position across the update so
+   * the thing being typed into stays put, whatever the document does.
+   */
+  async function anchored(fn) {
+    const el = document.querySelector('.terminal');
+    if (!el) {
+      fn();
+      return;
+    }
+
+    const before = el.getBoundingClientRect().top;
+    fn();
+    await tick();
+
+    const settle = () => {
+      const drift = el.getBoundingClientRect().top - before;
+      if (Math.abs(drift) > 1) window.scrollTo({ top: window.scrollY + drift, behavior: 'instant' });
+    };
+
+    settle();
+    requestAnimationFrame(settle);
+  }
+
   function run(raw) {
     const cmd = raw.trim();
     if (!cmd) return;
@@ -122,7 +151,7 @@
     }
 
     if (head === 'mode' || head === 'view') {
-      fn();
+      anchored(fn);
     } else {
       fn(rest[0]);
     }

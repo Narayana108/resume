@@ -31,6 +31,7 @@ html[data-palette="indigo"] {
   --term-accent: #ddd6fe;
   --term-key: #a78bfa;
   --term-link: #c4b5fd;
+  --geo-highlight: #a78bfa;
   --btn-bg: #6d28d9;
   --btn-bg-hover: #5b21b6;
   --btn-ink: #ffffff;
@@ -40,6 +41,12 @@ html[data-palette="indigo"] {
   --bub-2: #ede3fd;
   --bub-3: #e3d5fc;
   --bub-glow: rgba(109, 40, 217, 0.3);
+}
+
+/* The terminal anchors its own scroll position across view changes; the
+   browser's scroll anchoring would fight it and reintroduce the jump. */
+html {
+  overflow-anchor: none;
 }
 
 html[data-palette="emerald"] {
@@ -68,6 +75,7 @@ html[data-palette="emerald"] {
   --term-accent: #a7f3d0;
   --term-key: #34d399;
   --term-link: #6ee7b7;
+  --geo-highlight: #34d399;
   --btn-bg: #009b5a;
   --btn-bg-hover: #1e4d36;
   --btn-ink: #ffffff;
@@ -100,6 +108,7 @@ html[data-mode="dark"][data-palette="indigo"] {
   --term-bar: #171122;
   --term-key: #c4b5fd;
   --term-link: #ddd6fe;
+  --geo-highlight: #ddd6fe;
   --btn-bg: #7c3aed;
   --btn-bg-hover: #8b5cf6;
   --btn-ink: #ffffff;
@@ -132,6 +141,7 @@ html[data-mode="dark"][data-palette="emerald"] {
   --term-bar: #0a1a13;
   --term-key: #6ee7b7;
   --term-link: #a7f3d0;
+  --geo-highlight: #6ee7b7;
   --btn-bg: #059669;
   --btn-bg-hover: #047857;
   --btn-ink: #ffffff;
@@ -154,7 +164,9 @@ html[data-mode="dark"][data-palette="emerald"] {
 }
 
 html {
-  scroll-behavior: smooth;
+  /* Deliberately not `scroll-behavior: smooth`. It animates every programmatic
+     scroll, including the browser's own clamp when a view change resizes the
+     document, which reads as the page jumping to another part of the page. */
   -webkit-text-size-adjust: 100%;
 }
 
