@@ -1,6 +1,13 @@
 <script>
   import { site } from '../data/resume.js';
   import { palette, mode, view, setPalette, setMode, setView, toggleMode } from '../stores/theme.js';
+  import { isAudioEnabled, toggleAudio } from '../audio.js';
+
+  let audioOn = $state(isAudioEnabled());
+
+  function onAudioToggle() {
+    audioOn = toggleAudio();
+  }
 
   const palettes = [
     { id: 'indigo', label: 'Purple', title: 'Purple and indigo' },
@@ -63,6 +70,17 @@
       >
         <span aria-hidden="true">{$mode === 'dark' ? '☾' : '☀'}</span>
         <span>{$mode === 'dark' ? 'Dark' : 'Light'}</span>
+      </button>
+
+      <button
+        type="button"
+        class="btn-ghost"
+        title={audioOn ? 'Mute harmonic chimes' : 'Unmute harmonic chimes'}
+        aria-pressed={audioOn}
+        onclick={onAudioToggle}
+      >
+        <span aria-hidden="true">{audioOn ? '\u{1F50A}' : '\u{1F507}'}</span>
+        <span>{audioOn ? 'Sound' : 'Muted'}</span>
       </button>
 
       <a

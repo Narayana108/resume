@@ -139,7 +139,19 @@
   onMount(() => {
     draw();
     window.addEventListener('resize', draw);
-    return () => window.removeEventListener('resize', draw);
+
+    // The chart is painted, not styled, so a palette or mode change does not
+    // repaint it on its own. Watch the theme attributes and redraw.
+    const observer = new MutationObserver(draw);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-palette', 'data-mode']
+    });
+
+    return () => {
+      window.removeEventListener('resize', draw);
+      observer.disconnect();
+    };
   });
 </script>
 
