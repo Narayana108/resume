@@ -26,6 +26,7 @@
   const IDLE_MS = 1100;
   const DRAG_SENS = 0.0085;
   const CLICK_SLOP = 6;
+  const HOLD_MS = 4200;
 
   function read(name, fallback) {
     return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
@@ -183,6 +184,7 @@
     let lastX = 0;
     let lastY = 0;
     let lastInteract = 0;
+    let lastAdvance = 0;
 
     const reduced =
       typeof window.matchMedia === 'function' &&
@@ -279,6 +281,9 @@
           }
         }
 
+        // Rotate for a while, then morph into the next form on its own.
+        if (!dragging && now - lastAdvance > HOLD_MS) advance(false);
+
         if (morph < 1) morph = Math.min(1, morph + MORPH_STEP);
       }
 
@@ -286,11 +291,12 @@
       raf = requestAnimationFrame(frame);
     }
 
-    function advance() {
+    function advance(withSound) {
       previous = current;
       current = ORDER[(ORDER.indexOf(current) + 1) % ORDER.length];
       morph = 0;
-      playHarmonicChime(648, 1.1);
+      lastAdvance = performance.now();
+      if (withSound) playHarmonicChime(648, 1.1);
     }
 
     function onDown(e) {
@@ -302,6 +308,7 @@
       vel.x = 0;
       vel.y = 0;
       lastInteract = performance.now();
+      lastAdvance = lastInteract;
       canvas.setPointerCapture(e.pointerId);
       canvas.classList.add('is-grabbing');
     }
@@ -335,10 +342,11 @@
       if (moved < CLICK_SLOP) {
         vel.x = 0;
         vel.y = 0;
-        advance();
+        advance(true);
       }
     }
 
+    lastAdvance = performance.now();
     measure();
     window.addEventListener('resize', measure);
     canvas.addEventListener('pointerdown', onDown);

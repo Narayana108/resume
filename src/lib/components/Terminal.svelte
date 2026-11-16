@@ -226,7 +226,7 @@
     gap: 10px;
     padding: 9px 14px;
     background: var(--term-bar);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid var(--term-line);
     flex-wrap: wrap;
   }
 
@@ -239,7 +239,7 @@
   .terminal-title {
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 11.5px;
-    color: #9aa4b2;
+    color: var(--term-dim);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -248,9 +248,9 @@
   .terminal-quick { display: flex; gap: 5px; margin-left: auto; flex-wrap: wrap; }
 
   .term-chip {
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(255, 255, 255, 0.05);
-    color: #c7d0db;
+    border: 1px solid var(--term-line);
+    background: var(--term-chip);
+    color: var(--term-ink);
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 10px;
     padding: 3px 8px;
@@ -259,7 +259,7 @@
     transition: background 0.2s ease, color 0.2s ease;
   }
 
-  .term-chip:hover { background: rgba(255, 255, 255, 0.14); color: #fff; }
+  .term-chip:hover { background: var(--term-chip-hover); color: var(--term-ink); }
 
   .terminal-body { padding: 14px; background: var(--term-bg); }
 
@@ -297,7 +297,7 @@
     gap: 8px;
     margin-top: 12px;
     padding-top: 11px;
-    border-top: 1px solid rgba(255, 255, 255, 0.09);
+    border-top: 1px solid var(--term-line);
   }
 
   .term-prompt {
@@ -313,20 +313,20 @@
     min-width: 0;
     background: transparent;
     border: 0;
-    color: #fff;
+    color: var(--term-ink);
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 12px;
     padding: 4px 0;
   }
 
   .term-in:focus { outline: none; }
-  .term-in::placeholder { color: #5c6672; }
+  .term-in::placeholder { color: var(--term-dim); }
 
   .term-run {
     flex: 0 0 auto;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    background: rgba(255, 255, 255, 0.08);
-    color: #e5eaf0;
+    border: 1px solid var(--term-line);
+    background: var(--term-run-bg);
+    color: var(--term-run-ink);
     font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-size: 11px;
     font-weight: 600;
@@ -336,5 +336,5 @@
     transition: background 0.2s ease;
   }
 
-  .term-run:hover { background: rgba(255, 255, 255, 0.18); }
+  .term-run:hover { background: var(--term-run-bg-hover); }
 </style>
