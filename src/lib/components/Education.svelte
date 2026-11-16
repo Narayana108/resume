@@ -46,21 +46,6 @@
     margin: 0;
   }
 
-  .entry-date {
-    display: inline-block;
-    flex: 0 0 auto;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 12.5px;
-    font-weight: 500;
-    color: var(--ink-muted);
-    background: var(--surface-subtle);
-    border: 1px solid var(--hairline);
-    border-radius: 8px;
-    padding: 3px 9px;
-    white-space: nowrap;
-    align-self: flex-start;
-  }
-
   .cred-meta {
     font-family: 'EB Garamond', Georgia, serif;
     font-size: 16px;

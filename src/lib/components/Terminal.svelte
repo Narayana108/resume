@@ -10,6 +10,8 @@
   /** A line is a list of coloured segments: [text, class] pairs. */
   function pushSegs(segs) {
     output.push({ segs: segs.map(([t, c]) => ({ t, c: c || 't-val' })) });
+    // A long session would otherwise grow the array and the DOM without bound.
+    if (output.length > 200) output.splice(0, output.length - 200);
     scroll();
   }
 

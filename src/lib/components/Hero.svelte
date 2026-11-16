@@ -14,6 +14,14 @@
   let copied = false;
   let copyTimer;
 
+  const PORTRAITS = ['./pp-white.png', './pp-suit.png'];
+  let portrait = $state(0);
+  const avatarSrc = $derived(PORTRAITS[portrait]);
+
+  function togglePortrait() {
+    portrait = (portrait + 1) % PORTRAITS.length;
+  }
+
   function onMove(e) {
     if (reduced) return;
     const r = e.currentTarget.getBoundingClientRect();
@@ -46,7 +54,9 @@
 >
   <PolyhedralMorpher />
 
-  <img class="avatar" src="./pp.png" alt="" width="132" height="132" />
+  <button type="button" class="avatar-btn" onclick={togglePortrait} title="Switch portrait" aria-label="Switch portrait">
+    <img class="avatar" src={avatarSrc} alt="" width="132" height="132" />
+  </button>
 
   <div class="hero-body">
     <div class="tagline">
@@ -105,6 +115,17 @@
       align-items: flex-start;
       gap: 26px;
     }
+  }
+
+  .avatar-btn {
+    padding: 0;
+    border: 0;
+    background: none;
+    border-radius: 14px;
+    cursor: pointer;
+    flex: 0 0 auto;
+    line-height: 0;
+    display: block;
   }
 
   .avatar {
