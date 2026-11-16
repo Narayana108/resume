@@ -8,17 +8,24 @@
    * interpolating vertex positions rather than cross-fading. Edges are shaded by
    * average depth so the back of the solid reads darker than the front.
    *
-   * Purely decorative — pointer-events are off so it never intercepts the hero
-   * links or text selection.
+   * Interaction:
+   *  - drag orbits the solid spherically (horizontal drag spins it about Y,
+   *    vertical drag tips it about X), with the drag velocity carried into a
+   *    decaying inertia spin on release;
+   *  - a click that did not move advances to the next form;
+   *  - it drifts on its own again once the pointer has been still for a moment.
    */
   import { onMount } from 'svelte';
+  import { playHarmonicChime } from '../../audio.js';
 
   let canvas;
 
   const PHI = (1 + Math.sqrt(5)) / 2;
   const TWO_PI = Math.PI * 2;
-  const MORPH_STEP = 0.04;
-  const HOLD_MS = 4200;
+  const MORPH_STEP = 0.045;
+  const IDLE_MS = 1100;
+  const DRAG_SENS = 0.0085;
+  const CLICK_SLOP = 6;
 
   function read(name, fallback) {
     return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
@@ -165,10 +172,17 @@
     let raf = 0;
 
     const rot = { x: 0.42, y: 0.65, z: 0.15 };
+    const vel = { x: 0, y: 0 };
+
     let current = 'merkaba';
     let previous = 'merkaba';
     let morph = 1;
-    let lastAdvance = performance.now();
+
+    let dragging = false;
+    let moved = 0;
+    let lastX = 0;
+    let lastY = 0;
+    let lastInteract = 0;
 
     const reduced =
       typeof window.matchMedia === 'function' &&
@@ -213,7 +227,6 @@
         return project3D([ix, iy, iz], radius, cx, cy, rot.x, rot.y, rot.z);
       });
 
-      // Containment circle.
       ctx.beginPath();
       ctx.arc(cx, cy, radius * 1.12, 0, TWO_PI);
       ctx.strokeStyle = rgba(accent, 0.1);
@@ -248,31 +261,102 @@
       raf = 0;
 
       if (!reduced) {
-        rot.y += 0.007;
-        rot.x += 0.004;
-        rot.z += 0.002;
-        if (morph < 1) morph = Math.min(1, morph + MORPH_STEP);
+        if (!dragging) {
+          // Carry the release velocity, then settle into a slow drift.
+          rot.y += vel.y;
+          rot.x += vel.x;
+          vel.y *= 0.94;
+          vel.x *= 0.94;
 
-        if (now - lastAdvance > HOLD_MS) {
-          lastAdvance = now;
-          previous = current;
-          current = ORDER[(ORDER.indexOf(current) + 1) % ORDER.length];
-          morph = 0;
+          if (Math.abs(vel.y) < 0.0006 && Math.abs(vel.x) < 0.0006) {
+            vel.y = 0;
+            vel.x = 0;
+            if (now - lastInteract > IDLE_MS) {
+              rot.y += 0.007;
+              rot.x += 0.004;
+              rot.z += 0.002;
+            }
+          }
         }
+
+        if (morph < 1) morph = Math.min(1, morph + MORPH_STEP);
       }
 
       draw();
+      raf = requestAnimationFrame(frame);
+    }
 
-      if (!reduced) raf = requestAnimationFrame(frame);
+    function advance() {
+      previous = current;
+      current = ORDER[(ORDER.indexOf(current) + 1) % ORDER.length];
+      morph = 0;
+      playHarmonicChime(648, 1.1);
+    }
+
+    function onDown(e) {
+      if (!canvas) return;
+      dragging = true;
+      moved = 0;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      vel.x = 0;
+      vel.y = 0;
+      lastInteract = performance.now();
+      canvas.setPointerCapture(e.pointerId);
+      canvas.classList.add('is-grabbing');
+    }
+
+    function onMove(e) {
+      if (!dragging) return;
+      const dx = e.clientX - lastX;
+      const dy = e.clientY - lastY;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      moved += Math.abs(dx) + Math.abs(dy);
+
+      rot.y += dx * DRAG_SENS;
+      rot.x += dy * DRAG_SENS;
+
+      // Feed the drag velocity so the release keeps spinning.
+      vel.y = dx * DRAG_SENS * 0.55;
+      vel.x = dy * DRAG_SENS * 0.55;
+      lastInteract = performance.now();
+    }
+
+    function onUp(e) {
+      if (!dragging) return;
+      dragging = false;
+      if (canvas && canvas.hasPointerCapture(e.pointerId)) {
+        canvas.releasePointerCapture(e.pointerId);
+      }
+      if (canvas) canvas.classList.remove('is-grabbing');
+      lastInteract = performance.now();
+
+      if (moved < CLICK_SLOP) {
+        vel.x = 0;
+        vel.y = 0;
+        advance();
+      }
     }
 
     measure();
     window.addEventListener('resize', measure);
+    canvas.addEventListener('pointerdown', onDown);
+    canvas.addEventListener('pointermove', onMove);
+    canvas.addEventListener('pointerup', onUp);
+    canvas.addEventListener('pointercancel', onUp);
+
     raf = requestAnimationFrame(frame);
 
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener('resize', measure);
+      if (canvas) {
+        canvas.removeEventListener('pointerdown', onDown);
+        canvas.removeEventListener('pointermove', onMove);
+        canvas.removeEventListener('pointerup', onUp);
+        canvas.removeEventListener('pointercancel', onUp);
+      }
     };
   });
 </script>
@@ -289,8 +373,16 @@
     width: 180px;
     height: 180px;
     opacity: 0.6;
-    pointer-events: none;
-    z-index: 0;
+    z-index: 2;
+    cursor: grab;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .hero-geo.is-grabbing {
+    cursor: grabbing;
+    opacity: 0.85;
   }
 
   @media (max-width: 640px) {
