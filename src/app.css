@@ -47,7 +47,6 @@ html[data-palette="indigo"] {
   --bub-2: #ede3fd;
   --bub-3: #e3d5fc;
   --bub-glow: rgba(109, 40, 217, 0.3);
-  --sheen: rgba(255, 255, 255, 0.55);
 }
 
 /* The terminal anchors its own scroll position across view changes; the
@@ -98,7 +97,6 @@ html[data-palette="emerald"] {
   --bub-2: #e2f5eb;
   --bub-3: #d2eee0;
   --bub-glow: rgba(0, 179, 104, 0.35);
-  --sheen: rgba(255, 255, 255, 0.55);
 }
 
 html[data-mode="dark"][data-palette="indigo"] {
@@ -143,7 +141,6 @@ html[data-mode="dark"][data-palette="indigo"] {
   --bub-2: rgba(167, 139, 250, 0.22);
   --bub-3: rgba(167, 139, 250, 0.32);
   --bub-glow: rgba(167, 139, 250, 0.45);
-  --sheen: rgba(255, 255, 255, 0.07);
 }
 
 html[data-mode="dark"][data-palette="emerald"] {
@@ -188,7 +185,6 @@ html[data-mode="dark"][data-palette="emerald"] {
   --bub-2: rgba(52, 211, 153, 0.22);
   --bub-3: rgba(52, 211, 153, 0.32);
   --bub-glow: rgba(52, 211, 153, 0.45);
-  --sheen: rgba(255, 255, 255, 0.07);
 }
 
 /* --------------------------------------------------------------------------
@@ -310,30 +306,6 @@ a:hover {
   padding: 20px;
   position: relative;
   overflow: hidden;
-}
-
-.card.pad::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 45%;
-  background: linear-gradient(105deg, transparent, var(--sheen), transparent);
-  transform: translateX(-160%);
-  pointer-events: none;
-}
-
-/* One-shot keyframe, not a transition: a transition animates the reverse
-   sweep when the pointer leaves, which reads as jank. The animation plays
-   once on hover-in and is dropped instantly on hover-out. */
-.card.pad:hover::after {
-  animation: card-sheen 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@keyframes card-sheen {
-  0% { transform: translateX(-160%); }
-  100% { transform: translateX(260%); }
 }
 
 @media (min-width: 640px) {
@@ -611,6 +583,44 @@ a.btn-solid:hover {
 .shell {
   position: relative;
   z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Motion
+   -------------------------------------------------------------------------- */
+
+/* Sections and the hero reveal as they enter the viewport. */
+.hero,
+#view-interactive .block {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero.is-visible,
+#view-interactive .block.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Buttons: press feedback. */
+.btn-ghost:active,
+.btn-solid:active {
+  transform: translateY(0) scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  #view-interactive .block {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .card:hover,
+  .card:active {
+    transform: none;
+  }
 }
 
 /* Prose shared by the profile block. */

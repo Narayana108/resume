@@ -138,28 +138,36 @@
       ctx.fillText(label, tx, y);
     }
 
-    // Click glow: an expanding ring and soft fill around the hexagon.
+    // Click glow: a soft crest that expands with ease-out and fades, plus a
+    // gentle wash over the hexagon. No hard ring, no linear motion.
     if (glow) {
-      const p = (performance.now() - glow.start) / 900;
+      const p = (performance.now() - glow.start) / 1100;
       if (p >= 1) {
         glow = null;
       } else {
-        const a = 1 - p;
-        const gr = radius * (0.55 + p * 1.05);
-        const g = ctx.createRadialGradient(cx, cy, gr * 0.55, cx, cy, gr);
+        const e = 1 - Math.pow(1 - p, 3); // ease-out expansion
+        const a = Math.pow(1 - p, 1.6);   // smooth fade
+        const gr = radius * (0.5 + e * 1.15);
+        const band = radius * 0.36;
+
+        // Crest: a soft radial band, bright in the middle, gone at both edges.
+        const g = ctx.createRadialGradient(cx, cy, gr - band, cx, cy, gr + band);
         g.addColorStop(0, rgba(brand, 0));
-        g.addColorStop(0.75, rgba(brand, 0.22 * a));
+        g.addColorStop(0.5, rgba(brand, 0.5 * a));
         g.addColorStop(1, rgba(brand, 0));
         ctx.fillStyle = g;
         ctx.beginPath();
-        ctx.arc(cx, cy, gr, 0, Math.PI * 2);
+        ctx.arc(cx, cy, gr + band, 0, Math.PI * 2);
         ctx.fill();
 
+        // Inner wash that fades out.
+        const w = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius * 0.95);
+        w.addColorStop(0, rgba(highlight, 0.26 * a));
+        w.addColorStop(1, rgba(highlight, 0));
+        ctx.fillStyle = w;
         ctx.beginPath();
-        ctx.arc(cx, cy, gr, 0, Math.PI * 2);
-        ctx.strokeStyle = rgba(highlight, 0.55 * a);
-        ctx.lineWidth = 2;
-        ctx.stroke();
+        ctx.arc(cx, cy, radius * 0.95, 0, Math.PI * 2);
+        ctx.fill();
       }
     }
   }
