@@ -35,6 +35,7 @@
   const TRAIL_MAX = 4;
   const RIPPLE_MAX = 6;
   const SPOT_SCALE = 3.8;
+  const MAX_LAG = 70;
 
   const state = {
     pointerX: -9999,
@@ -54,6 +55,7 @@
   let raf = 0;
   let running = false;
   let prevDirty = null;
+  let lastNow = 0;
 
   let baseCanvas = null;
   let baseCtx = null;
@@ -337,16 +339,43 @@
     drawRipples(box);
   }
 
-  function frame() {
+  function frame(now) {
     raf = 0;
+
+    // Frame-rate independent: a 120Hz display must not smooth twice as fast as
+    // a 60Hz one, and a slow frame must not stall the light.
+    const dt = lastNow ? Math.min(0.05, (now - lastNow) / 1000) : 0.016;
+    lastNow = now;
 
     const sx0 = state.smoothX;
     const sy0 = state.smoothY;
     const i0 = state.intensity;
 
-    state.smoothX += (state.pointerX - state.smoothX) * 0.16;
-    state.smoothY += (state.pointerY - state.smoothY) * 0.16;
-    state.intensity += ((state.pointerActive ? 1 : 0) - state.intensity) * 0.12;
+    // ~32ms time constant. The old per-frame 0.16 factor was a ~95ms constant,
+    // which is what read as the spotlight lagging behind the cursor.
+    const k = 1 - Math.exp(-dt / 0.032);
+
+    let dx = state.pointerX - state.smoothX;
+    let dy = state.pointerY - state.smoothY;
+    let dist = Math.hypot(dx, dy);
+
+    // Never trail further than MAX_LAG behind. A fast flick would otherwise
+    // leave the light crawling across the page long after the cursor stopped.
+    if (dist > MAX_LAG) {
+      state.smoothX = state.pointerX - (dx / dist) * MAX_LAG;
+      state.smoothY = state.pointerY - (dy / dist) * MAX_LAG;
+      dx = state.pointerX - state.smoothX;
+      dy = state.pointerY - state.smoothY;
+      dist = MAX_LAG;
+    }
+
+    if (dist > 0.001) {
+      state.smoothX += dx * k;
+      state.smoothY += dy * k;
+    }
+
+    const ki = 1 - Math.exp(-dt / 0.07);
+    state.intensity += ((state.pointerActive ? 1 : 0) - state.intensity) * ki;
 
     // Snap once the easing is below a visible threshold. Without this the
     // position approaches its target asymptotically and never equals it, so
@@ -358,14 +387,14 @@
     }
 
     for (let i = state.trail.length - 1; i >= 0; i--) {
-      state.trail[i].life *= 0.91;
+      state.trail[i].life *= Math.pow(0.84, dt * 60);
       if (state.trail[i].life < 0.03) state.trail.splice(i, 1);
     }
 
     for (let i = state.ripples.length - 1; i >= 0; i--) {
       const rp = state.ripples[i];
-      rp.radius += 7.5;
-      rp.alpha *= 0.962;
+      rp.radius += 450 * dt;
+      rp.alpha *= Math.pow(0.962, dt * 60);
       if (rp.alpha < 0.015) state.ripples.splice(i, 1);
     }
 
