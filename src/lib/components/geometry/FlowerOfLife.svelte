@@ -303,18 +303,6 @@
           ctx.restore();
         }
       }
-
-      for (let k = 0; k < 3; k++) {
-        const rr = rp.radius - k * rp.band * 0.62;
-        if (rr <= 1) continue;
-        const a = rp.alpha * (0.62 - k * 0.17);
-        if (a <= 0.01) continue;
-        ctx.beginPath();
-        ctx.arc(rp.x, rp.y, rr, 0, TWO_PI);
-        ctx.strokeStyle = rgba(highlight, a);
-        ctx.lineWidth = 1.7 - k * 0.4;
-        ctx.stroke();
-      }
     }
   }
 
