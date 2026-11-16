@@ -318,15 +318,22 @@ a:hover {
   top: 0;
   bottom: 0;
   left: 0;
-  width: 55%;
+  width: 45%;
   background: linear-gradient(105deg, transparent, var(--sheen), transparent);
-  transform: translateX(-140%);
-  transition: transform 0.8s ease;
+  transform: translateX(-160%);
   pointer-events: none;
 }
 
+/* One-shot keyframe, not a transition: a transition animates the reverse
+   sweep when the pointer leaves, which reads as jank. The animation plays
+   once on hover-in and is dropped instantly on hover-out. */
 .card.pad:hover::after {
-  transform: translateX(240%);
+  animation: card-sheen 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes card-sheen {
+  0% { transform: translateX(-160%); }
+  100% { transform: translateX(260%); }
 }
 
 @media (min-width: 640px) {
