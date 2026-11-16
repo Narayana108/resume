@@ -28,6 +28,12 @@
     font-size: 17px;
     line-height: 1.55;
     color: var(--ink-muted);
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
+  .skills :global(li):hover {
+    transform: translateX(4px);
+    color: var(--ink);
   }
 
   .skills :global(li)::before {

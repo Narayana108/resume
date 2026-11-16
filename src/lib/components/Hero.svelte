@@ -71,6 +71,12 @@
     padding: 4px;
     background: var(--surface);
     flex: 0 0 auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .avatar:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 0 4px var(--glow);
   }
 
   @media (min-width: 640px) {
@@ -104,6 +110,15 @@
     border-radius: 9999px;
     padding: 3px 11px;
     white-space: nowrap;
+    animation: bubble-float 5s ease-in-out infinite;
+  }
+
+  .tagline-bubble:nth-child(2) { animation-delay: 0.6s; }
+  .tagline-bubble:nth-child(3) { animation-delay: 1.2s; }
+
+  @keyframes bubble-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
   }
 
   .tagline-bubble:nth-child(2) { background: var(--bub-2); }

@@ -30,12 +30,12 @@ export const profile = {
    * read as broad rather than spiky.
    */
   axes: [
-    { label: 'Product', value: 0.85 },
-    { label: 'Backend', value: 0.9 },
-    { label: 'Frontend', value: 0.85 },
-    { label: 'Cloud & Infra', value: 0.95 },
-    { label: 'Scaling & Ops', value: 0.9 },
-    { label: 'CI/CD', value: 0.95 }
+    { label: 'AI & Agents', value: 4 },
+    { label: 'Backend', value: 4 },
+    { label: 'Frontend', value: 3 },
+    { label: 'Cloud & Infra', value: 5 },
+    { label: 'Scaling & Ops', value: 5 },
+    { label: 'CI/CD', value: 5 }
   ],
   points: [
     {
@@ -52,9 +52,9 @@ export const profile = {
     }
   ],
   closing: {
-    lead: 'Together, these capabilities make me a',
-    emphasis: 'Platform & Product Engineer',
-    tail: 'able to contribute to any layer of the technology stack or take ownership of the entire stack end to end.'
+    lead: 'Together, these capabilities enable me to operate as an',
+    emphasis: 'AI-empowered, full-spectrum engineer',
+    tail: ', working across the entire technology stack.'
   }
 };
 

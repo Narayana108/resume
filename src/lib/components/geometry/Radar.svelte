@@ -10,6 +10,8 @@
   import { profile } from '../../data/resume.js';
 
   let canvas;
+  let glow = null;
+  let raf = 0;
 
   function read(name, fallback) {
     return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
@@ -41,6 +43,7 @@
     const brand = read('--brand', '#009B5A');
     const accent = read('--accent', '#1E4D36');
     const inkMuted = read('--ink-muted', '#5A5A5A');
+    const highlight = read('--geo-highlight', '#34D399');
 
     const axes = profile.axes;
     const n = axes.length;
@@ -85,7 +88,7 @@
     const values = axes.map((a) => a.value);
     ctx.beginPath();
     for (let i = 0; i < n; i++) {
-      const [x, y] = point(i, values[i]);
+      const [x, y] = point(i, values[i] / 5);
       if (i === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     }
@@ -98,7 +101,7 @@
 
     // Vertices.
     for (let i = 0; i < n; i++) {
-      const [x, y] = point(i, values[i]);
+      const [x, y] = point(i, values[i] / 5);
       ctx.beginPath();
       ctx.arc(x, y, 3, 0, Math.PI * 2);
       ctx.fillStyle = brand;
@@ -134,10 +137,52 @@
       }
       ctx.fillText(label, tx, y);
     }
+
+    // Click glow: an expanding ring and soft fill around the hexagon.
+    if (glow) {
+      const p = (performance.now() - glow.start) / 900;
+      if (p >= 1) {
+        glow = null;
+      } else {
+        const a = 1 - p;
+        const gr = radius * (0.55 + p * 1.05);
+        const g = ctx.createRadialGradient(cx, cy, gr * 0.55, cx, cy, gr);
+        g.addColorStop(0, rgba(brand, 0));
+        g.addColorStop(0.75, rgba(brand, 0.22 * a));
+        g.addColorStop(1, rgba(brand, 0));
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(cx, cy, gr, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, gr, 0, Math.PI * 2);
+        ctx.strokeStyle = rgba(highlight, 0.55 * a);
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+    }
+  }
+
+
+  function frame() {
+    draw();
+    if (glow) {
+      raf = requestAnimationFrame(frame);
+    } else {
+      raf = 0;
+    }
+  }
+
+  function onPointerDown(e) {
+    const rect = canvas.getBoundingClientRect();
+    glow = { x: e.clientX - rect.left, y: e.clientY - rect.top, start: performance.now() };
+    if (!raf) raf = requestAnimationFrame(frame);
   }
 
   onMount(() => {
     draw();
+    canvas.addEventListener('pointerdown', onPointerDown);
     window.addEventListener('resize', draw);
 
     // The chart is painted, not styled, so a palette or mode change does not
@@ -149,18 +194,40 @@
     });
 
     return () => {
+      cancelAnimationFrame(raf);
+      canvas.removeEventListener('pointerdown', onPointerDown);
       window.removeEventListener('resize', draw);
       observer.disconnect();
     };
   });
 </script>
 
-<div class="geo-canvas-wrap">
-  <canvas bind:this={canvas} aria-label="Radar chart of full-spectrum engineering capability"></canvas>
+<div class="radar">
+  <h3 class="radar-title">full spectrum engineer</h3>
+  <div class="geo-canvas-wrap">
+    <canvas bind:this={canvas} aria-label="Radar chart of full-spectrum engineering capability"></canvas>
+  </div>
 </div>
 
 <style>
-  .geo-canvas-wrap {
+  .radar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.radar-title {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brand);
+  text-align: center;
+  margin: 0;
+}
+
+.geo-canvas-wrap {
     position: relative;
     width: 100%;
     max-width: 340px;

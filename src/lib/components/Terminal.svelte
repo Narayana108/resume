@@ -1,6 +1,6 @@
 <script>
   import { tick } from 'svelte';
-  import { site, profile, skills, experience, education } from '../data/resume.js';
+  import { site, profile, education } from '../data/resume.js';
   import { palette, mode, view, setPalette, setMode, setView } from '../stores/theme.js';
 
   let output = $state([]);
@@ -23,8 +23,6 @@
         ['help', 'show this message'],
         ['whoami', 'identity and summary'],
         ['profile', 'profile text'],
-        ['skills', 'technical skills inventory'],
-        ['experience', 'employment timeline'],
         ['education', 'education and certifications'],
         ['contact', 'contact details and links'],
         ['theme <p>', 'set palette: indigo | emerald'],
@@ -57,18 +55,8 @@
         ['', 't-val'],
         [profile.closing.lead + ' ', 't-dim'],
         [profile.closing.emphasis, 't-ok'],
-        [' ' + profile.closing.tail, 't-dim']
+        [profile.closing.tail, 't-dim']
       ]);
-    },
-
-    skills() {
-      for (const s of skills) pushSegs([[`${s.label}: `, 't-key'], [s.text, 't-val']]);
-    },
-
-    experience() {
-      for (const j of experience) {
-        pushSegs([[j.title, 't-key'], [' — ', 't-dim'], [j.date, 't-link']]);
-      }
     },
 
     education() {
@@ -167,7 +155,7 @@
     if (output.length && termEl) termEl.scrollTop = termEl.scrollHeight;
   });
 
-  const quick = ['help', 'skills', 'experience', 'contact'];
+  const quick = ['help', 'contact'];
 
   pushSegs([[site.name, 't-key'], [' — resume shell', 't-dim']]);
   pushSegs([['Type ', 't-dim'], ['"help"', 't-cmd'], [' for available commands.', 't-dim']]);

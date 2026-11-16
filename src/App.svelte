@@ -20,6 +20,21 @@
   onMount(() => {
     // Re-apply on first paint so a stored theme wins over the markup default.
     applyTheme($palette, $mode);
+
+    // Reveal sections as they enter the viewport.
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            io.unobserve(e.target);
+          }
+        }
+      },
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('.hero, #view-interactive .block').forEach((el) => io.observe(el));
+    return () => io.disconnect();
   });
 </script>
 

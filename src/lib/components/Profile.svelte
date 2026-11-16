@@ -15,8 +15,7 @@
 
     <p class="prose prose-closing">
       {profile.closing.lead}
-      <strong>{profile.closing.emphasis}</strong>
-      {profile.closing.tail}
+      <strong>{profile.closing.emphasis}</strong>{profile.closing.tail}
     </p>
   </div>
 </div>

@@ -30,8 +30,7 @@
     </ul>
     <p>
       {profile.closing.lead}
-      <strong>{profile.closing.emphasis}</strong>
-      {profile.closing.tail}
+      <strong>{profile.closing.emphasis}</strong>{profile.closing.tail}
     </p>
   </section>
 
