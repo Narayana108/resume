@@ -9,7 +9,7 @@
     <h1 class="ats-name">{site.name}</h1>
     <p class="ats-role">{site.role}</p>
     <p class="ats-tagline">{site.tagline.join(' · ')}</p>
-    <p class="ats-contact">{email} &middot; {site.location} &middot; {site.githubLabel}</p>
+    <p class="ats-contact">{email} · {site.location} · {site.githubLabel}</p>
 
     <dl class="ats-facts">
       {#each site.facts as fact}
@@ -50,7 +50,7 @@
       <div class="ats-job">
         <h3 class="ats-job-title">{job.title}</h3>
         <p class="ats-meta">
-          {job.subtitle}{#if job.subtitle} &middot; {/if}{job.date}
+          {job.subtitle ? `${job.subtitle} · ${job.date}` : job.date}
         </p>
 
         {#if job.bullets?.length}
@@ -70,7 +70,7 @@
         {/if}
 
         {#each job.clients ?? [] as client}
-          <p class="ats-client">{client.name} &middot; {client.date}</p>
+          <p class="ats-client">{client.name} · {client.date}</p>
           <ul class="ats-list">
             {#each client.bullets as bullet}
               <li>{bullet}</li>
@@ -82,7 +82,7 @@
           <p class="ats-note">
             Projects:
             {#each job.projects as project, i}
-              {#if i > 0} &middot; {/if}
+              {i > 0 ? ' · ' : ''}
               <a href={project.href}>{project.label}</a>
             {/each}
           </p>
@@ -96,7 +96,7 @@
     {#each education as item}
       <div class="ats-job">
         <h3 class="ats-job-title">{item.title}</h3>
-        <p class="ats-meta">{item.meta} &middot; {item.date}</p>
+        <p class="ats-meta">{item.meta} · {item.date}</p>
       </div>
     {/each}
   </section>

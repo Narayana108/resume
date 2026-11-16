@@ -1,6 +1,7 @@
 <script>
   import { site } from '../data/resume.js';
   import PolyhedralMorpher from './geometry/PolyhedralMorpher.svelte';
+  import { mode } from '../stores/theme.js';
 
   const email = `${site.email.user}@${site.email.domain}.${site.email.tld}`;
 
@@ -18,11 +19,17 @@
   let copyTimer;
 
   const PORTRAITS = ['./pp-white.png', './pp-suit.png'];
-  let portrait = $state(0);
+  const SUIT = 1;
+
+  // Follow the theme by default: pp_suit on the dark theme, pp_white on light.
+  // A click sets a manual override that sticks until the page is reloaded.
+  let override = $state(null);
+  const themed = $derived($mode === 'dark' ? SUIT : 0);
+  const portrait = $derived(override ?? themed);
   const avatarSrc = $derived(PORTRAITS[portrait]);
 
   function togglePortrait() {
-    portrait = (portrait + 1) % PORTRAITS.length;
+    override = portrait === 0 ? 1 : 0;
   }
 
   function onMove(e) {

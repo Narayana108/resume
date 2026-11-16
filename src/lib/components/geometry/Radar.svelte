@@ -19,6 +19,8 @@
 
   let canvas;
   let glow = null;
+  let hover = -1;
+  let labelHits = [];
   let raf = 0;
 
   let w = 0;
@@ -124,10 +126,11 @@
 
     // Axis labels. Align away from the centre so long labels grow inward
     // rather than off the canvas, then clamp the whole text box to the padding.
+    // The laid-out boxes are recorded so the pointer can hit-test them.
     ctx.font = '600 10px "JetBrains Mono", ui-monospace, monospace';
-    ctx.fillStyle = inkMuted;
     ctx.textBaseline = 'middle';
     const pad = 4;
+    labelHits = [];
     for (let i = 0; i < n; i++) {
       const a = -Math.PI / 2 + ((Math.PI * 2) / n) * i;
       const cos = Math.cos(a);
@@ -136,21 +139,35 @@
       const [x, y] = point(i, 1.18);
 
       let tx;
+      let align;
       if (cos < -0.2) {
-        ctx.textAlign = 'right';
+        align = 'right';
         tx = Math.min(w - pad, Math.max(pad + tw, x));
       } else if (cos > 0.2) {
-        ctx.textAlign = 'left';
+        align = 'left';
         tx = Math.max(pad, Math.min(w - pad - tw, x));
       } else {
-        ctx.textAlign = 'center';
+        align = 'center';
         tx = Math.min(w - pad - tw / 2, Math.max(pad + tw / 2, x));
       }
-      ctx.fillText(label, tx, y);
-    }
 
+      const left = align === 'right' ? tx - tw : align === 'left' ? tx : tx - tw / 2;
+      labelHits.push({ x: left, y: y - 7, w: tw, h: 14 });
+
+      ctx.textAlign = align;
+      if (i === hover) {
+        ctx.save();
+        ctx.shadowColor = rgba(highlight, 0.95);
+        ctx.shadowBlur = 12;
+        ctx.fillStyle = highlight;
+        ctx.fillText(label, tx, y);
+        ctx.restore();
+      } else {
+        ctx.fillStyle = inkMuted;
+        ctx.fillText(label, tx, y);
+      }
+    }
     // Click glow: a soft hexagonal crest and wash. The radar is a hexagon,
-    // so the glow follows the same six-fold shape instead of a circle.
     if (glow) {
       const p = (performance.now() - glow.start) / 1100;
       if (p >= 1) {
@@ -209,7 +226,31 @@
     }
   }
 
-  function onPointerDown(e) {
+  /** Hit-test the axis labels so the hovered one can glow. */
+  function onMove(e) {
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    let next = -1;
+    for (let i = 0; i < labelHits.length; i++) {
+      const b = labelHits[i];
+      if (mx >= b.x - 6 && mx <= b.x + b.w + 6 && my >= b.y - 5 && my <= b.y + b.h + 5) {
+        next = i;
+        break;
+      }
+    }
+    if (next !== hover) {
+      hover = next;
+      draw();
+    }
+  }
+
+  function onLeave() {
+    if (hover !== -1) {
+      hover = -1;
+      draw();
+    }
+  }  function onPointerDown(e) {
     if (e.button !== 0) return;
     glow = { start: performance.now() };
     playHarmonicChime(432, 1.2);
@@ -232,12 +273,16 @@
     draw();
 
     canvas.addEventListener('pointerdown', onPointerDown);
+    canvas.addEventListener('pointermove', onMove);
+    canvas.addEventListener('pointerleave', onLeave);
     window.addEventListener('resize', onResize);
     const unsubscribe = onThemeChange(onTheme);
 
     return () => {
       cancelAnimationFrame(raf);
       canvas.removeEventListener('pointerdown', onPointerDown);
+      canvas.removeEventListener('pointermove', onMove);
+      canvas.removeEventListener('pointerleave', onLeave);
       window.removeEventListener('resize', onResize);
       unsubscribe();
     };

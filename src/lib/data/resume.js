@@ -100,7 +100,7 @@ export const experience = [
   },
   {
     title: 'Independent Residential Study & Teaching',
-    subtitle: 'Sanskrit, Classical Logic & Philosophy — India',
+    subtitle: 'Sanskrit, Classical Logic & Philosophy, India',
     date: 'Oct 2021 - Present',
     bullets: [
       'Residential study of Sanskrit grammar, classical logic, epistemology and philosophy.',

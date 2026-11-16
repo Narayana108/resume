@@ -3,6 +3,7 @@
   import { site } from '../data/resume.js';
   import { palette, mode, view, setPalette, setMode, setView, toggleMode } from '../stores/theme.js';
   import { isAudioEnabled, toggleAudio } from '../audio.js';
+  import Merkaba from './geometry/Merkaba.svelte';
 
   let audioOn = $state(isAudioEnabled());
   let progress = $state(0);
@@ -35,7 +36,7 @@
   <div class="scroll-progress" style:transform={`scaleX(${progress})`} aria-hidden="true"></div>
   <div class="topbar-inner">
     <a class="brand" href="#top">
-      <span class="brand-mark" aria-hidden="true">N</span>
+      <span class="brand-mark" aria-hidden="true"><Merkaba /></span>
       <span class="brand-text">
         <span class="brand-name">{site.name}</span>
         <span class="brand-role">{site.role}</span>
