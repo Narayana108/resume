@@ -28,7 +28,7 @@
     font-size: 17px;
     line-height: 1.55;
     color: var(--ink-muted);
-    transition: transform 0.2s ease, color 0.2s ease;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .skills :global(li):hover {

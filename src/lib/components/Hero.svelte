@@ -71,7 +71,7 @@
     padding: 4px;
     background: var(--surface);
     flex: 0 0 auto;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .avatar:hover {

@@ -116,21 +116,21 @@ html[data-mode="dark"][data-palette="indigo"] {
   --shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.55);
   --shadow-hover: 0 20px 42px -12px rgba(167, 139, 250, 0.28);
   --glow: rgba(167, 139, 250, 0.3);
-  --term-bg: #ffffff;
-  --term-bar: #f7f4fd;
-  --term-ink: #1b1426;
-  --term-dim: #6b5f80;
-  --term-ok: #7c3aed;
-  --term-warn: #b91c1c;
-  --term-accent: #7c3aed;
-  --term-key: #8b5cf6;
-  --term-link: #6d28d9;
-  --term-line: rgba(27, 20, 38, 0.1);
-  --term-chip: rgba(124, 58, 237, 0.08);
-  --term-chip-hover: rgba(124, 58, 237, 0.16);
-  --term-run-bg: rgba(124, 58, 237, 0.09);
-  --term-run-bg-hover: rgba(124, 58, 237, 0.18);
-  --term-run-ink: #4c1d95;
+  --term-bg: #0f0b18;
+  --term-bar: #171122;
+  --term-ink: #d6dee8;
+  --term-dim: #7d8894;
+  --term-ok: #c4b5fd;
+  --term-warn: #fca5a5;
+  --term-accent: #ddd6fe;
+  --term-key: #a78bfa;
+  --term-link: #c4b5fd;
+  --term-line: rgba(255, 255, 255, 0.09);
+  --term-chip: rgba(255, 255, 255, 0.06);
+  --term-chip-hover: rgba(255, 255, 255, 0.14);
+  --term-run-bg: rgba(255, 255, 255, 0.08);
+  --term-run-bg-hover: rgba(255, 255, 255, 0.16);
+  --term-run-ink: #e5eaf0;
   --geo-highlight: #c4b5fd;
   --btn-bg: #7c3aed;
   --btn-bg-hover: #8b5cf6;
@@ -160,21 +160,21 @@ html[data-mode="dark"][data-palette="emerald"] {
   --shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.6);
   --shadow-hover: 0 20px 42px -12px rgba(52, 211, 153, 0.2);
   --glow: rgba(52, 211, 153, 0.24);
-  --term-bg: #ffffff;
-  --term-bar: #f3f8f5;
-  --term-ink: #10231b;
-  --term-dim: #5c7a6c;
-  --term-ok: #059669;
-  --term-warn: #b91c1c;
-  --term-accent: #059669;
-  --term-key: #10b981;
-  --term-link: #047857;
-  --term-line: rgba(16, 35, 27, 0.1);
-  --term-chip: rgba(5, 150, 105, 0.08);
-  --term-chip-hover: rgba(5, 150, 105, 0.16);
-  --term-run-bg: rgba(5, 150, 105, 0.09);
-  --term-run-bg-hover: rgba(5, 150, 105, 0.18);
-  --term-run-ink: #065f46;
+  --term-bg: #04100b;
+  --term-bar: #0a1a13;
+  --term-ink: #d6e8de;
+  --term-dim: #7d9488;
+  --term-ok: #6ee7b7;
+  --term-warn: #fca5a5;
+  --term-accent: #a7f3d0;
+  --term-key: #34d399;
+  --term-link: #6ee7b7;
+  --term-line: rgba(255, 255, 255, 0.09);
+  --term-chip: rgba(255, 255, 255, 0.06);
+  --term-chip-hover: rgba(255, 255, 255, 0.14);
+  --term-run-bg: rgba(255, 255, 255, 0.08);
+  --term-run-bg-hover: rgba(255, 255, 255, 0.16);
+  --term-run-ink: #e5eaf0;
   --geo-highlight: #6ee7b7;
   --btn-bg: #059669;
   --btn-bg-hover: #047857;
@@ -289,7 +289,9 @@ a:hover {
   border: 1px solid var(--hairline);
   border-radius: 16px;
   box-shadow: var(--shadow);
-  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  transition: border-color 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .card:hover {

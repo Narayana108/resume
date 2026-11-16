@@ -8,6 +8,7 @@
    */
   import { onMount } from 'svelte';
   import { profile } from '../../data/resume.js';
+  import { playHarmonicChime } from '../../audio.js';
 
   let canvas;
   let glow = null;
@@ -138,8 +139,8 @@
       ctx.fillText(label, tx, y);
     }
 
-    // Click glow: a soft crest that expands with ease-out and fades, plus a
-    // gentle wash over the hexagon. No hard ring, no linear motion.
+    // Click glow: a soft hexagonal crest and wash. The radar is a hexagon,
+    // so the glow follows the same six-fold shape instead of a circle.
     if (glow) {
       const p = (performance.now() - glow.start) / 1100;
       if (p >= 1) {
@@ -150,24 +151,41 @@
         const gr = radius * (0.5 + e * 1.15);
         const band = radius * 0.36;
 
-        // Crest: a soft radial band, bright in the middle, gone at both edges.
-        const g = ctx.createRadialGradient(cx, cy, gr - band, cx, cy, gr + band);
-        g.addColorStop(0, rgba(brand, 0));
-        g.addColorStop(0.5, rgba(brand, 0.5 * a));
-        g.addColorStop(1, rgba(brand, 0));
-        ctx.fillStyle = g;
-        ctx.beginPath();
-        ctx.arc(cx, cy, gr + band, 0, Math.PI * 2);
-        ctx.fill();
+        const hex = (r) => {
+          ctx.beginPath();
+          for (let i = 0; i < 6; i++) {
+            const ang = -Math.PI / 2 + (Math.PI / 3) * i;
+            const x = cx + Math.cos(ang) * r;
+            const y = cy + Math.sin(ang) * r;
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.closePath();
+        };
 
-        // Inner wash that fades out.
+        // Crest: layered hexagon strokes, alpha peaking in the middle of the
+        // band, so the ring is soft and six-sided rather than a hard circle.
+        const layers = 6;
+        for (let i = 0; i < layers; i++) {
+          const t = i / (layers - 1);
+          const rr = gr - band + band * 2 * t;
+          const aa = a * Math.sin(Math.PI * t);
+          hex(rr);
+          ctx.strokeStyle = rgba(brand, 0.55 * aa);
+          ctx.lineWidth = 2.4;
+          ctx.stroke();
+        }
+
+        // Wash: a radial gradient clipped to a hexagon.
+        ctx.save();
+        hex(radius * 0.95);
+        ctx.clip();
         const w = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius * 0.95);
-        w.addColorStop(0, rgba(highlight, 0.26 * a));
+        w.addColorStop(0, rgba(highlight, 0.24 * a));
         w.addColorStop(1, rgba(highlight, 0));
         ctx.fillStyle = w;
-        ctx.beginPath();
-        ctx.arc(cx, cy, radius * 0.95, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.fillRect(cx - radius, cy - radius, radius * 2, radius * 2);
+        ctx.restore();
       }
     }
   }
@@ -185,6 +203,7 @@
   function onPointerDown(e) {
     const rect = canvas.getBoundingClientRect();
     glow = { x: e.clientX - rect.left, y: e.clientY - rect.top, start: performance.now() };
+    playHarmonicChime(432, 1.2);
     if (!raf) raf = requestAnimationFrame(frame);
   }
 

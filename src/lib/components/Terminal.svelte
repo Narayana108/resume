@@ -1,6 +1,6 @@
 <script>
   import { tick } from 'svelte';
-  import { site, profile, education } from '../data/resume.js';
+  import { site, profile } from '../data/resume.js';
   import { palette, mode, view, setPalette, setMode, setView } from '../stores/theme.js';
 
   let output = $state([]);
@@ -23,7 +23,6 @@
         ['help', 'show this message'],
         ['whoami', 'identity and summary'],
         ['profile', 'profile text'],
-        ['education', 'education and certifications'],
         ['contact', 'contact details and links'],
         ['theme <p>', 'set palette: indigo | emerald'],
         ['mode', 'toggle light / dark'],
@@ -57,12 +56,6 @@
         [profile.closing.emphasis, 't-ok'],
         [profile.closing.tail, 't-dim']
       ]);
-    },
-
-    education() {
-      for (const e of education) {
-        pushSegs([[e.title, 't-key'], [' — ', 't-dim'], [`${e.meta} (${e.date})`, 't-link']]);
-      }
     },
 
     contact() {
@@ -190,7 +183,7 @@
         class="term-in"
         type="text"
         spellcheck="false"
-        placeholder="Type a command (help, skills, experience, education, contact, theme, clear)..."
+        placeholder="Type a command (help, contact, theme, clear)..."
         bind:value={input}
       />
       <button type="submit" class="term-run">Execute</button>
