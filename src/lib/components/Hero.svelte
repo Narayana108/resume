@@ -195,6 +195,7 @@
     border-radius: 9999px;
     padding: 3px 11px;
     white-space: nowrap;
+    transition: box-shadow 0.3s ease, filter 0.3s ease, border-color 0.3s ease;
     animation: bubble-float 5s ease-in-out infinite;
   }
 
@@ -208,6 +209,15 @@
 
   .tagline-bubble:nth-child(2) { background: var(--bub-2); }
   .tagline-bubble:nth-child(3) { background: var(--bub-3); }
+
+  /* Subtle shine on hover: a soft halo plus a lift in luminance.
+     Deliberately no transform here — bubble-float owns transform, and a
+     running animation overrides a class-level transform. */
+  .tagline-bubble:hover {
+    filter: brightness(1.08);
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px var(--glow), 0 6px 18px -8px var(--glow);
+  }
 
   .hero-name {
     font-family: 'Cormorant Garamond', Georgia, serif;
