@@ -55,7 +55,7 @@
   <PolyhedralMorpher />
 
   <button type="button" class="avatar-btn" onclick={togglePortrait} title="Switch portrait" aria-label="Switch portrait">
-    <img class="avatar" src={avatarSrc} alt="" width="152" height="152" />
+    <img class="avatar" src={avatarSrc} alt="" width="176" height="176" />
   </button>
 
   <div class="hero-body">
@@ -129,8 +129,8 @@
   }
 
   .avatar {
-    width: 124px;
-    height: 124px;
+    width: 140px;
+    height: 140px;
     object-fit: cover;
     border-radius: 14px;
     border: 1px solid var(--hairline);
@@ -150,7 +150,7 @@
   }
 
   @media (min-width: 640px) {
-    .avatar { width: 152px; height: 152px; }
+    .avatar { width: 176px; height: 176px; }
   }
 
   .hero-body {
