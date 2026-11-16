@@ -52,6 +52,8 @@ src/
   App.svelte            view switch, theme application, shell layout
   app.css               theme tokens, resets, shared primitives, print
   lib/
+    canvas.js           shared read()/rgba() helpers for the canvases
+    audio.js            Pythagorean chime synth (Web Audio, lazy context)
     data/resume.js      single source of truth for all resume content
     stores/theme.js     palette + mode + view stores (localStorage)
     components/
@@ -91,8 +93,9 @@ Theme tokens are CSS custom properties in `src/app.css`, scoped by
 Each has a light and a dark variant. The active palette and mode are mirrored
 onto `<html>` by `src/lib/stores/theme.js` and persisted to `localStorage`.
 
-The Clean ATS Resume sheet is pinned to emerald in both screen and print so the
-preview matches the downloaded PDF.
+The Clean ATS Resume sheet follows the active palette on screen, so the preview
+matches the theme you are browsing in. In print it is forced to emerald, so the
+downloaded PDF is always green.
 
 ## Views
 
@@ -102,6 +105,24 @@ preview matches the downloaded PDF.
 The Clean ATS Resume is light-only: entering it forces the light theme and disables
 the mode toggle.
 
+## Interactions
+
+- **Flower-of-life background** — a continuous spotlight follows the cursor. It
+  is a `source-in` mask over a pre-rendered gold lattice, so it glides rather
+  than snapping between circles. Clicking the page background drops a water
+  ripple that refracts the lattice as the wave passes.
+- **Hero card** — tilts a few degrees toward the pointer. The polyhedral solid
+  in the corner rotates on its own and morphs between the six Platonic forms;
+  drag it to orbit, click to advance.
+- **Profile radar** — six axes rated out of five. Clicking it fires a hexagonal
+  glow and a 432 Hz chime.
+- **Terminal** — `help`, `whoami`, `profile`, `contact`, `theme`, `mode`,
+  `view`, `clear`. Output is colour-coded per segment and follows the palette.
+- **Top bar** — a reading-progress hairline tracks scroll position.
+
+Every animation is disabled under `prefers-reduced-motion: reduce`, and the
+canvases stop their animation loops when they are off-screen or nothing is
+moving.
 ## Print / PDF
 
 Print rules live inside `CleanSheet.svelte` so they outrank the component's scoped

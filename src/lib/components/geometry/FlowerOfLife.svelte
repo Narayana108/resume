@@ -25,10 +25,11 @@
    */
   import { onMount } from 'svelte';
   import { playHarmonicChime } from '../../audio.js';
+  import { read, rgba } from '../../canvas.js';
+  import { onThemeChange } from '../../stores/theme.js';
 
   let canvas;
 
-  const PHI = (1 + Math.sqrt(5)) / 2;
   const TWO_PI = Math.PI * 2;
   const R = 48;
   const MAX_DPR = 1.5;
@@ -66,21 +67,6 @@
 
   let brand = '#009B5A';
   let highlight = '#34D399';
-
-  function read(name, fallback) {
-    return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
-  }
-
-  function rgb(hex) {
-    const h = hex.replace('#', '');
-    const full = h.length === 3 ? h.split('').map((c) => c + c).join('') : h;
-    const n = parseInt(full, 16);
-    return `${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}`;
-  }
-
-  function rgba(hex, a) {
-    return `rgba(${rgb(hex)}, ${a})`;
-  }
 
   /** Hex lattice: row pitch r*sqrt(3)/2, odd rows shifted by r/2. */
   function buildNodes() {
@@ -410,6 +396,9 @@
   function kick() {
     if (!running) {
       running = true;
+      // Without this the first frame after a pause sees a huge dt, clamps to
+      // 0.05, and eases ~79% of the way to the cursor in one frame — a jump.
+      lastNow = 0;
       raf = requestAnimationFrame(frame);
     }
   }
@@ -448,6 +437,16 @@
   function onPointerDown(e) {
     if (e.target instanceof Element && e.target.closest(INTERACTIVE)) return;
     spawnRipple(e.clientX, e.clientY, 432);
+  }
+
+  let resizeRaf = 0;
+
+  function onResize() {
+    if (resizeRaf) return;
+    resizeRaf = requestAnimationFrame(() => {
+      resizeRaf = 0;
+      resize();
+    });
   }
 
   function resize() {
@@ -490,22 +489,19 @@
     window.addEventListener('pointerdown', onPointerDown, { passive: true });
     window.addEventListener('pointerleave', onLeave);
     window.addEventListener('blur', onLeave);
-    window.addEventListener('resize', resize);
+    window.addEventListener('resize', onResize);
 
-    const observer = new MutationObserver(retheme);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-palette', 'data-mode']
-    });
+    const unsubscribe = onThemeChange(retheme);
 
     return () => {
       cancelAnimationFrame(raf);
-      observer.disconnect();
+      cancelAnimationFrame(resizeRaf);
+      unsubscribe();
       window.removeEventListener('pointermove', onMove);
       window.removeEventListener('pointerdown', onPointerDown);
       window.removeEventListener('pointerleave', onLeave);
       window.removeEventListener('blur', onLeave);
-      window.removeEventListener('resize', resize);
+      window.removeEventListener('resize', onResize);
     };
   });
 </script>

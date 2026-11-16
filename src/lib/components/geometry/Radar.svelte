@@ -2,51 +2,62 @@
   /**
    * Full-spectrum radar chart.
    *
-   * Six axes, one per capability the role spans. The shape is deliberately
-   * near-regular: the point is that no axis is a spike and none is a dent —
-   * the profile is broad rather than deep in one place.
+   * Six axes, one per capability the role spans, each rated 0-5. The shape is
+   * meant to read as broad rather than spiky: no axis is a spike and none is a
+   * dent.
+   *
+   * The canvas is painted, not styled, so it redraws on resize and on theme
+   * change. Dimensions and colours are cached rather than re-read per frame —
+   * getComputedStyle and getBoundingClientRect both force work, and the click
+   * glow animates for ~1s at a time.
    */
   import { onMount } from 'svelte';
   import { profile } from '../../data/resume.js';
   import { playHarmonicChime } from '../../audio.js';
+  import { read, rgba } from '../../canvas.js';
+  import { onThemeChange } from '../../stores/theme.js';
 
   let canvas;
   let glow = null;
   let raf = 0;
 
-  function read(name, fallback) {
-    return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
-  }
+  let w = 0;
+  let h = 0;
+  let dpr = 1;
+  let brand = '#009B5A';
+  let accent = '#1E4D36';
+  let inkMuted = '#5A5A5A';
+  let highlight = '#34D399';
 
-  function rgba(hex, alpha) {
-    const h = hex.replace('#', '');
-    const full = h.length === 3 ? h.split('').map((c) => c + c).join('') : h;
-    const n = parseInt(full, 16);
-    return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${alpha})`;
-  }
+  const axes = profile.axes;
+  const max = Math.max(...axes.map((a) => a.value));
 
-  function draw() {
+  function measure() {
     if (!canvas) return;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
     const rect = canvas.getBoundingClientRect();
-    const w = Math.max(1, Math.round(rect.width));
-    const h = Math.max(1, Math.round(rect.height));
-
+    w = Math.max(1, Math.round(rect.width));
+    h = Math.max(1, Math.round(rect.height));
     if (canvas.width !== w * dpr || canvas.height !== h * dpr) {
       canvas.width = w * dpr;
       canvas.height = h * dpr;
     }
+  }
+
+  function readColours() {
+    brand = read('--brand', '#009B5A');
+    accent = read('--accent', '#1E4D36');
+    inkMuted = read('--ink-muted', '#5A5A5A');
+    highlight = read('--geo-highlight', '#34D399');
+  }
+
+  function draw() {
+    if (!canvas || !w) return;
 
     const ctx = canvas.getContext('2d');
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, w, h);
 
-    const brand = read('--brand', '#009B5A');
-    const accent = read('--accent', '#1E4D36');
-    const inkMuted = read('--ink-muted', '#5A5A5A');
-    const highlight = read('--geo-highlight', '#34D399');
-
-    const axes = profile.axes;
     const n = axes.length;
     const cx = w / 2;
     const cy = h / 2;
@@ -86,10 +97,9 @@
     }
 
     // Data polygon.
-    const values = axes.map((a) => a.value);
     ctx.beginPath();
     for (let i = 0; i < n; i++) {
-      const [x, y] = point(i, values[i] / 5);
+      const [x, y] = point(i, axes[i].value / max);
       if (i === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     }
@@ -102,7 +112,7 @@
 
     // Vertices.
     for (let i = 0; i < n; i++) {
-      const [x, y] = point(i, values[i] / 5);
+      const [x, y] = point(i, axes[i].value / max);
       ctx.beginPath();
       ctx.arc(x, y, 3, 0, Math.PI * 2);
       ctx.fillStyle = brand;
@@ -147,7 +157,7 @@
         glow = null;
       } else {
         const e = 1 - Math.pow(1 - p, 3); // ease-out expansion
-        const a = Math.pow(1 - p, 1.6);   // smooth fade
+        const a = Math.pow(1 - p, 1.6); // smooth fade
         const gr = radius * (0.5 + e * 1.15);
         const band = radius * 0.36;
 
@@ -180,16 +190,15 @@
         ctx.save();
         hex(radius * 0.95);
         ctx.clip();
-        const w = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius * 0.95);
-        w.addColorStop(0, rgba(highlight, 0.24 * a));
-        w.addColorStop(1, rgba(highlight, 0));
-        ctx.fillStyle = w;
+        const wash = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius * 0.95);
+        wash.addColorStop(0, rgba(highlight, 0.24 * a));
+        wash.addColorStop(1, rgba(highlight, 0));
+        ctx.fillStyle = wash;
         ctx.fillRect(cx - radius, cy - radius, radius * 2, radius * 2);
         ctx.restore();
       }
     }
   }
-
 
   function frame() {
     draw();
@@ -201,30 +210,36 @@
   }
 
   function onPointerDown(e) {
-    const rect = canvas.getBoundingClientRect();
-    glow = { x: e.clientX - rect.left, y: e.clientY - rect.top, start: performance.now() };
+    if (e.button !== 0) return;
+    glow = { start: performance.now() };
     playHarmonicChime(432, 1.2);
     if (!raf) raf = requestAnimationFrame(frame);
   }
 
-  onMount(() => {
+  function onResize() {
+    measure();
     draw();
-    canvas.addEventListener('pointerdown', onPointerDown);
-    window.addEventListener('resize', draw);
+  }
 
-    // The chart is painted, not styled, so a palette or mode change does not
-    // repaint it on its own. Watch the theme attributes and redraw.
-    const observer = new MutationObserver(draw);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-palette', 'data-mode']
-    });
+  function onTheme() {
+    readColours();
+    draw();
+  }
+
+  onMount(() => {
+    measure();
+    readColours();
+    draw();
+
+    canvas.addEventListener('pointerdown', onPointerDown);
+    window.addEventListener('resize', onResize);
+    const unsubscribe = onThemeChange(onTheme);
 
     return () => {
       cancelAnimationFrame(raf);
       canvas.removeEventListener('pointerdown', onPointerDown);
-      window.removeEventListener('resize', draw);
-      observer.disconnect();
+      window.removeEventListener('resize', onResize);
+      unsubscribe();
     };
   });
 </script>
@@ -232,29 +247,33 @@
 <div class="radar">
   <h3 class="radar-title">full spectrum engineer</h3>
   <div class="geo-canvas-wrap">
-    <canvas bind:this={canvas} aria-label="Radar chart of full-spectrum engineering capability"></canvas>
+    <canvas
+      bind:this={canvas}
+      role="img"
+      aria-label="Radar chart of full-spectrum engineering capability, rated out of five"
+    ></canvas>
   </div>
 </div>
 
 <style>
   .radar {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
 
-.radar-title {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--brand);
-  text-align: center;
-  margin: 0;
-}
+  .radar-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--brand);
+    text-align: center;
+    margin: 0;
+  }
 
-.geo-canvas-wrap {
+  .geo-canvas-wrap {
     position: relative;
     width: 100%;
     max-width: 340px;

@@ -5,7 +5,6 @@
 
 export const site = {
   name: 'Nārāyaṇa Dās Harricharaṇ',
-  shortName: 'Nārāyaṇa',
   role: 'Senior DevOps / Platform Engineer',
   tagline: ['Infrastructure & Cloud', 'Full-Stack Development', 'AI Systems'],
   email: { user: 'narayan-das', domain: 'tuta', tld: 'io' },
@@ -23,7 +22,6 @@ export const site = {
 };
 
 export const profile = {
-  heading: 'Senior DevOps / Platform Engineer',
   /**
    * Radar axes for the interactive Profile section. `value` is a
    * self-assessment on a 0–1 scale, not a measurement — the shape is meant to
@@ -264,11 +262,6 @@ export const experience = [
 ];
 
 export const education = [
-  {
-    title: 'Bachelor of Arts (B.A.) — Sanskrit Grammar & Literature',
-    meta: 'In progress',
-    date: 'Jul 2026 - Present'
-  },
   {
     title: 'Red Hat Certified Systems Administrator',
     meta: 'Red Hat',

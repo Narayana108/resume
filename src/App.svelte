@@ -18,9 +18,6 @@
   $: applyTheme($palette, $mode);
 
   onMount(() => {
-    // Re-apply on first paint so a stored theme wins over the markup default.
-    applyTheme($palette, $mode);
-
     // Reveal sections as they enter the viewport.
     const io = new IntersectionObserver(
       (entries) => {

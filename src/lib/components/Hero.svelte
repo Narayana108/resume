@@ -2,13 +2,51 @@
   import { site } from '../data/resume.js';
   import PolyhedralMorpher from './geometry/PolyhedralMorpher.svelte';
 
-  $: email = `${site.email.user}@${site.email.domain}.${site.email.tld}`;
+  const email = `${site.email.user}@${site.email.domain}.${site.email.tld}`;
+
+  const reduced =
+    typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false;
+
+  let rx = 0;
+  let ry = 0;
+  let copied = false;
+  let copyTimer;
+
+  function onMove(e) {
+    if (reduced) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    ry = ((e.clientX - r.left) / r.width - 0.5) * 7;
+    rx = -((e.clientY - r.top) / r.height - 0.5) * 7;
+  }
+
+  function onLeave() {
+    rx = 0;
+    ry = 0;
+  }
+
+  async function copyEmail() {
+    try {
+      await navigator.clipboard.writeText(email);
+      copied = true;
+      clearTimeout(copyTimer);
+      copyTimer = setTimeout(() => (copied = false), 1600);
+    } catch {
+      copied = false;
+    }
+  }
 </script>
 
-<section class="card hero">
+<section
+  class="card hero"
+  onpointermove={onMove}
+  onpointerleave={onLeave}
+  style:transform={`perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`}
+>
   <PolyhedralMorpher />
 
-  <img class="avatar" src="./pp.png" alt={site.name} />
+  <img class="avatar" src="./pp.png" alt="" width="132" height="132" />
 
   <div class="hero-body">
     <div class="tagline">
@@ -30,9 +68,9 @@
     </dl>
 
     <div class="hero-actions">
-      <a class="btn-ghost" href="mailto:{email}">
-        <span aria-hidden="true">✉</span> {email}
-      </a>
+      <button type="button" class="btn-ghost" onclick={copyEmail} title="Copy email address">
+        <span aria-hidden="true">{copied ? '✓' : '✉'}</span> {copied ? 'Copied' : email}
+      </button>
       <a class="btn-ghost" href={site.github} target="_blank" rel="noopener">
         <span aria-hidden="true">⌘</span> {site.githubLabel}
       </a>
@@ -51,6 +89,13 @@
     gap: 18px;
     position: relative;
     overflow: hidden;
+    transform-style: preserve-3d;
+    transition: transform 0.18s ease-out, box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+
+  .hero:hover {
+    box-shadow: var(--shadow-hover), 0 0 0 4px var(--glow);
   }
 
   @media (min-width: 640px) {
@@ -77,6 +122,10 @@
   .avatar:hover {
     transform: scale(1.04);
     box-shadow: 0 0 0 4px var(--glow);
+  }
+
+  .hero:hover {
+    box-shadow: var(--shadow-hover), 0 0 0 4px var(--glow);
   }
 
   @media (min-width: 640px) {

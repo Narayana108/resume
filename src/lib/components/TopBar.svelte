@@ -1,13 +1,29 @@
 <script>
+  import { onMount } from 'svelte';
   import { site } from '../data/resume.js';
   import { palette, mode, view, setPalette, setMode, setView, toggleMode } from '../stores/theme.js';
   import { isAudioEnabled, toggleAudio } from '../audio.js';
 
   let audioOn = $state(isAudioEnabled());
+  let progress = $state(0);
 
   function onAudioToggle() {
     audioOn = toggleAudio();
   }
+
+  onMount(() => {
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      progress = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  });
 
   const palettes = [
     { id: 'indigo', label: 'Purple', title: 'Purple and indigo' },
@@ -16,6 +32,7 @@
 </script>
 
 <header class="topbar">
+  <div class="scroll-progress" style:transform={`scaleX(${progress})`} aria-hidden="true"></div>
   <div class="topbar-inner">
     <a class="brand" href="#top">
       <span class="brand-mark" aria-hidden="true">N</span>

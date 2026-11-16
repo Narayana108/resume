@@ -25,7 +25,7 @@ export function isAudioEnabled() {
   return enabled;
 }
 
-export function setAudioEnabled(next) {
+function setAudioEnabled(next) {
   enabled = Boolean(next);
   if (enabled) {
     const c = ensure();

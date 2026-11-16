@@ -17,6 +17,8 @@
    */
   import { onMount } from 'svelte';
   import { playHarmonicChime } from '../../audio.js';
+  import { read, rgba } from '../../canvas.js';
+  import { onThemeChange } from '../../stores/theme.js';
 
   let canvas;
 
@@ -27,17 +29,6 @@
   const DRAG_SENS = 0.0085;
   const CLICK_SLOP = 6;
   const HOLD_MS = 4200;
-
-  function read(name, fallback) {
-    return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
-  }
-
-  function rgba(hex, a) {
-    const h = hex.replace('#', '');
-    const full = h.length === 3 ? h.split('').map((c) => c + c).join('') : h;
-    const n = parseInt(full, 16);
-    return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${a})`;
-  }
 
   function normalize(verts) {
     return verts.map((v) => {
@@ -202,6 +193,14 @@
       }
     }
 
+    let colours = { brand: "#009B5A", accent: "#1E4D36", highlight: "#34D399" };
+
+    function readColours() {
+      colours.brand = read("--brand", "#009B5A");
+      colours.accent = read("--accent", "#1E4D36");
+      colours.highlight = read("--geo-highlight", "#34D399");
+    }
+
     function draw() {
       if (!canvas) return;
 
@@ -209,9 +208,9 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, w, h);
 
-      const brand = read('--brand', '#009B5A');
-      const accent = read('--accent', '#1E4D36');
-      const highlight = read('--geo-highlight', '#34D399');
+      const brand = colours.brand;
+      const accent = colours.accent;
+      const highlight = colours.highlight;
 
       const cx = w / 2;
       const cy = h / 2;
@@ -262,7 +261,16 @@
     function frame(now) {
       raf = 0;
 
-      if (!reduced) {
+      // Reduced motion: paint one static frame and stop.
+      if (reduced) {
+        draw();
+        return;
+      }
+
+      // Offscreen: the hero is scrolled away, so stop until it returns.
+      if (!visible) return;
+
+      {
         if (!dragging) {
           // Carry the release velocity, then settle into a slow drift.
           rot.y += vel.y;
@@ -301,6 +309,7 @@
 
     function onDown(e) {
       if (!canvas) return;
+      if (e.button !== 0) return;
       dragging = true;
       moved = 0;
       lastX = e.clientX;
@@ -345,20 +354,33 @@
         advance(true);
       }
     }
+    let visible = true;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible && !raf) raf = requestAnimationFrame(frame);
+      },
+      { threshold: 0.01 }
+    );
 
     lastAdvance = performance.now();
     measure();
+    readColours();
+    const unsubscribe = onThemeChange(readColours);
     window.addEventListener('resize', measure);
     canvas.addEventListener('pointerdown', onDown);
     canvas.addEventListener('pointermove', onMove);
     canvas.addEventListener('pointerup', onUp);
     canvas.addEventListener('pointercancel', onUp);
 
+    io.observe(canvas);
     raf = requestAnimationFrame(frame);
 
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener('resize', measure);
+      io.disconnect();
+      unsubscribe();
       if (canvas) {
         canvas.removeEventListener('pointerdown', onDown);
         canvas.removeEventListener('pointermove', onMove);

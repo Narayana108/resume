@@ -16,7 +16,6 @@ html[data-palette="indigo"] {
   --brand-strong: #5b21b6;
   --accent: #1d297a;
   --accent-soft: rgba(29, 41, 122, 0.09);
-  --brand-soft: rgba(109, 40, 217, 0.1);
   --hairline: #e5e5e5;
   --hairline-strong: #d4d4d4;
   --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05), 0 4px 12px -4px rgba(0, 0, 0, 0.03);
@@ -46,7 +45,6 @@ html[data-palette="indigo"] {
   --bub-1: #f5f0fe;
   --bub-2: #ede3fd;
   --bub-3: #e3d5fc;
-  --bub-glow: rgba(109, 40, 217, 0.3);
 }
 
 /* The terminal anchors its own scroll position across view changes; the
@@ -66,7 +64,6 @@ html[data-palette="emerald"] {
   --brand-strong: #1e4d36;
   --accent: #1e4d36;
   --accent-soft: rgba(30, 77, 54, 0.08);
-  --brand-soft: rgba(0, 155, 90, 0.12);
   --hairline: #e0e8e3;
   --hairline-strong: #cbd8d0;
   --shadow: 0 10px 30px -10px rgba(23, 33, 28, 0.05), 0 4px 12px -4px rgba(23, 33, 28, 0.03);
@@ -96,7 +93,6 @@ html[data-palette="emerald"] {
   --bub-1: #effaf4;
   --bub-2: #e2f5eb;
   --bub-3: #d2eee0;
-  --bub-glow: rgba(0, 179, 104, 0.35);
 }
 
 html[data-mode="dark"][data-palette="indigo"] {
@@ -110,7 +106,6 @@ html[data-mode="dark"][data-palette="indigo"] {
   --brand-strong: #ddd6fe;
   --accent: #a78bfa;
   --accent-soft: rgba(167, 139, 250, 0.16);
-  --brand-soft: rgba(196, 181, 253, 0.16);
   --hairline: #352a4d;
   --hairline-strong: #4a3b6b;
   --shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.55);
@@ -140,7 +135,6 @@ html[data-mode="dark"][data-palette="indigo"] {
   --bub-1: rgba(167, 139, 250, 0.14);
   --bub-2: rgba(167, 139, 250, 0.22);
   --bub-3: rgba(167, 139, 250, 0.32);
-  --bub-glow: rgba(167, 139, 250, 0.45);
 }
 
 html[data-mode="dark"][data-palette="emerald"] {
@@ -154,7 +148,6 @@ html[data-mode="dark"][data-palette="emerald"] {
   --brand-strong: #6ee7b7;
   --accent: #6ee7b7;
   --accent-soft: rgba(110, 231, 183, 0.14);
-  --brand-soft: rgba(52, 211, 153, 0.14);
   --hairline: #163026;
   --hairline-strong: #1e4034;
   --shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.6);
@@ -184,7 +177,6 @@ html[data-mode="dark"][data-palette="emerald"] {
   --bub-1: rgba(52, 211, 153, 0.14);
   --bub-2: rgba(52, 211, 153, 0.22);
   --bub-3: rgba(52, 211, 153, 0.32);
-  --bub-glow: rgba(52, 211, 153, 0.45);
 }
 
 /* --------------------------------------------------------------------------
@@ -329,6 +321,21 @@ a:hover {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--hairline);
+}
+
+/* Reading-progress hairline along the bottom edge of the sticky topbar. */
+.scroll-progress {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 2px;
+  width: 100%;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  background: var(--brand);
+  opacity: 0.75;
+  pointer-events: none;
+  will-change: transform;
 }
 
 .topbar-inner {
@@ -623,6 +630,15 @@ a.btn-solid:hover {
   .card:active {
     transform: none;
   }
+
+  .tagline-bubble {
+    animation: none;
+  }
+
+  .avatar:hover,
+  .skills li:hover {
+    transform: none;
+  }
 }
 
 /* Prose shared by the profile block. */
@@ -715,10 +731,6 @@ a.btn-solid:hover {
     font-size: 10.8pt;
   }
 
-  .ats-job {
-    break-inside: avoid;
-  }
-
   .ats,
   .ats-h2,
   .ats-name,
@@ -772,7 +784,6 @@ a.btn-solid:hover {
   .ats-job {
     margin-bottom: 6px;
     padding-bottom: 6px;
-    break-inside: avoid;
   }
 
   /* The downloadable PDF always uses the emerald theme. */

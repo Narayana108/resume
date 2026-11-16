@@ -1,7 +1,7 @@
 <script>
   import { tick } from 'svelte';
   import { site, profile } from '../data/resume.js';
-  import { palette, mode, view, setPalette, setMode, setView } from '../stores/theme.js';
+  import { mode, view, setPalette, setMode, setView } from '../stores/theme.js';
 
   let output = $state([]);
   let input = $state('');
@@ -177,9 +177,10 @@
     </div>
 
     <form class="term-form" onsubmit={submit}>
-      <label class="term-prompt" for="term-in">❯</label>
+      <label class="term-prompt" for="term-in" aria-hidden="true">❯</label>
       <input
         id="term-in"
+        aria-label="Terminal command"
         class="term-in"
         type="text"
         spellcheck="false"
@@ -257,10 +258,6 @@
   }
 
   .term-line { margin: 0; }
-  .term-echo { color: var(--term-accent); }
-  .term-ok { color: var(--term-ink); }
-  .term-dim { color: var(--term-dim); }
-  .term-warn { color: var(--term-warn); }
 
   /* Segment colours — all driven by the active palette's terminal tokens. */
   .t-prompt { color: var(--term-ok); font-weight: 700; }
