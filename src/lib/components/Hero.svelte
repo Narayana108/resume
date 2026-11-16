@@ -9,8 +9,11 @@
       ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
       : false;
 
-  let rx = 0;
-  let ry = 0;
+  // Must be $state: a plain `let` is not tracked in Svelte 5, so the
+  // transform never re-rendered and the card never actually tilted.
+  let rx = $state(0);
+  let ry = $state(0);
+  let tiltOn = $state(true);
   let copied = false;
   let copyTimer;
 
@@ -23,15 +26,26 @@
   }
 
   function onMove(e) {
-    if (reduced) return;
+    if (reduced || !tiltOn) return;
     const r = e.currentTarget.getBoundingClientRect();
-    ry = ((e.clientX - r.left) / r.width - 0.5) * 7;
-    rx = -((e.clientY - r.top) / r.height - 0.5) * 7;
+    ry = ((e.clientX - r.left) / r.width - 0.5) * 9;
+    rx = -((e.clientY - r.top) / r.height - 0.5) * 9;
   }
 
   function onLeave() {
     rx = 0;
     ry = 0;
+  }
+
+  /**
+   * Clicking the card's own surface toggles the tilt, so the motion can be
+   * turned off without leaving the page. Clicks on links and buttons inside
+   * the card are left alone.
+   */
+  function onClick(e) {
+    if (e.target.closest('a, button, input, label, select, textarea')) return;
+    tiltOn = !tiltOn;
+    if (!tiltOn) onLeave();
   }
 
   async function copyEmail() {
@@ -50,7 +64,8 @@
   class="card hero"
   onpointermove={onMove}
   onpointerleave={onLeave}
-  style:transform={`perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`}
+  onclick={onClick}
+  style:transform={tiltOn ? `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)` : 'none'}
 >
   <PolyhedralMorpher />
 
