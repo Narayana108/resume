@@ -150,7 +150,7 @@
     if (output.length && termEl) termEl.scrollTop = termEl.scrollHeight;
   });
 
-  const quick = ['help', 'contact'];
+  const quick = ['help', 'contact', 'clear'];
 
   pushSegs([[site.name, 't-key'], [' — resume shell', 't-dim']]);
   pushSegs([['Type ', 't-dim'], ['"help"', 't-cmd'], [' for available commands.', 't-dim']]);
