@@ -162,7 +162,21 @@
       if (inputEl) inputEl.focus();
     };
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+
+    // Scrolling to the very bottom opens the terminal, so the nudge arrow is
+    // both a button and a scroll cue.
+    const onScroll = () => {
+      if (!collapsed || window.scrollY <= 0) return;
+      const atBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8;
+      if (atBottom) collapsed = false;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('scroll', onScroll);
+    };
   });
 
   const quick = ['help', 'contact', 'clear'];
@@ -228,6 +242,18 @@
     </form>
   </div>
 </section>
+
+{#if collapsed}
+  <button
+    type="button"
+    class="term-nudge"
+    onclick={() => (collapsed = false)}
+    aria-label="Open terminal"
+    title="Open terminal"
+  >
+    <span aria-hidden="true">▾</span>
+  </button>
+{/if}
 
 <style>
   .terminal {
@@ -337,6 +363,30 @@
   }
 
   .term-chip:hover { background: var(--term-chip-hover); color: var(--term-ink); }
+
+  .term-nudge {
+    display: block;
+    margin: 10px auto 0;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    border: 1px solid var(--hairline-strong);
+    background: var(--surface);
+    color: var(--brand);
+    font-size: 13px;
+    line-height: 1;
+    cursor: pointer;
+    animation: term-nudge 1.6s ease-in-out infinite;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .term-nudge:hover {
+    border-color: var(--brand);
+    color: var(--brand-strong);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .term-nudge { animation: none; }
+  }
 
   .terminal-body { padding: 14px; background: var(--term-bg); }
 
