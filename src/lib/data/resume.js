@@ -6,7 +6,7 @@
 export const site = {
   name: 'Nārāyaṇa Dās Harricharaṇ',
   role: 'Senior DevOps / Platform Engineer',
-  tagline: ['Infrastructure & Cloud', 'Full-Stack Development', 'AI Systems'],
+  tagline: ['DevOps', 'Full-Stack Development', 'AI Systems'],
   email: { user: 'narayan-das', domain: 'tuta', tld: 'io' },
   github: 'https://github.com/Narayana108/',
   githubLabel: 'github.com/Narayana108',
