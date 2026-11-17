@@ -1,11 +1,12 @@
 <script>
-  import { tick } from 'svelte';
+  import { tick, onMount } from 'svelte';
   import { site, profile } from '../data/resume.js';
   import { mode, view, setPalette, setMode, setView } from '../stores/theme.js';
 
   let output = $state([]);
   let input = $state('');
   let termEl = $state(null);
+  let inputEl = $state(null);
 
   /** A line is a list of coloured segments: [text, class] pairs. */
   function pushSegs(segs) {
@@ -150,6 +151,19 @@
     if (output.length && termEl) termEl.scrollTop = termEl.scrollHeight;
   });
 
+  // Press "/" anywhere outside a field to jump into the terminal.
+  onMount(() => {
+    const onKey = (e) => {
+      if (e.key !== '/' || e.metaKey || e.ctrlKey || e.altKey) return;
+      const el = e.target;
+      if (el instanceof HTMLElement && /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName)) return;
+      e.preventDefault();
+      if (inputEl) inputEl.focus();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  });
+
   const quick = ['help', 'contact', 'clear'];
 
   pushSegs([[site.name, 't-key'], [' — resume shell', 't-dim']]);
@@ -188,6 +202,7 @@
         spellcheck="false"
         placeholder="Type a command (help, contact, theme, clear)..."
         bind:value={input}
+        bind:this={inputEl}
       />
       <button type="submit" class="term-run">Execute</button>
     </form>

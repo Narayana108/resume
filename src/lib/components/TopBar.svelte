@@ -12,6 +12,16 @@
     audioOn = toggleAudio();
   }
 
+  /**
+   * The brand link points at #top. Handle it in JS so the jump is a smooth
+   * glide rather than an instant hash change, and so no history entry is left
+   * behind by the anchor.
+   */
+  function onBrandClick(e) {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   onMount(() => {
     const onScroll = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
@@ -32,10 +42,10 @@
   ];
 </script>
 
-<header class="topbar">
+<header class="topbar" class:is-scrolled={progress > 0}>
   <div class="scroll-progress" style:transform={`scaleX(${progress})`} aria-hidden="true"></div>
   <div class="topbar-inner">
-    <a class="brand" href="#top">
+    <a class="brand" href="#top" onclick={onBrandClick}>
       <span class="brand-mark" aria-hidden="true"><Merkaba /></span>
       <span class="brand-text">
         <span class="brand-name">{site.name}</span>

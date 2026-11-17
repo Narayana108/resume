@@ -21,8 +21,26 @@
   }
 
   .block-head {
+    position: relative;
     padding-bottom: 10px;
     border-bottom: 1px solid var(--hairline);
+  }
+
+  /* A brand-coloured rule sweeps across the divider when the section is
+     hovered, so the heading reads as interactive without adding chrome. */
+  .block-head::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 2px;
+    width: 0;
+    background: var(--brand);
+    transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .block:hover .block-head::after {
+    width: 100%;
   }
 
   .block-title {

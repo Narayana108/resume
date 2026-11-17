@@ -323,6 +323,11 @@ a:hover {
   border-bottom: 1px solid var(--hairline);
 }
 
+/* Lift the bar off the page once it is no longer at the top. */
+.topbar.is-scrolled {
+  box-shadow: 0 8px 24px -14px rgba(0, 0, 0, 0.28);
+}
+
 /* Reading-progress hairline along the bottom edge of the sticky topbar. */
 .scroll-progress {
   position: absolute;
