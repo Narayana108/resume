@@ -42,7 +42,7 @@
   ];
 </script>
 
-<header class="topbar" class:is-scrolled={progress > 0}>
+<header class="topbar">
   <div class="scroll-progress" style:transform={`scaleX(${progress})`} aria-hidden="true"></div>
   <div class="topbar-inner">
     <a class="brand" href="#top" onclick={onBrandClick}>

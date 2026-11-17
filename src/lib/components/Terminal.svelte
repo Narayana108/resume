@@ -217,6 +217,32 @@
     border: 1px solid var(--hairline-strong);
     background: var(--term-bg);
     box-shadow: var(--shadow);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+
+  /* The terminal lights up when it is being used: hover, or focus anywhere
+     inside it (the input, a quick chip, the Execute button). */
+  .terminal:hover,
+  .terminal:focus-within {
+    border-color: var(--brand);
+    box-shadow: var(--shadow), 0 0 0 4px var(--glow), 0 0 26px -6px var(--glow);
+  }
+
+  @keyframes term-breathe {
+    0%, 100% {
+      box-shadow: var(--shadow), 0 0 0 4px var(--glow), 0 0 22px -8px var(--glow);
+    }
+    50% {
+      box-shadow: var(--shadow), 0 0 0 5px var(--glow), 0 0 34px -4px var(--glow);
+    }
+  }
+
+  .terminal:focus-within {
+    animation: term-breathe 2.8s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .terminal:focus-within { animation: none; }
   }
 
   .terminal-bar {

@@ -51,7 +51,9 @@
 
   onMount(() => {
     const ctx = canvas.getContext('2d');
-    const rot = { x: 0.42, y: 0.65, z: 0.15 };
+    // Fixed showcase pose: a 23.4 degree axial tilt (Earth's) and a slight
+    // roll, so both interlocking tetrahedra read clearly. Only Y changes.
+    const rot = { x: 0.41, y: 0.65, z: 0.12 };
     let raf = 0;
     let w = 0;
     let h = 0;
@@ -101,8 +103,8 @@
 
     function frame() {
       if (!reduced) {
-        rot.y += 0.011;
-        rot.x += 0.006;
+        // Spin about the fixed axis only, clockwise seen from above.
+        rot.y -= 0.011;
       }
       draw();
       if (!reduced) raf = requestAnimationFrame(frame);
