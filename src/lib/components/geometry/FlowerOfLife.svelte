@@ -37,6 +37,9 @@
   const RIPPLE_MAX = 6;
   const SPOT_SCALE = 3.8;
   const MAX_LAG = 70;
+  const reduced =
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const state = {
     pointerX: -9999,
@@ -327,7 +330,7 @@
 
     // ~32ms time constant. The old per-frame 0.16 factor was a ~95ms constant,
     // which is what read as the spotlight lagging behind the cursor.
-    const k = 1 - Math.exp(-dt / 0.032);
+    const k = reduced ? 1 : 1 - Math.exp(-dt / 0.032);
 
     let dx = state.pointerX - state.smoothX;
     let dy = state.pointerY - state.smoothY;
@@ -405,7 +408,7 @@
 
   function onMove(e) {
     const dist = Math.hypot(e.clientX - state.pointerX, e.clientY - state.pointerY);
-    if (dist > 14 && state.pointerActive) {
+    if (!reduced && dist > 14 && state.pointerActive) {
       state.trail.push({ x: state.smoothX, y: state.smoothY, life: 0.75 });
       if (state.trail.length > TRAIL_MAX) state.trail.shift();
     }

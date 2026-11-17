@@ -482,6 +482,15 @@ a:hover {
   }
 }
 
+/* Below 900px the action row is wider than the viewport, so let it wrap onto its own full-width line. */
+@media (max-width: 899px) {
+  .topbar-actions {
+    flex-wrap: wrap;
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
 .palette-switch {
   display: flex;
   align-items: center;

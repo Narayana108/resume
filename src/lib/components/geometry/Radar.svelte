@@ -21,6 +21,9 @@
   let glow = null;
   let hover = -1;
   let labelHits = [];
+  const reduced =
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let raf = 0;
 
   let w = 0;
@@ -252,9 +255,9 @@
     }
   }  function onPointerDown(e) {
     if (e.button !== 0) return;
-    glow = { start: performance.now() };
+    if (!reduced) glow = { start: performance.now() };
     playHarmonicChime(432, 1.2);
-    if (!raf) raf = requestAnimationFrame(frame);
+    if (!reduced && !raf) raf = requestAnimationFrame(frame);
   }
 
   function onResize() {
