@@ -111,7 +111,10 @@
     </div>
   </div>
 
-  <Terminal />
+  <!-- The terminal belongs to the interactive studio, not the ATS document. -->
+  <div hidden={$view === 'ats'}>
+    <Terminal />
+  </div>
 </main>
 
 <nav class="dot-rail" aria-label="Section navigation" hidden={$view === 'ats'}>

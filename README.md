@@ -103,7 +103,8 @@ downloaded PDF is always green.
 - **Clean ATS Resume** — single-column ATS-friendly document, light themes only
 
 The Clean ATS Resume is light-only: entering it forces the light theme and disables
-the mode toggle.
+the mode toggle. The terminal belongs to the interactive studio and is hidden in
+the ATS view.
 
 ## Interactions
 
@@ -116,9 +117,14 @@ the mode toggle.
   drag it to orbit, click to advance.
 - **Profile radar** — six axes rated out of five. Clicking it fires a hexagonal
   glow and a 432 Hz chime.
-- **Terminal** — `help`, `whoami`, `profile`, `contact`, `theme`, `mode`,
+- **Terminal** — collapsed by default, with a nudge chevron below it. Click the
+  chevron, click a quick chip, or reach the bottom of the page and scroll again
+  to open it. Commands: `help`, `whoami`, `profile`, `contact`, `theme`, `mode`,
   `view`, `clear`. Output is colour-coded per segment and follows the palette.
 - **Top bar** — a reading-progress hairline tracks scroll position.
+- **Section rail** — dots on the right edge track which section is in view and
+  jump to it when clicked.
+- **Grain** — a fixed 3.2% noise layer gives the flat areas texture.
 
 Every animation is disabled under `prefers-reduced-motion: reduce`, and the
 canvases stop their animation loops when they are off-screen or nothing is
