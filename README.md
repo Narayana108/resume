@@ -118,8 +118,8 @@ the ATS view.
 - **Profile radar** — six axes rated out of five. Clicking it fires a hexagonal
   glow and a 432 Hz chime.
 - **Terminal** — collapsed by default, with a nudge chevron below it. Click the
-  chevron, click a quick chip, or reach the bottom of the page and scroll again
-  to open it. Commands: `help`, `whoami`, `profile`, `contact`, `theme`, `mode`,
+  chevron or a quick chip to open it. Commands: `help`, `whoami`, `profile`,
+  `contact`, `theme`, `mode`,
   `view`, `clear`. Output is colour-coded per segment and follows the palette.
 - **Top bar** — a reading-progress hairline tracks scroll position.
 - **Section rail** — dots on the right edge track which section is in view and

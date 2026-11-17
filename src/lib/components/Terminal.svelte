@@ -163,41 +163,7 @@
     };
     window.addEventListener('keydown', onKey);
 
-    // The nudge needs intent: reaching the bottom alone must not open the
-    // terminal, or collapsing it while already at the bottom would instantly
-    // re-open it (the clamp fires a scroll event). It opens only after the
-    // user has sat at the bottom for a moment and then scrolls again.
-    let bottomSince = 0;
-
-    const onScroll = () => {
-      if (!collapsed) return;
-      const atBottom =
-        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8;
-      if (atBottom) {
-        if (!bottomSince) bottomSince = performance.now();
-      } else {
-        bottomSince = 0;
-      }
-    };
-
-    const onNudge = () => {
-      if (!collapsed || !bottomSince) return;
-      if (performance.now() - bottomSince >= 400) {
-        collapsed = false;
-        bottomSince = 0;
-      }
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('wheel', onNudge, { passive: true });
-    window.addEventListener('touchmove', onNudge, { passive: true });
-
-    return () => {
-      window.removeEventListener('keydown', onKey);
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('wheel', onNudge);
-      window.removeEventListener('touchmove', onNudge);
-    };
+    return () => window.removeEventListener('keydown', onKey);
   });
 
   const quick = ['help', 'contact', 'clear'];
@@ -274,8 +240,8 @@
   >
     <svg
       viewBox="0 0 24 24"
-      width="28"
-      height="28"
+      width="38"
+      height="38"
       fill="none"
       stroke="currentColor"
       stroke-width="2"
@@ -363,8 +329,8 @@
   }
 
   @keyframes term-nudge {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(3px); }
+    0%, 100% { transform: translateY(-4px); }
+    50% { transform: translateY(6px); }
   }
 
   .term-toggle.is-collapsed {
