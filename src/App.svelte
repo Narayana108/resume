@@ -61,11 +61,11 @@
     <Hero />
 
     <div id="view-interactive" hidden={$view !== 'interactive'}>
-      <Section title="Profile">
+      <Section title="Profile" cls="block-wide">
         <Profile />
       </Section>
 
-      <Section title="Technical Skills">
+      <Section title="Technical Skills" cls="block-narrow">
         <Skills />
       </Section>
 
@@ -73,7 +73,7 @@
         <Experience />
       </Section>
 
-      <Section title="Education &amp; Certifications">
+      <Section title="Education &amp; Certifications" cls="block-narrow">
         <Education />
       </Section>
     </div>
@@ -124,6 +124,7 @@
     flex-direction: column;
     gap: 40px;
   }
+
 
   /* Desktop-only back-to-top control. */
   .to-top {

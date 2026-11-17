@@ -202,7 +202,7 @@
   .tagline-bubble {
     display: inline-flex;
     align-items: center;
-    font-family: 'EB Garamond', Georgia, serif;
+    font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 0.01em;
@@ -247,7 +247,7 @@
   }
 
   .hero-role {
-    font-family: 'EB Garamond', Georgia, serif;
+    font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 17px;
     color: var(--brand-strong);
     margin: 0;

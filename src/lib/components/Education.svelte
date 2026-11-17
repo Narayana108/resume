@@ -47,7 +47,7 @@
   }
 
   .cred-meta {
-    font-family: 'EB Garamond', Georgia, serif;
+    font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 16px;
     color: var(--ink-muted);
     margin: 0;

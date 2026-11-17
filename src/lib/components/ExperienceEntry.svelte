@@ -92,7 +92,7 @@
   }
 
   .entry-sub {
-    font-family: 'EB Garamond', Georgia, serif;
+    font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 17px;
     color: var(--brand-strong);
     margin: 0;
@@ -111,6 +111,7 @@
     position: relative;
     padding-left: 17px;
     font-size: 17px;
+    font-weight: 500;
     line-height: 1.55;
     color: var(--ink-muted);
   }
@@ -163,7 +164,7 @@
   }
 
   .client-name {
-    font-family: 'EB Garamond', Georgia, serif;
+    font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 17px;
     font-weight: 600;
     color: var(--accent);

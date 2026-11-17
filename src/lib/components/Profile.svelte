@@ -41,6 +41,7 @@
 
   .profile-list :global(li) {
     font-size: 17px;
+    font-weight: 500;
     line-height: 1.55;
   }
 

@@ -7,6 +7,7 @@
   let input = $state('');
   let termEl = $state(null);
   let inputEl = $state(null);
+  let collapsed = $state(false);
 
   /** A line is a list of coloured segments: [text, class] pairs. */
   function pushSegs(segs) {
@@ -176,6 +177,15 @@
       <span></span><span></span><span></span>
     </div>
     <span class="terminal-title">narayana@resume:~ (zsh)</span>
+    <button
+      type="button"
+      class="term-toggle"
+      onclick={() => (collapsed = !collapsed)}
+      aria-expanded={!collapsed}
+      title={collapsed ? 'Expand terminal' : 'Collapse terminal'}
+    >
+      {collapsed ? '▸' : '▾'}
+    </button>
     <div class="terminal-quick">
       {#each quick as cmd}
         <button type="button" class="term-chip" onclick={() => run(cmd)}>{cmd}</button>
@@ -183,7 +193,7 @@
     </div>
   </div>
 
-  <div class="terminal-body">
+  <div class="terminal-body" hidden={collapsed}>
     <div bind:this={termEl} class="term-out" role="log" aria-live="polite">
       {#each output as line}
         <div class="term-line">
@@ -268,6 +278,24 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .term-toggle {
+    appearance: none;
+    border: 1px solid var(--term-line);
+    background: var(--term-chip);
+    color: var(--term-ink);
+    font-size: 10px;
+    line-height: 1;
+    padding: 3px 7px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .term-toggle:hover {
+    background: var(--term-chip-hover);
+    color: var(--term-ink);
   }
 
   .terminal-quick { display: flex; gap: 5px; margin-left: auto; flex-wrap: wrap; }

@@ -1,9 +1,9 @@
 <script>
   /** Shared section scaffolding: heading + card slot. */
-  let { title, children } = $props();
+  let { title, children, cls = '' } = $props();
 </script>
 
-<section class="block">
+<section class="block {cls}">
   <header class="block-head">
     <h2 class="block-title">{title}</h2>
   </header>
@@ -28,6 +28,12 @@
 
   /* A brand-coloured rule sweeps across the divider when the section is
      hovered, so the heading reads as interactive without adding chrome. */
+  /* Editorial rhythm: not every section is the same width, so the column
+     reads as a composed page rather than a stack of identical tiles. */
+  .block-narrow .card {
+    max-width: 860px;
+  }
+
   .block-head::after {
     content: '';
     position: absolute;

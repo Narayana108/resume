@@ -18,7 +18,7 @@
 
   .colophon-line {
     margin: 0;
-    font-family: 'EB Garamond', Georgia, serif;
+    font-family: 'Cormorant Garamond', Georgia, serif;
     font-style: italic;
     font-size: 15px;
     color: var(--ink-faint);

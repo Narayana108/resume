@@ -211,7 +211,7 @@ body {
 h1,
 h2,
 h3 {
-  font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  font-family: 'Cormorant Garamond', 'Cormorant Garamond', Georgia, serif;
   font-weight: 600;
   margin: 0;
   color: var(--ink);
@@ -652,8 +652,9 @@ a.btn-solid:hover {
 
 /* Prose shared by the profile block. */
 .prose {
-  font-family: 'EB Garamond', Georgia, serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 18px;
+  font-weight: 500;
   line-height: 1.62;
   color: var(--ink);
   margin-bottom: 0.85em;
