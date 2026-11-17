@@ -146,10 +146,12 @@
 
   .ats-contact { font-size: 16px; margin: 0; color: #222; }
 
+  /* Single column on purpose: a two-column grid can interleave in ATS
+     parsers, which read the DOM in order and lose the row grouping. */
   .ats-facts {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2px 24px;
+    grid-template-columns: 1fr;
+    gap: 2px;
     margin: 20px 0 0;
     padding: 0;
     text-align: left;
@@ -163,6 +165,7 @@
   }
 
   .ats-fact dt { font-weight: 700; color: #000; flex: 0 0 auto; }
+  .ats-fact dt::after { content: ':'; }
   .ats-fact dd { margin: 0; color: #222; }
 
   .ats-sec { margin-bottom: 18px; }
@@ -234,7 +237,7 @@
 
     .ats-head { padding-bottom: 8px; margin-bottom: 10px; }
     .ats-tagline { margin-bottom: 2px; padding-bottom: 2px; border-bottom: 1px solid #009b5a; }
-    .ats-facts { margin-top: 8px; gap: 0 20px; }
+    .ats-facts { margin-top: 8px; gap: 0; }
     .ats-fact { font-size: 9.6pt; }
     .ats-sec { margin-bottom: 10px; }
 
