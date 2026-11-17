@@ -32,6 +32,16 @@
     override = portrait === 0 ? 1 : 0;
   }
 
+  // Selecting a theme switches the portrait with it, even after a manual
+  // toggle, so the pairing pp_white/light and pp_suit/dark always holds.
+  let prevMode = $mode;
+  $effect(() => {
+    if ($mode !== prevMode) {
+      prevMode = $mode;
+      override = null;
+    }
+  });
+
   function onMove(e) {
     if (reduced || !tiltOn) return;
     const r = e.currentTarget.getBoundingClientRect();

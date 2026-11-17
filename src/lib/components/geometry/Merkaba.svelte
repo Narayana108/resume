@@ -73,7 +73,6 @@
     }
 
     function draw() {
-      const brand = read('--brand', '#009B5A');
       const highlight = read('--geo-highlight', '#34D399');
 
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -95,15 +94,8 @@
         ctx.moveTo(a.x, a.y);
         ctx.lineTo(b.x, b.y);
         ctx.strokeStyle = rgba(highlight, alpha);
-        ctx.lineWidth = 1.1 * ((a.scale + b.scale) * 0.5);
+        ctx.lineWidth = 1.3 * ((a.scale + b.scale) * 0.5);
         ctx.stroke();
-      }
-
-      for (const p of pts) {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, Math.max(1.1, 1.9 * p.scale), 0, TAU);
-        ctx.fillStyle = rgba(brand, 0.9);
-        ctx.fill();
       }
     }
 

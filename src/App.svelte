@@ -14,8 +14,15 @@
   import Footer from './lib/components/Footer.svelte';
   import FlowerOfLife from './lib/components/geometry/FlowerOfLife.svelte';
 
+  // Back-to-top affordance: appears once the page is scrolled past the hero.
+  let showTop = $state(false);
+
+  function toTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   // Mirror the theme onto <html> whenever it changes.
-  $: applyTheme($palette, $mode);
+  $effect(() => applyTheme($palette, $mode));
 
   onMount(() => {
     // Reveal sections as they enter the viewport.
@@ -31,7 +38,17 @@
       { threshold: 0.1 }
     );
     document.querySelectorAll('.hero, #view-interactive .block').forEach((el) => io.observe(el));
-    return () => io.disconnect();
+
+    const onScroll = () => {
+      showTop = window.scrollY > 420;
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    return () => {
+      io.disconnect();
+      window.removeEventListener('scroll', onScroll);
+    };
   });
 </script>
 
@@ -70,6 +87,18 @@
   <Footer />
 </main>
 
+<button
+  type="button"
+  class="to-top"
+  class:is-visible={showTop}
+  onclick={toTop}
+  aria-label="Back to top"
+  title="Back to top"
+  tabindex={showTop ? 0 : -1}
+>
+  ↑
+</button>
+
 <style>
   .shell {
     width: 100%;
@@ -94,6 +123,46 @@
     display: flex;
     flex-direction: column;
     gap: 40px;
+  }
+
+  /* Desktop-only back-to-top control. */
+  .to-top {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 30;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 9999px;
+    border: 1px solid var(--hairline-strong);
+    background: var(--surface);
+    color: var(--brand);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: opacity 0.25s ease, transform 0.25s ease,
+      border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .to-top.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+
+  .to-top:hover {
+    border-color: var(--brand);
+    color: var(--brand-strong);
+  }
+
+  @media (max-width: 899px) {
+    .to-top { display: none; }
   }
 
   @media print {
