@@ -244,6 +244,23 @@
     letter-spacing: -0.015em;
     color: var(--brand);
     margin: 0 0 4px;
+    animation: name-reveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* The name wipes in from the left on load. */
+  @keyframes name-reveal {
+    from {
+      clip-path: inset(0 100% 0 0);
+      opacity: 0;
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-name { animation: none; }
   }
 
   .hero-role {

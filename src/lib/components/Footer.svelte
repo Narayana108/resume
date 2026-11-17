@@ -1,11 +1,8 @@
 <script>
-  import { site } from '../data/resume.js';
 </script>
 
 <footer class="colophon">
-  <p class="colophon-line">
-    <a href={site.website} target="_blank" rel="noopener">Website by {site.name}</a>
-  </p>
+  <p class="colophon-line">Last updated November 2026</p>
 </footer>
 
 <style>

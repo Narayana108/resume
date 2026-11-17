@@ -208,10 +208,23 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Film grain: a fixed, non-interactive noise layer so the large flat areas
+   have some texture. Kept very faint so it never touches legibility. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNDAnIGhlaWdodD0nMTQwJz48ZmlsdGVyIGlkPSduJz48ZmVUdXJidWxlbmNlIHR5cGU9J2ZyYWN0YWxOb2lzZScgYmFzZUZyZXF1ZW5jeT0nMC44JyBudW1PY3RhdmVzPSczJyBzdGl0Y2hUaWxlcz0nc3RpdGNoJy8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9JzE0MCcgaGVpZ2h0PScxNDAnIGZpbHRlcj0ndXJsKCUyM24pJy8+PC9zdmc+");
+  background-size: 140px 140px;
+}
+
 h1,
 h2,
 h3 {
-  font-family: 'Cormorant Garamond', 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
   font-weight: 600;
   margin: 0;
   color: var(--ink);

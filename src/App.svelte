@@ -17,6 +17,20 @@
   // Back-to-top affordance: appears once the page is scrolled past the hero.
   let showTop = $state(false);
 
+  // Section dot rail.
+  const sections = [
+    { id: 'profile', title: 'Profile' },
+    { id: 'skills', title: 'Technical Skills' },
+    { id: 'experience', title: 'Experience' },
+    { id: 'education', title: 'Education' }
+  ];
+  let active = $state('profile');
+
+  function goto(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
   function toTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -41,6 +55,14 @@
 
     const onScroll = () => {
       showTop = window.scrollY > 420;
+
+      // The section whose heading has most recently passed the top of the
+      // viewport is the one being read.
+      let current = 'profile';
+      document.querySelectorAll('#view-interactive .block').forEach((b) => {
+        if (b.getBoundingClientRect().top <= 140) current = b.id;
+      });
+      if (current !== active) active = current;
     };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -61,19 +83,19 @@
     <Hero />
 
     <div id="view-interactive" hidden={$view !== 'interactive'}>
-      <Section title="Profile" cls="block-wide">
+      <Section title="Profile" cls="block-wide" id="profile">
         <Profile />
       </Section>
 
-      <Section title="Technical Skills" cls="block-narrow">
+      <Section title="Technical Skills" cls="block-narrow" id="skills">
         <Skills />
       </Section>
 
-      <Section title="Experience">
+      <Section title="Experience" id="experience">
         <Experience />
       </Section>
 
-      <Section title="Education &amp; Certifications" cls="block-narrow">
+      <Section title="Education &amp; Certifications" cls="block-narrow" id="education">
         <Education />
       </Section>
     </div>
@@ -86,6 +108,19 @@
   <Terminal />
   <Footer />
 </main>
+
+<nav class="dot-rail" aria-label="Section navigation">
+  {#each sections as s}
+    <button
+      type="button"
+      class="dot"
+      class:is-active={active === s.id}
+      onclick={() => goto(s.id)}
+      aria-label={s.title}
+      title={s.title}
+    ></button>
+  {/each}
+</nav>
 
 <button
   type="button"
@@ -125,6 +160,44 @@
     gap: 40px;
   }
 
+
+  /* Desktop-only section dot rail. */
+  .dot-rail {
+    position: fixed;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 35;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .dot {
+    width: 9px;
+    height: 9px;
+    padding: 0;
+    border-radius: 9999px;
+    border: 1px solid var(--hairline-strong);
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+  }
+
+  .dot:hover {
+    border-color: var(--brand);
+    transform: scale(1.25);
+  }
+
+  .dot.is-active {
+    background: var(--brand);
+    border-color: var(--brand);
+    transform: scale(1.35);
+  }
+
+  @media (max-width: 899px) {
+    .dot-rail { display: none; }
+  }
 
   /* Desktop-only back-to-top control. */
   .to-top {

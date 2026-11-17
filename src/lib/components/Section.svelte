@@ -1,9 +1,9 @@
 <script>
   /** Shared section scaffolding: heading + card slot. */
-  let { title, children, cls = '' } = $props();
+  let { title, children, cls = '', id = '' } = $props();
 </script>
 
-<section class="block {cls}">
+<section class="block {cls}" {id}>
   <header class="block-head">
     <h2 class="block-title">{title}</h2>
   </header>
