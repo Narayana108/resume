@@ -11,7 +11,6 @@
   import Education from './lib/components/Education.svelte';
   import CleanSheet from './lib/components/CleanSheet.svelte';
   import Terminal from './lib/components/Terminal.svelte';
-  import Footer from './lib/components/Footer.svelte';
   import FlowerOfLife from './lib/components/geometry/FlowerOfLife.svelte';
 
   // Back-to-top affordance: appears once the page is scrolled past the hero.
@@ -113,7 +112,6 @@
   </div>
 
   <Terminal />
-  <Footer />
 </main>
 
 <nav class="dot-rail" aria-label="Section navigation" hidden={$view === 'ats'}>

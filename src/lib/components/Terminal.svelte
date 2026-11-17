@@ -7,7 +7,7 @@
   let input = $state('');
   let termEl = $state(null);
   let inputEl = $state(null);
-  let collapsed = $state(false);
+  let collapsed = $state(true);
 
   /** A line is a list of coloured segments: [text, class] pairs. */
   function pushSegs(segs) {
@@ -180,15 +180,25 @@
     <button
       type="button"
       class="term-toggle"
+      class:is-collapsed={collapsed}
       onclick={() => (collapsed = !collapsed)}
       aria-expanded={!collapsed}
-      title={collapsed ? 'Expand terminal' : 'Collapse terminal'}
+      title={collapsed ? 'Open terminal' : 'Collapse terminal'}
     >
-      {collapsed ? '▸' : '▾'}
+      {collapsed ? '▾' : '▴'}
     </button>
     <div class="terminal-quick">
       {#each quick as cmd}
-        <button type="button" class="term-chip" onclick={() => run(cmd)}>{cmd}</button>
+        <button
+          type="button"
+          class="term-chip"
+          onclick={() => {
+            collapsed = false;
+            run(cmd);
+          }}
+        >
+          {cmd}
+        </button>
       {/each}
     </div>
   </div>
@@ -291,6 +301,20 @@
     border-radius: 6px;
     cursor: pointer;
     transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  @keyframes term-nudge {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(3px); }
+  }
+
+  .term-toggle.is-collapsed {
+    color: var(--term-ok);
+    animation: term-nudge 1.6s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .term-toggle.is-collapsed { animation: none; }
   }
 
   .term-toggle:hover {
