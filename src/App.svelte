@@ -57,11 +57,18 @@
       showTop = window.scrollY > 420;
 
       // The section whose heading has most recently passed the top of the
-      // viewport is the one being read.
-      let current = 'profile';
-      document.querySelectorAll('#view-interactive .block').forEach((b) => {
-        if (b.getBoundingClientRect().top <= 140) current = b.id;
-      });
+      // viewport is the one being read. The last section can never reach that
+      // line because the document ends first, so the end of the page counts.
+      const blocks = [...document.querySelectorAll('#view-interactive .block')];
+      const atBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+
+      let current = atBottom && blocks.length ? blocks[blocks.length - 1].id : 'profile';
+      if (!atBottom) {
+        for (const b of blocks) {
+          if (b.getBoundingClientRect().top <= 140) current = b.id;
+        }
+      }
       if (current !== active) active = current;
     };
     onScroll();
@@ -109,7 +116,7 @@
   <Footer />
 </main>
 
-<nav class="dot-rail" aria-label="Section navigation">
+<nav class="dot-rail" aria-label="Section navigation" hidden={$view === 'ats'}>
   {#each sections as s}
     <button
       type="button"

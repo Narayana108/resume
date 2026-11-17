@@ -240,10 +240,10 @@
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: clamp(28px, 5vw, 42px);
     font-weight: 600;
-    line-height: 1.08;
+    line-height: 1.22;
     letter-spacing: -0.015em;
     color: var(--brand);
-    margin: 0 0 4px;
+    margin: 0 0 6px;
     animation: name-reveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
