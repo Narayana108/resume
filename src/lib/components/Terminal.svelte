@@ -163,19 +163,40 @@
     };
     window.addEventListener('keydown', onKey);
 
-    // Scrolling to the very bottom opens the terminal, so the nudge arrow is
-    // both a button and a scroll cue.
+    // The nudge needs intent: reaching the bottom alone must not open the
+    // terminal, or collapsing it while already at the bottom would instantly
+    // re-open it (the clamp fires a scroll event). It opens only after the
+    // user has sat at the bottom for a moment and then scrolls again.
+    let bottomSince = 0;
+
     const onScroll = () => {
-      if (!collapsed || window.scrollY <= 0) return;
+      if (!collapsed) return;
       const atBottom =
         window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8;
-      if (atBottom) collapsed = false;
+      if (atBottom) {
+        if (!bottomSince) bottomSince = performance.now();
+      } else {
+        bottomSince = 0;
+      }
     };
+
+    const onNudge = () => {
+      if (!collapsed || !bottomSince) return;
+      if (performance.now() - bottomSince >= 400) {
+        collapsed = false;
+        bottomSince = 0;
+      }
+    };
+
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('wheel', onNudge, { passive: true });
+    window.addEventListener('touchmove', onNudge, { passive: true });
 
     return () => {
       window.removeEventListener('keydown', onKey);
       window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('wheel', onNudge);
+      window.removeEventListener('touchmove', onNudge);
     };
   });
 
@@ -251,7 +272,19 @@
     aria-label="Open terminal"
     title="Open terminal"
   >
-    <span aria-hidden="true">▾</span>
+    <svg
+      viewBox="0 0 24 24"
+      width="28"
+      height="28"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
   </button>
 {/if}
 
@@ -364,23 +397,20 @@
 
   .term-chip:hover { background: var(--term-chip-hover); color: var(--term-ink); }
 
+  /* A plain, borderless chevron: no bubble, no chrome. */
   .term-nudge {
     display: block;
-    margin: 10px auto 0;
-    padding: 6px 14px;
-    border-radius: 9999px;
-    border: 1px solid var(--hairline-strong);
-    background: var(--surface);
+    margin: 4px auto 0;
+    padding: 2px;
+    border: 0;
+    background: none;
     color: var(--brand);
-    font-size: 13px;
-    line-height: 1;
     cursor: pointer;
     animation: term-nudge 1.6s ease-in-out infinite;
-    transition: border-color 0.2s ease, color 0.2s ease;
+    transition: color 0.2s ease;
   }
 
   .term-nudge:hover {
-    border-color: var(--brand);
     color: var(--brand-strong);
   }
 
